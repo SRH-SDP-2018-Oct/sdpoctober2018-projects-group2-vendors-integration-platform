@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.google.gson.Gson;
+
 @Entity
 @Table(name="user_master")
 public class UserMaster {
@@ -126,5 +128,9 @@ public class UserMaster {
 	}
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 }

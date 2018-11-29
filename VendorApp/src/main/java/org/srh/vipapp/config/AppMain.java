@@ -12,6 +12,7 @@ public class AppMain {
 		SessionFactory sessionFactory = RootHB.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		UserMaster userMaster = session.find(UserMaster.class, 1);
+		System.out.println(userMaster);
 		session.close();
 		sessionFactory.close();
 		System.exit(0);
