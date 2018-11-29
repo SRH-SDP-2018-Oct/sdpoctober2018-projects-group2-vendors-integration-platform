@@ -5,12 +5,26 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import org.srh.vendorapi.hbm.hql.UserMasterQuery;
 
 import com.google.gson.Gson;
 
 @Entity
 @Table(name="user_master")
+@NamedQueries({
+	@NamedQuery(name=UserMasterQuery.GET_ALL_USER_$N, query=UserMasterQuery.GET_ALL_USER_$Q),
+	@NamedQuery(name=UserMasterQuery.FIND_USER_BY_USERNAME_$N, query=UserMasterQuery.FIND_USER_BY_USERNAME_$Q),
+})
+
+/**
+ * The Entity representing the table 'user_master' from the 'vendor_app' database.
+ * Date: 28 Nov 2018
+ * @author Vivek
+ */
 public class UserMaster {
 
 	@Id
