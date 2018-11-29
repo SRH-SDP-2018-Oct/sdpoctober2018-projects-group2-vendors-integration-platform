@@ -54,4 +54,5 @@ public class AppMain {
 		session.close();
 		sessionFactory.close();
 	}
+
 }

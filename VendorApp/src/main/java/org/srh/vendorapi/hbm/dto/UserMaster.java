@@ -2,9 +2,12 @@ package org.srh.vendorapi.hbm.dto;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -28,12 +31,16 @@ import com.google.gson.Gson;
 public class UserMaster {
 
 	@Id
-	@Column(name="userId")
-	private int id;
+	@GeneratedValue(strategy=GenerationType.TABLE)
+	private int userId;
+
+	@ManyToOne
+	@JoinColumn(name="userType")
+	private UserType userType;
 
 	private String username;
-	private String uPwd;
-	private String uType;
+	private String pwd;
+
 	private String firstName;
 	private String lastName;
 	private String phone;
@@ -41,36 +48,40 @@ public class UserMaster {
 	private String address;
 	private String pin;
 	private String country;
-	private boolean deleteFlag;
+	private boolean deleteFlag = false;
 	private int createdBy;
 	private Date createdOn;
 	private int modifiedBy;
 	private Date modifiedOn;
 
 	public int getId() {
-		return id;
+		return userId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int userId) {
+		this.userId = userId;
 	}
+
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getuPwd() {
-		return uPwd;
+
+	public String getPwd() {
+		return pwd;
 	}
-	public void setuPwd(String uPwd) {
-		this.uPwd = uPwd;
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
-	public String getuType() {
-		return uType;
+
+	public UserType getUserType() {
+		return userType;
 	}
-	public void setuType(String uType) {
-		this.uType = uType;
+	public void setUserType(UserType userType) {
+		this.userType = userType;
 	}
+
 	public String getFirstName() {
 		return firstName;
 	}
