@@ -1,4 +1,4 @@
-package org.srh.vendorapi.hbm.dao;
+package org.srh.vipapp.hbm.dao;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import javax.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.srh.util.StringUtil;
-import org.srh.vendorapi.hbm.RootHB;
-import org.srh.vendorapi.hbm.dto.UserMaster;
-import org.srh.vendorapi.hbm.hql.UserMasterQuery;
+import org.srh.vipapp.hbm.RootHB;
+import org.srh.vipapp.hbm.dto.UserMaster;
+import org.srh.vipapp.hbm.hql.UserMasterQuery;
 
 
 /**

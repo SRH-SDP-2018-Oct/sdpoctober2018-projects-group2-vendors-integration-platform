@@ -1,4 +1,4 @@
-package org.srh.vendorapi.hbm.dto;
+package org.srh.vipapp.hbm.dto;
 
 import java.util.Date;
 
@@ -12,7 +12,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.srh.vendorapi.hbm.hql.UserMasterQuery;
+import org.srh.vipapp.hbm.hql.UserMasterQuery;
 
 import com.google.gson.Gson;
 

@@ -1,4 +1,4 @@
-package org.srh.vendorapi.hbm.dto;
+package org.srh.vipapp.hbm.dto;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

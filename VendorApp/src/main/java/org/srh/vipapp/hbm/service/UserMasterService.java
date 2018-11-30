@@ -1,16 +1,15 @@
-package org.srh.vendorapi.hbm.dao;
+package org.srh.vipapp.hbm.service;
 
 import java.util.List;
 
-import org.srh.vendorapi.hbm.dto.UserMaster;
-
+import org.srh.vipapp.hbm.dto.UserMaster;
 
 /**
- * HBM DAO to perform task related to {@link UserMaster} entity.  <br/>
+ * HBM Service to perform task related to {@link UserMaster} entity.  <br/>
  * Date: 29 Nov 2018
  * @author Vivek
  */
-public interface UserMasterDao {
+public interface UserMasterService {
 
 	/**
 	 * Gets the {@link UserMaster} entity with the given 'userId'.

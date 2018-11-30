@@ -6,11 +6,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+
+/**
+ * Product Controller of the Spring
+ * @author Vivek
+ */
+
 @RestController
-@RequestMapping("/vip")
+@RequestMapping("/products")
 public class ProductController {
 
-	@RequestMapping(path="/products", method=RequestMethod.GET)
+	@RequestMapping(path="/get", method=RequestMethod.GET)
 	public String getProduct() {
 
 		JSONObject jsonObject;

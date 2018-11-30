@@ -1,10 +1,10 @@
-package org.srh.vendorapi.hbm.service;
+package org.srh.vipapp.hbm.service;
 
 import java.util.List;
 
-import org.srh.vendorapi.hbm.dao.UserMasterDao;
-import org.srh.vendorapi.hbm.dao.UserMasterDaoImpl;
-import org.srh.vendorapi.hbm.dto.UserMaster;
+import org.srh.vipapp.hbm.dao.UserMasterDao;
+import org.srh.vipapp.hbm.dao.UserMasterDaoImpl;
+import org.srh.vipapp.hbm.dto.UserMaster;
 
 
 /**

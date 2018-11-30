@@ -17,6 +17,6 @@
  * @author Vivek
  *
  */
-package org.srh.vendorapi.hbm;
+package org.srh.vipapp.hbm;
 
 import org.hibernate.query.Query;

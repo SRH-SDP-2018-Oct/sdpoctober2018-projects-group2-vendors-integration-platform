@@ -1,4 +1,4 @@
-package org.srh.vendorapi.hbm.hql;
+package org.srh.vipapp.hbm.hql;
 
 public final class UserMasterQuery {
 
