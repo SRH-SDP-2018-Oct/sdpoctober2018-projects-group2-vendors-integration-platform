@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS user_master;
 CREATE TABLE user_master (
   userId INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Auto generated userid of the system user to perform management/maintenance',
   username VARCHAR(75) NOT NULL UNIQUE COMMENT 'user name to login within the application as the system user',
-  pwd TEXT NOT NULL DEFAULT '' COMMENT 'User Password',
+  pwd TEXT COMMENT 'User Password',
   userType TINYINT UNSIGNED NOT NULL COMMENT 'User type to define privileges',
   firstName VARCHAR(30) NOT NULL,
   lastName VARCHAR(30) NOT NULL,
@@ -51,14 +51,14 @@ DESC user_master;
 /*Data for the table `user_master` */
 
 -- Entry -> ROOT User
-INSERT INTO user_master (userType, createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn)
-SELECT user_type.typeId, '1', '1', 'root', 'root', 'root', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+INSERT INTO user_master (userType, createdBy, modifiedBy, username, pwd, firstName, lastName, createdOn, modifiedOn)
+SELECT user_type.typeId, '1', '1', 'root', '', 'root', 'root', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM user_type
 WHERE user_type.typeName = 'admin';
 
 -- Entry -> SYSTEM User
-INSERT INTO user_master (userType, createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn)
-SELECT user_type.typeId , um.userId, um.userId, 'system', 'system', 'system', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+INSERT INTO user_master (userType, createdBy, modifiedBy, username, pwd, firstName, lastName, createdOn, modifiedOn)
+SELECT user_type.typeId , um.userId, um.userId, 'system', '', 'system', 'system', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM user_type, user_master um
 WHERE user_type.typeName = 'system' AND um.userName='root';
 
