@@ -1,4 +1,4 @@
-package org.srh.vipapp.config;
+package org.srh.config;
 
 import java.util.List;
 
