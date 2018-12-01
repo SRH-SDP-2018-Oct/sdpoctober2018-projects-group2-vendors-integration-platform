@@ -1,0 +1,35 @@
+
+In order to execute the project successfully remember following points:
+
+- This project runs as Spring Boot Project.
+- This project is not fully configured to run on the Tomcat. (Only for Plan B)
+
+
+Steps:
+ - Window -> Perspective -> Open Perspective -> Other -> Select 'Git'
+ - Import Respository from GitHub
+ 	-> Clone a Git Respository
+ 	-> URI: https://github.com/SRH-SDP-2018-Oct/sdpoctober2018-projects-group2-vendors-integration-platform
+ 	-> HOST: github.com
+ 	-> Enter GitHub Credentials
+ - Import 'VendorApp' from Imported GitHub Respository.
+ 	-> Expand Imported GitHub Respository
+ 	-> Expand 'Working Tree'
+ 	-> the Right-Click 'VendorApp' -> Import Project
+ 	-> Wait till the import project in progress window is completed
+ - Till project is getting imported run the queries from -> doc -> testschema.sql
+ - Go To Project Explorer, right-click Gradle -> Refresh Gradle Project
+ 	(It may take from several seconds to minutes)
+ - Window -> Show View -> Gradle Tasks
+ 	-> Expand 'VendorApp' (project icon)
+ 	-> Expand 'build' (folder icon)
+ 	-> Right-Click -> 'build' (setup icon) -> Run Gradle Task
+ 		(It may take from several seconds to minutes)
+ - Our project is ready to be executed.
+ - Run 'Application.java' file from 'src/main/java' in package 'org.srh.config' as an 'Java Application'
+ 	The project is now running as 'SpringBoot' Application. Does not require server for deployment.
+ - Open Browser and execute following URL:
+ 	- http://localhost:8080/vip/users/id/1  (Valid) (200)
+ 	- http://localhost:8080/vip/users/id/3	(Not Found) (422)
+ 	- http://localhost:8080/vip/users/id/a	(In Valid) (422)
+ 	
