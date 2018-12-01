@@ -1,7 +1,10 @@
 package org.srh.util;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.srh.constants.ErrorCode;
 import org.srh.constants.KeyConstant;
@@ -34,6 +37,22 @@ public final class HttpUtil {
 		else
 			jsonObject = new JSONObject();
 		return new JSONObject().put(KEY_DATA, jsonObject);
+	}
+
+
+	/**
+	 * Returns the success response in form of JSONObject.
+	 * @param list {@link List<?>}
+	 * @return jsonObject {@link JSONObject}
+	 */
+	public static JSONObject successResponseArray(List<?> list) {
+		JSONArray jsonArray = new JSONArray();
+		if(list!=null && !list.isEmpty()) {
+			for(Object obj : list) {
+				jsonArray.put(new JSONObject(Common.hidePojoData(obj)));
+			}
+		}
+		return new JSONObject().put(KEY_DATA, jsonArray);
 	}
 
 

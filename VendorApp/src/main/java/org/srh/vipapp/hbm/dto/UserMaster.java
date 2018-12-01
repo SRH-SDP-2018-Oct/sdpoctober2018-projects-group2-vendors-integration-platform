@@ -16,7 +16,7 @@ import org.srh.vipapp.hbm.hql.UserMasterQuery;
 
 @Entity
 @Table(name="user_master")
-@NamedQuery(name=UserMasterQuery.GET_ALL_USER_$N, query=UserMasterQuery.GET_ALL_USER_$Q)
+@NamedQuery(name=UserMasterQuery.GET_ALL_USERS_$N, query=UserMasterQuery.GET_ALL_USERS_$Q)
 @NamedQuery(name=UserMasterQuery.FIND_USER_BY_USERNAME_$N, query=UserMasterQuery.FIND_USER_BY_USERNAME_$Q)
 @POJO(hidden="setPwd", hiddenParam="java.lang.String")
 

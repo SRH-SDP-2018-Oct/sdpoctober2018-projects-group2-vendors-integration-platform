@@ -4,9 +4,13 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.json.JSONArray;
 import org.srh.util.HttpUtil;
+import org.srh.util.VipLog;
 import org.srh.vipapp.hbm.RootHB;
 import org.srh.vipapp.hbm.dto.UserMaster;
+import org.srh.vipapp.hbm.service.CustomerMasterService;
+import org.srh.vipapp.hbm.service.CustomerMasterServiceImpl;
 import org.srh.vipapp.hbm.service.UserMasterService;
 import org.srh.vipapp.hbm.service.UserMasterServiceImpl;
 
@@ -19,9 +23,18 @@ import org.srh.vipapp.hbm.service.UserMasterServiceImpl;
  */
 public class AppMain {
 
+
+
 	public static void main(String[] args) {
-		testUserFunctionalities();
+		testCustomerFunctinalities();
 		System.exit(0);
+	}
+
+
+
+	static void testCustomerFunctinalities() {
+		CustomerMasterService hbmService = new CustomerMasterServiceImpl();
+		VipLog.print(AppMain.class, new JSONArray(hbmService.findByName("john")));
 	}
 
 

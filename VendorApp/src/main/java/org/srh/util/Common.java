@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.apache.log4j.Logger;
 import org.srh.annotation.POJO;
 
 /**
@@ -12,6 +13,8 @@ import org.srh.annotation.POJO;
  * @author Vivek
  */
 public final class Common {
+
+	private static final Logger LOGGER = Logger.getLogger(Common.class);
 
 	private Common() { }
 
@@ -69,8 +72,8 @@ public final class Common {
 				Method m = cls.getMethod(hiddenField, Class.forName(hiddenClass));
 				m.invoke(obj, new Object[1]);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
-					| NoSuchMethodException | SecurityException | ClassNotFoundException e) {
-				e.printStackTrace();
+					| NoSuchMethodException | SecurityException | ClassNotFoundException ex) {
+				LOGGER.error("Exception occurred during hidden POJO data", ex);
 			}
 		}
 		return obj;

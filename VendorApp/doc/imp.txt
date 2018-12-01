@@ -29,7 +29,7 @@ Steps:
  - Run 'Application.java' file from 'src/main/java' in package 'org.srh.config' as an 'Java Application'
  	The project is now running as 'SpringBoot' Application. Does not require server for deployment.
  - Open Browser and execute following URL:
- 	- http://localhost:8080/vip/users/id/1  (Valid) (200)
- 	- http://localhost:8080/vip/users/id/3	(Not Found) (422)
- 	- http://localhost:8080/vip/users/id/a	(In Valid) (422)
+ 	- http://localhost:8080/vip/user/id/1  (Valid) (200)
+ 	- http://localhost:8080/vip/user/id/3	(Not Found) (422)
+ 	- http://localhost:8080/vip/user/id/a	(In Valid) (422)
  	

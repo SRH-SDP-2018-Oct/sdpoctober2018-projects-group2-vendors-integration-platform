@@ -15,7 +15,7 @@ import org.srh.vipapp.service.UserService;
  * @author Vivek
  */
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
@@ -23,7 +23,7 @@ public class UserController {
 
 	@RequestMapping("/login")
 	public String userLogin() {
-		return "Sucess";
+		return "Success";
 	}
 
 
