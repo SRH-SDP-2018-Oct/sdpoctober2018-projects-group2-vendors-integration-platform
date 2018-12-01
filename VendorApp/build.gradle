@@ -48,7 +48,7 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-autoconfigure")
 
     // https://mvnrepository.com/artifact/org.json/json
-	compile("org.json:json:20171018")
+	compile("org.json:json:20180130")
 
 	// // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
 	compile 'org.hibernate:hibernate-core:5.3.7.Final'

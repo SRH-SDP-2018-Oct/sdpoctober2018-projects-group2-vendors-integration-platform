@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.srh.util.HttpUtil;
 import org.srh.vipapp.hbm.RootHB;
 import org.srh.vipapp.hbm.dto.UserMaster;
 import org.srh.vipapp.hbm.service.UserMasterService;
 import org.srh.vipapp.hbm.service.UserMasterServiceImpl;
-import org.srh.vipapp.service.UserServiceImpl;
 
 
 /**
@@ -39,9 +39,8 @@ public class AppMain {
 		// Get User By UserName
 		UserMaster userMaster2 = userMasterService.findByUsername("system");
 
-		System.err.println(new UserServiceImpl().getUserById("1"));
-
-		System.err.println(userMaster);
+		System.err.println(HttpUtil.successResponse(null));
+		System.err.println(HttpUtil.successResponse(userMaster));
 		System.err.println(userMasterList);
 		System.err.println(userMaster2);
 	}

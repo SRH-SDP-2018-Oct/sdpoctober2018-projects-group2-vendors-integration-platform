@@ -8,20 +8,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.srh.annotation.POJO;
 import org.srh.vipapp.hbm.hql.UserMasterQuery;
-
-import com.google.gson.Gson;
 
 @Entity
 @Table(name="user_master")
-@NamedQueries({
-	@NamedQuery(name=UserMasterQuery.GET_ALL_USER_$N, query=UserMasterQuery.GET_ALL_USER_$Q),
-	@NamedQuery(name=UserMasterQuery.FIND_USER_BY_USERNAME_$N, query=UserMasterQuery.FIND_USER_BY_USERNAME_$Q),
-})
+@NamedQuery(name=UserMasterQuery.GET_ALL_USER_$N, query=UserMasterQuery.GET_ALL_USER_$Q)
+@NamedQuery(name=UserMasterQuery.FIND_USER_BY_USERNAME_$N, query=UserMasterQuery.FIND_USER_BY_USERNAME_$Q)
+@POJO(hidden="setPwd", hiddenParam="java.lang.String")
 
 /**
  * The Entity representing the table 'user_master' from the 'vendor_app' database.
@@ -153,9 +150,5 @@ public class UserMaster {
 	}
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
-
-	public String toString() {
-		return new Gson().toJson(this);
 	}
 }
