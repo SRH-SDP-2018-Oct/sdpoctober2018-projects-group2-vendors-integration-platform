@@ -1,4 +1,4 @@
-DROP DATABASE netti_vendor;
+DROP DATABASE IF EXISTS netti_vendor;
 
 CREATE DATABASE netti_vendor;
 
