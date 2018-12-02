@@ -53,14 +53,16 @@ DESC user_master;
 /*Data for the table `user_master` */
 
 -- Entry -> ROOT User
-INSERT INTO user_master (userType, createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn)
-SELECT user_type.typeId, '1', '1', 'root', 'root', 'root', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+INSERT INTO user_master (userType, createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn, pwd)
+SELECT user_type.typeId, '1', '1', 'root', 'root', 'root', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
+  '9dae67e870c8b41b24e78f44c6a8f74ea931f2cef5b125fbbb2db87566083860'
 FROM user_type
 WHERE user_type.typeName = 'admin';
 
 -- Entry -> SYSTEM User
-INSERT INTO user_master (userType, createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn)
-SELECT user_type.typeId , um.userId, um.userId, 'system', 'system', 'system', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+INSERT INTO user_master (userType, createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn, pwd)
+SELECT user_type.typeId , um.userId, um.userId, 'system', 'system', 'system', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
+  '9dae67e870c8b41b24e78f44c6a8f74ea931f2cef5b125fbbb2db87566083860'
 FROM user_type, user_master um
 WHERE user_type.typeName = 'system' AND um.userName='root';
 
@@ -97,14 +99,16 @@ DESC customer_master;
 
 
 -- Entry -> Customer
-INSERT INTO customer_master (createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn)
-SELECT um.userId, um.userId, 'john', 'John', 'Doe', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+INSERT INTO customer_master (createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn, pwd)
+SELECT um.userId, um.userId, 'john', 'John', 'Doe', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
+  '9dae67e870c8b41b24e78f44c6a8f74ea931f2cef5b125fbbb2db87566083860' -- Hello@135
 FROM user_type, user_master um
 WHERE user_type.typeName = 'system' AND um.userName='system';
 
 -- Entry -> Customer
-INSERT INTO customer_master (createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn)
-SELECT um.userId, um.userId, 'james', 'James', 'Anderson', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+INSERT INTO customer_master (createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn, pwd)
+SELECT um.userId, um.userId, 'james', 'James', 'Anderson', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
+  '9dae67e870c8b41b24e78f44c6a8f74ea931f2cef5b125fbbb2db87566083860' -- Hello@135
 FROM user_type, user_master um
 WHERE user_type.typeName = 'system' AND um.userName='system';
 

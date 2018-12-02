@@ -1,5 +1,8 @@
 package org.srh.util;
 
+import java.nio.charset.StandardCharsets;
+
+import com.google.common.hash.Hashing;
 
 /**
  * String Utility Class   <br/>
@@ -40,5 +43,15 @@ public class StringUtil {
 	 */
 	public static String append(Object obj1, Object obj2, Object obj3, Object obj4) {
 		return new StringBuilder().append(obj1).append(obj2).append(obj3).append(obj4).toString();
+	}
+
+
+	/**
+	 * Perform SHA256 Encryption on the input text and return the encrypted text.
+	 * @param input {@link String}
+	 * @return encryptedInput {@link String}
+	 */
+	public static String sha256(String input) {
+		return Hashing.sha256().hashString(input, StandardCharsets.UTF_8).toString();
 	}
 }

@@ -44,7 +44,8 @@ public class CustomerLoginRegistrationServiceImpl implements CustomerLoginRegist
 			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_CREDENTIALS, description);
 		}
 		// 
-		if(!customerMaster.getPwd().equals(pwd)) {
+		String pwdEncrypted = StringUtil.sha256(pwd);
+		if(!customerMaster.getPwd().equals(pwdEncrypted)) {
 			String err = StringUtil.append("Invalid password for username [", username, "].");
 			VipLog.log(CustomerMasterServiceImpl.class, err);
 			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_CREDENTIALS, description);

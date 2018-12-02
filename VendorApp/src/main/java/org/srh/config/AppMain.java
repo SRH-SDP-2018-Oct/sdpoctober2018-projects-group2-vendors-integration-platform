@@ -1,5 +1,6 @@
 package org.srh.config;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -14,6 +15,8 @@ import org.srh.vipapp.hbm.service.CustomerMasterServiceImpl;
 import org.srh.vipapp.hbm.service.UserMasterService;
 import org.srh.vipapp.hbm.service.UserMasterServiceImpl;
 
+import com.google.common.hash.Hashing;
+
 
 /**
  * Crash and Burn App
@@ -26,7 +29,9 @@ public class AppMain {
 
 
 	public static void main(String[] args) {
-		testCustomerFunctinalities();
+		// testCustomerFunctinalities();
+		String sha256 = Hashing.sha256().hashString("Hello@135", StandardCharsets.UTF_8).toString();
+		VipLog.print(sha256);
 		System.exit(0);
 	}
 
