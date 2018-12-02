@@ -2,8 +2,10 @@ package org.srh.constants;
 
 public enum ErrorCode {
 
-	INVALID_INPUT("01","Invalid Input"),
-	NOT_FOUND("02","Not Found");
+	ERROR( Codes.ERROR, "Error"),
+	INVALID_INPUT( Codes.INVALID_INPUT, "Invalid Input"),
+	NOT_FOUND( Codes.NOT_FOUND, "Not Found"),
+	INVALID_CREDENTIALS( Codes.INVALID_CREDENTIALS, "Invalid Credentials");
 
 	private String code;
 	private String message;
@@ -20,4 +22,5 @@ public enum ErrorCode {
 	public String getMessage() {
 		return message;
 	}
+
 }

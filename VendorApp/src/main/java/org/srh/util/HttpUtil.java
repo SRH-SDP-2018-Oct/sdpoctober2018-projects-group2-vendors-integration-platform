@@ -19,6 +19,9 @@ public final class HttpUtil {
 
 	public static final int HTTP_RESPONSE_ERROR_CODE = 422;
 	public static final String KEY_DATA = KeyConstant.DATA.val();
+	public static final String KEY_STATUS = KeyConstant.STATUS.val();
+	public static final String KEY_SUCCESS = KeyConstant.SUCCESS.val();
+	public static final String KEY_DESC = KeyConstant.DESC.val();
 	public static final String KEY_ERROR = KeyConstant.ERROR.val();
 	public static final String KEY_ERROR_CODE = KeyConstant.ERROR_CODE.val();
 	public static final String KEY_ERROR_MESSAGE = KeyConstant.ERROR_MESSAGE.val();
@@ -36,7 +39,62 @@ public final class HttpUtil {
 			jsonObject = new JSONObject(Common.hidePojoData(obj));
 		else
 			jsonObject = new JSONObject();
-		return new JSONObject().put(KEY_DATA, jsonObject);
+		return new JSONObject().put(KEY_DATA, jsonObject).put(KEY_STATUS, KEY_SUCCESS);
+	}
+
+
+	/**
+	 * Returns the success response in form of JSONObject.
+	 * @param obj {@link Object}
+	 * @param statusMsg {@link String}
+	 * @return jsonObject {@link JSONObject}
+	 */
+	public static JSONObject successResponse(Object obj, String statusMsg) {
+		JSONObject jsonObject;
+		if(obj!=null)
+			jsonObject = new JSONObject(Common.hidePojoData(obj));
+		else
+			jsonObject = new JSONObject();
+		return new JSONObject().put(KEY_DATA, jsonObject).put(KEY_STATUS, statusMsg);
+	}
+
+
+	/**
+	 * Returns the success response in form of JSONObject.
+	 * @param obj {@link Object}
+	 * @param key {@link String}
+	 * @param value {@link String}
+	 * @return jsonObject {@link JSONObject}
+	 */
+	public static JSONObject successResponse(Object obj, String key, String value) {
+		JSONObject jsonObject;
+		if(obj!=null)
+			jsonObject = new JSONObject(Common.hidePojoData(obj));
+		else
+			jsonObject = new JSONObject();
+		JSONObject jsonData = new JSONObject().put(KEY_DATA, jsonObject);
+		jsonData.put(KEY_STATUS, KEY_SUCCESS);
+		jsonData.put(key, value);
+		return jsonData;
+	}
+
+
+	/**
+	 * Returns the success response in form of JSONObject.
+	 * @param obj {@link Object}
+	 * @param desc {@link String}
+	 * @return jsonObject {@link JSONObject}
+	 */
+	public static JSONObject successResponseDesc(Object obj, String desc) {
+		JSONObject jsonObject;
+		if(obj!=null)
+			jsonObject = new JSONObject(Common.hidePojoData(obj));
+		else
+			jsonObject = new JSONObject();
+		JSONObject jsonData = new JSONObject().put(KEY_DATA, jsonObject);
+		jsonData.put(KEY_STATUS, KEY_SUCCESS);
+		jsonData.put(KEY_DESC, desc);
+		return jsonData;
 	}
 
 

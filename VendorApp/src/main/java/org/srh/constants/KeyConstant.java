@@ -2,7 +2,7 @@ package org.srh.constants;
 
 public enum KeyConstant {
 
-	DATA("data"), ERROR("error"),
+	DATA("data"), STATUS("status"), SUCCESS("success"), DESC("description"), ERROR("error"),
 	ERROR_CODE("error_code"), ERROR_MESSAGE("error_message"), ERROR_DESC("error_description");
 
 	private String val;
