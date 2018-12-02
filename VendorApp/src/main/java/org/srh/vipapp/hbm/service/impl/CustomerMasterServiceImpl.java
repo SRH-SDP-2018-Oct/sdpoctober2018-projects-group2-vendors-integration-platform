@@ -1,10 +1,11 @@
-package org.srh.vipapp.hbm.service;
+package org.srh.vipapp.hbm.service.impl;
 
 import java.util.List;
 
 import org.srh.vipapp.hbm.dao.CustomerMasterDao;
-import org.srh.vipapp.hbm.dao.CustomerMasterDaoImpl;
+import org.srh.vipapp.hbm.dao.impl.CustomerMasterDaoImpl;
 import org.srh.vipapp.hbm.dto.CustomerMaster;
+import org.srh.vipapp.hbm.service.CustomerMasterService;
 
 /**
  * Implementation class of HBM Service {@link CustomerMasterService}  <br/>

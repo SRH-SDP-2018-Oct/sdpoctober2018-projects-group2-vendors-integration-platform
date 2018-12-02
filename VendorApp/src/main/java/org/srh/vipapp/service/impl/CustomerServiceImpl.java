@@ -1,4 +1,4 @@
-package org.srh.vipapp.service;
+package org.srh.vipapp.service.impl;
 
 import java.util.List;
 
@@ -13,7 +13,8 @@ import org.srh.util.NumberUtil;
 import org.srh.util.StringUtil;
 import org.srh.vipapp.hbm.dto.CustomerMaster;
 import org.srh.vipapp.hbm.service.CustomerMasterService;
-import org.srh.vipapp.hbm.service.CustomerMasterServiceImpl;
+import org.srh.vipapp.hbm.service.impl.CustomerMasterServiceImpl;
+import org.srh.vipapp.service.CustomerService;
 
 /**
  * Serivce Implementation of {@link CustomerService}.  <br/>

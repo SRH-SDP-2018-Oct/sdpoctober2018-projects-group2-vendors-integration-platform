@@ -1,4 +1,4 @@
-package org.srh.vipapp.hbm.dao;
+package org.srh.vipapp.hbm.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import org.srh.util.StringUtil;
 import org.srh.util.AppLog;
 import org.srh.vipapp.hbm.RootHB;
+import org.srh.vipapp.hbm.dao.CustomerMasterDao;
 import org.srh.vipapp.hbm.dto.CustomerMaster;
 import org.srh.vipapp.hbm.hql.CustomerMasterQuery;
 

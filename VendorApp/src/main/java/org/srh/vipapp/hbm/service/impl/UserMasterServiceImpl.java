@@ -1,10 +1,11 @@
-package org.srh.vipapp.hbm.service;
+package org.srh.vipapp.hbm.service.impl;
 
 import java.util.List;
 
 import org.srh.vipapp.hbm.dao.UserMasterDao;
-import org.srh.vipapp.hbm.dao.UserMasterDaoImpl;
+import org.srh.vipapp.hbm.dao.impl.UserMasterDaoImpl;
 import org.srh.vipapp.hbm.dto.UserMaster;
+import org.srh.vipapp.hbm.service.UserMasterService;
 
 
 /**

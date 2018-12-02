@@ -1,4 +1,4 @@
-package org.srh.vipapp.service;
+package org.srh.vipapp.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +13,8 @@ import org.srh.util.StringUtil;
 import org.srh.util.AppLog;
 import org.srh.vipapp.hbm.dto.CustomerMaster;
 import org.srh.vipapp.hbm.service.CustomerMasterService;
-import org.srh.vipapp.hbm.service.CustomerMasterServiceImpl;
+import org.srh.vipapp.hbm.service.impl.CustomerMasterServiceImpl;
+import org.srh.vipapp.service.CustomerLoginRegistrationService;
 
 @Service
 public class CustomerLoginRegistrationServiceImpl implements CustomerLoginRegistrationService {
