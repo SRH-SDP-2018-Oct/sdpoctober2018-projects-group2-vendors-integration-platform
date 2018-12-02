@@ -11,11 +11,12 @@ public final class CustomerMasterQuery {
 	public static final String FIND_CUSTOMER_BY_USERNAME_$P1 = "userName";
 	public static final String FIND_CUSTOMER_BY_USERNAME_$N = "FIND_CUSTOMER_BY_USERNAME";
 	public static final String FIND_CUSTOMER_BY_USERNAME_$Q = "FROM CustomerMaster "
-			+ " WHERE deleteFlag=0 AND userName=:" + FIND_CUSTOMER_BY_USERNAME_$P1;
+			+ " WHERE deleteFlag=0 AND userName=:"+FIND_CUSTOMER_BY_USERNAME_$P1;
 
 	public static final String FIND_CUSTOMERS_BY_NAME_$P1 = "firstName";
 	public static final String FIND_CUSTOMERS_BY_NAME_$P2 = "lastName";
 	public static final String FIND_CUSTOMERS_BY_NAME_$N = "FIND_CUSTOMER_BY_NAME";
 	public static final String FIND_CUSTOMERS_BY_NAME_$Q = "FROM CustomerMaster "
-			+ " WHERE firstName LIKE :firstName OR lastName LIKE :lastName ";
+			+ " WHERE firstName LIKE :"+FIND_CUSTOMERS_BY_NAME_$P1
+					+ " OR lastName LIKE :"+FIND_CUSTOMERS_BY_NAME_$P2;
 }
