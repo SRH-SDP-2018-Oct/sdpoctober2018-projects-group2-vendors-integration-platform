@@ -1,4 +1,4 @@
-package org.srh.nettiapp.hbm.dto;
+package org.srh.aldoapp.hbm.dto;
 
 import java.util.Date;
 
@@ -9,9 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * The Entity representing the table 'branch_master' from the 'netti_vendor' database.
+ * The Entity representing the table 'branch_master' from the 'aldo_vendor' database.
  * Date: 01 Dec 2018
- * @author YASHAS
+ * @author Vivek
  */
 
 @Entity

@@ -1,5 +1,5 @@
 
-package org.srh.nettiapp.hbm.dto;
+package org.srh.aldoapp.hbm.dto;
 
 import java.util.Date;
 
@@ -13,9 +13,9 @@ import javax.persistence.Table;
 
 
 /**
- * The Entity representing the table 'branch_timings' from the 'netti_vendor' database.
- * Date: 01 Dec 2018
- * @author YASHAS
+ * The Entity representing the table 'branch_timings' from the 'aldi_vendor' database.
+ * Date: 02 Dec 2018
+ * @author Vivek
  */
 
 @Entity
