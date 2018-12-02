@@ -1,5 +1,11 @@
 package org.srh.constants;
 
+/**
+ * Common Codes.   <br/>
+ * Date: 01 Dec 2018
+ * @author Vivek
+ *
+ */
 public final class Codes {
 
 	private Codes() { }

@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Integer Utility Class
+ * Utility Class for Numbers.
  * Date: 30 Nov 2018
  * @author Vivek
  */

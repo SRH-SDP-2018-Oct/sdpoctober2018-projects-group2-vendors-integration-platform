@@ -2,6 +2,11 @@ package org.srh.util;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Logger Class for the application.   <br/>
+ * Date: 01 Dec 2018
+ * @author Vivek
+ */
 public class AppLog {
 
 	public static final String DEFAULT_LOG_MESSAGE = "=====>>>>> EXCEPTION OCCURRED";

@@ -1,5 +1,10 @@
 package org.srh.constants;
 
+/**
+ * Error Code enumeration.   <br/>
+ * Date: 01 Dec 2018
+ * @author Vivek
+ */
 public enum ErrorCode {
 
 	ERROR( Codes.ERROR, "Error"),

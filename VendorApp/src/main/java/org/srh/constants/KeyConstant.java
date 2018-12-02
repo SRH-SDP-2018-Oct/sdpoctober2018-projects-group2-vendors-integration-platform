@@ -1,5 +1,10 @@
 package org.srh.constants;
 
+/**
+ * Constant Keys throughout the application.   <br/>
+ * Date: 01 Dec 2018
+ * @author Vivek
+ */
 public enum KeyConstant {
 
 	DATA("data"), STATUS("status"), SUCCESS("success"), DESC("description"), ERROR("error"),
