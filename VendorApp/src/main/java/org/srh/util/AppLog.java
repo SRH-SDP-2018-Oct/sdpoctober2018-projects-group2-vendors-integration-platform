@@ -2,13 +2,13 @@ package org.srh.util;
 
 import org.apache.log4j.Logger;
 
-public class VipLog {
+public class AppLog {
 
 	public static final String DEFAULT_LOG_MESSAGE = "=====>>>>> EXCEPTION OCCURRED";
 	public static final String DEFAULT_PRINT_MESSAGE = "=====>>>>> PRINTING";
 
 
-	private VipLog() {}
+	private AppLog() {}
 
 
 	public static void log(Class<?> c, Object msg) {

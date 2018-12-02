@@ -8,7 +8,7 @@ import javax.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.srh.util.StringUtil;
-import org.srh.util.VipLog;
+import org.srh.util.AppLog;
 import org.srh.vipapp.hbm.RootHB;
 import org.srh.vipapp.hbm.dto.CustomerMaster;
 import org.srh.vipapp.hbm.hql.CustomerMasterQuery;
@@ -28,7 +28,7 @@ public class CustomerMasterDaoImpl implements CustomerMasterDao {
 			customerMaster = session.find(CustomerMaster.class, customerId);
 		}
 		catch(NoResultException ex) {
-			VipLog.log(this.getClass(), StringUtil.append("No customer exist with Id:", customerId) );
+			AppLog.log(this.getClass(), StringUtil.append("No customer exist with Id:", customerId) );
 		}
 		finally {
 			RootHB.closeSession(session);
@@ -58,7 +58,7 @@ public class CustomerMasterDaoImpl implements CustomerMasterDao {
 			return query.getSingleResult();
 		}
 		catch(NoResultException ex) {
-			VipLog.log(this.getClass(), StringUtil.append("No Customer exist with Username:", username) );
+			AppLog.log(this.getClass(), StringUtil.append("No Customer exist with Username:", username) );
 			return null;
 		}
 		finally {
@@ -78,7 +78,7 @@ public class CustomerMasterDaoImpl implements CustomerMasterDao {
 			return query.getResultList();
 		}
 		catch(NoResultException ex) {
-			VipLog.log(this.getClass(), StringUtil.append("No Customer exist with first name or last name:", name) );
+			AppLog.log(this.getClass(), StringUtil.append("No Customer exist with first name or last name:", name) );
 			return new ArrayList<>();
 		}
 		finally {

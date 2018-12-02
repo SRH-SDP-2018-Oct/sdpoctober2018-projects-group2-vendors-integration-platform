@@ -10,7 +10,7 @@ import org.srh.constants.ErrorCode;
 import org.srh.util.Common;
 import org.srh.util.HttpUtil;
 import org.srh.util.StringUtil;
-import org.srh.util.VipLog;
+import org.srh.util.AppLog;
 import org.srh.vipapp.hbm.dto.CustomerMaster;
 import org.srh.vipapp.hbm.service.CustomerMasterService;
 import org.srh.vipapp.hbm.service.CustomerMasterServiceImpl;
@@ -40,14 +40,14 @@ public class CustomerLoginRegistrationServiceImpl implements CustomerLoginRegist
 		//
 		if(customerMaster==null) {
 			String err = StringUtil.append("Invalid username [", username, "].");
-			VipLog.log(CustomerMasterServiceImpl.class, err);
+			AppLog.log(CustomerMasterServiceImpl.class, err);
 			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_CREDENTIALS, description);
 		}
 		// 
 		String pwdEncrypted = StringUtil.sha256(pwd);
 		if(!customerMaster.getPwd().equals(pwdEncrypted)) {
 			String err = StringUtil.append("Invalid password for username [", username, "].");
-			VipLog.log(CustomerMasterServiceImpl.class, err);
+			AppLog.log(CustomerMasterServiceImpl.class, err);
 			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_CREDENTIALS, description);
 		}
 
@@ -57,7 +57,7 @@ public class CustomerLoginRegistrationServiceImpl implements CustomerLoginRegist
 		HttpSession session = req.getSession(true);
 
 		String sessionId = session.getId();
-		VipLog.print( StringUtil.append("New session created with id [", sessionId , "].") );
+		AppLog.print( StringUtil.append("New session created with id [", sessionId , "].") );
 
 		return HttpUtil.successResponse(customerMaster, "sessionId", sessionId);
 	}

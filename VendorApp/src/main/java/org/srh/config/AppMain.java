@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.json.JSONArray;
 import org.srh.util.HttpUtil;
-import org.srh.util.VipLog;
+import org.srh.util.AppLog;
 import org.srh.vipapp.hbm.RootHB;
 import org.srh.vipapp.hbm.dto.UserMaster;
 import org.srh.vipapp.hbm.service.CustomerMasterService;
@@ -31,7 +31,7 @@ public class AppMain {
 	public static void main(String[] args) {
 		// testCustomerFunctinalities();
 		String sha256 = Hashing.sha256().hashString("Hello@135", StandardCharsets.UTF_8).toString();
-		VipLog.print(sha256);
+		AppLog.print(sha256);
 		System.exit(0);
 	}
 
@@ -39,7 +39,7 @@ public class AppMain {
 
 	static void testCustomerFunctinalities() {
 		CustomerMasterService hbmService = new CustomerMasterServiceImpl();
-		VipLog.print(AppMain.class, new JSONArray(hbmService.findByName("john")));
+		AppLog.print(AppMain.class, new JSONArray(hbmService.findByName("john")));
 	}
 
 

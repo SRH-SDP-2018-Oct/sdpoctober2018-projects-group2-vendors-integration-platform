@@ -7,7 +7,7 @@ import javax.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.srh.util.StringUtil;
-import org.srh.util.VipLog;
+import org.srh.util.AppLog;
 import org.srh.vipapp.hbm.RootHB;
 import org.srh.vipapp.hbm.dto.UserMaster;
 import org.srh.vipapp.hbm.hql.UserMasterQuery;
@@ -28,7 +28,7 @@ public class UserMasterDaoImpl implements UserMasterDao {
 			userMaster = session.find(UserMaster.class, userId);
 		}
 		catch(NoResultException ex) {
-			VipLog.log(this.getClass(), StringUtil.append("No user exist with Id:", userId) );
+			AppLog.log(this.getClass(), StringUtil.append("No user exist with Id:", userId) );
 		}
 		finally {
 			RootHB.closeSession(session);
@@ -58,7 +58,7 @@ public class UserMasterDaoImpl implements UserMasterDao {
 			return query.getSingleResult();
 		}
 		catch(NoResultException ex) {
-			VipLog.log(this.getClass(), StringUtil.append("No user with exist with Username:", username) );
+			AppLog.log(this.getClass(), StringUtil.append("No user with exist with Username:", username) );
 			return null;
 		}
 		finally {
