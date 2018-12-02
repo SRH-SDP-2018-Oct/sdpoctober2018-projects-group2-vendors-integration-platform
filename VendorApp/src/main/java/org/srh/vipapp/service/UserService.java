@@ -12,10 +12,11 @@ import org.json.JSONObject;
 public interface UserService {
 
 	/**
-	 * Returns user data as string in JSON format.
+	 * Returns user data enclosed in JSONObject of the given userId.
 	 * @param userId {@link String}
 	 * @param response {@link HttpServletResponse}
 	 * @return jsonObject {@link JSONObject}
 	 */
 	JSONObject getUserById(String userId, HttpServletResponse response);
+
 }

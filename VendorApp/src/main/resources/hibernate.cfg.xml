@@ -11,6 +11,7 @@
 		<property name="connection.password">root</property>    
  
         <mapping class="org.srh.vipapp.hbm.dto.UserType"/>
-        <mapping class="org.srh.vipapp.hbm.dto.UserMaster"/> 
+        <mapping class="org.srh.vipapp.hbm.dto.UserMaster"/>
+        <mapping class="org.srh.vipapp.hbm.dto.CustomerMaster"/>
     </session-factory>  
 </hibernate-configuration> 

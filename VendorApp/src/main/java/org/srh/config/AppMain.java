@@ -1,14 +1,21 @@
 package org.srh.config;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.json.JSONArray;
 import org.srh.util.HttpUtil;
+import org.srh.util.AppLog;
 import org.srh.vipapp.hbm.RootHB;
 import org.srh.vipapp.hbm.dto.UserMaster;
+import org.srh.vipapp.hbm.service.CustomerMasterService;
 import org.srh.vipapp.hbm.service.UserMasterService;
-import org.srh.vipapp.hbm.service.UserMasterServiceImpl;
+import org.srh.vipapp.hbm.service.impl.CustomerMasterServiceImpl;
+import org.srh.vipapp.hbm.service.impl.UserMasterServiceImpl;
+
+import com.google.common.hash.Hashing;
 
 
 /**
@@ -19,9 +26,20 @@ import org.srh.vipapp.hbm.service.UserMasterServiceImpl;
  */
 public class AppMain {
 
+
+
 	public static void main(String[] args) {
-		testUserFunctionalities();
+		// testCustomerFunctinalities();
+		String sha256 = Hashing.sha256().hashString("Hello@135", StandardCharsets.UTF_8).toString();
+		AppLog.print(sha256);
 		System.exit(0);
+	}
+
+
+
+	static void testCustomerFunctinalities() {
+		CustomerMasterService hbmService = new CustomerMasterServiceImpl();
+		AppLog.print(AppMain.class, new JSONArray(hbmService.findByName("john")));
 	}
 
 

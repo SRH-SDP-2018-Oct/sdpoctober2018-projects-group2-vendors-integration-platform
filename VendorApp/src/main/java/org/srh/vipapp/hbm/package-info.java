@@ -1,6 +1,6 @@
 
 /**
- * Main package contain the Hibernate implementations.   <br/>
+ * Base package with the Hibernate implementation.   <br/>
  * The framework is structured in form of Service, DAO and DTO.   <br/>
  * The classes within this package are independent from the components outside the package and act as a micro-service.
  */

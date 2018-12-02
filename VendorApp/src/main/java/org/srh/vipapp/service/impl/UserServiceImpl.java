@@ -1,4 +1,4 @@
-package org.srh.vipapp.service;
+package org.srh.vipapp.service.impl;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,7 +10,8 @@ import org.srh.util.NumberUtil;
 import org.srh.util.StringUtil;
 import org.srh.vipapp.hbm.dto.UserMaster;
 import org.srh.vipapp.hbm.service.UserMasterService;
-import org.srh.vipapp.hbm.service.UserMasterServiceImpl;
+import org.srh.vipapp.hbm.service.impl.UserMasterServiceImpl;
+import org.srh.vipapp.service.UserService;
 
 /**
  * Serivce Implementation of {@link UserService}.  <br/>
