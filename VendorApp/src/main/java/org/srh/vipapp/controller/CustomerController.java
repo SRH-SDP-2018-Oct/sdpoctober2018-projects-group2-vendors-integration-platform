@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.srh.bean.ServiceResp;
+import org.srh.bean.ServiceRespArray;
 import org.srh.constants.ErrorCode;
 import org.srh.util.AppLog;
 import org.srh.util.HttpUtil;
@@ -30,9 +31,31 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 
+
+	@RequestMapping(path="/id/{customerId}", method=RequestMethod.GET)
+	public String getCustomerById(@PathVariable String customerId, HttpServletResponse resp) {
+		ServiceResp serviceResp = customerService.getCustomerById(customerId);
+		return HttpUtil.buildResponse(resp, serviceResp).toString();
+	}
+
+
+	@RequestMapping(path="/username/{customerUsername}", method=RequestMethod.GET)
+	public String getCustomerByUsername(@PathVariable String customerUsername, HttpServletResponse resp) {
+		ServiceResp serviceResp = customerService.getCustomersByUsername(customerUsername);
+		return HttpUtil.buildResponse(resp, serviceResp).toString();
+	}
+
+
+	@RequestMapping(path="/name/{customerName}", method=RequestMethod.GET)
+	public String getCustomerByName(@PathVariable String customerName, HttpServletResponse resp) {
+		ServiceRespArray serviceResp = customerService.getCustomersByName(customerName);
+		return HttpUtil.buildResponseArray(resp, serviceResp).toString();
+	}
+
+
+
 	@Autowired
 	private CustomerLoginRegistrationService customerLoginRegistrationService;
-
 
 	@RequestMapping("/login")
 	public String customerLogin(@RequestParam String username, @RequestParam String pwd, 
@@ -56,20 +79,6 @@ public class CustomerController {
 		AppLog.print( StringUtil.append("New session created with id [", sessionId , "].") );
 
 		return HttpUtil.successResponse(serviceResp.getSuccessData(), "sessionId", sessionId).toString();
-	}
-
-
-	@RequestMapping(path="/id/{customerId}", method=RequestMethod.GET)
-	public String getCustomerById(@PathVariable String customerId, HttpServletResponse resp) {
-		ServiceResp serviceResp = customerService.getCustomerById(customerId);
-		return HttpUtil.buildResponse(resp, serviceResp).toString();
-	}
-
-
-	@RequestMapping(path="/name/{customerName}", method=RequestMethod.GET)
-	public String getCustomerByName(@PathVariable String customerName, HttpServletResponse resp) {
-		ServiceResp serviceResp = customerService.getCustomersByName(customerName);
-		return HttpUtil.buildResponse(resp, serviceResp).toString();
 	}
 
 }

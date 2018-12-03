@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.srh.bean.ServiceResp;
+import org.srh.bean.ServiceRespArray;
 import org.srh.constants.ErrorCode;
 import org.srh.constants.KeyConstant;
 
@@ -137,7 +138,7 @@ public final class HttpUtil {
 
 	/**
 	 * 
-	 * Builds the response for the controlle based on the service response.
+	 * Builds the response for the controller based on the service response.
 	 * @param resp {@link HttpServletResponse}
 	 * @param serviceResp {@link ServiceResp}
 	 * @return responseObject {@link Object}
@@ -145,9 +146,25 @@ public final class HttpUtil {
 	public static Object buildResponse(HttpServletResponse resp, ServiceResp serviceResp) {
 		ErrorCode errorCode = serviceResp.getErrorCode();
 		if(errorCode!=null) {
-			return errorResponse(resp, ErrorCode.INVALID_INPUT, serviceResp.getErrorDescription());
+			return errorResponse(resp, errorCode, serviceResp.getErrorDescription());
 		}
 		return successResponse(serviceResp.getSuccessData());
+	}
+
+
+	/**
+	 * 
+	 * Builds the response for the controller based on the service response.
+	 * @param resp {@link HttpServletResponse}
+	 * @param serviceRespArray {@link ServiceRespArray}
+	 * @return responseObject {@link Object}
+	 */
+	public static Object buildResponseArray(HttpServletResponse resp, ServiceRespArray serviceRespArray) {
+		ErrorCode errorCode = serviceRespArray.getErrorCode();
+		if(errorCode!=null) {
+			return errorResponse(resp, errorCode, serviceRespArray.getErrorDescription());
+		}
+		return successResponseArray(serviceRespArray.getSuccessData());
 	}
 }
 

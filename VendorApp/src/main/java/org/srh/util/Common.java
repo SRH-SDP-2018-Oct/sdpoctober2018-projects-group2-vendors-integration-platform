@@ -3,10 +3,12 @@ package org.srh.util;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.srh.annotation.POJO;
 import org.srh.bean.ServiceResp;
+import org.srh.bean.ServiceRespArray;
 import org.srh.constants.ErrorCode;
 
 /**
@@ -101,6 +103,29 @@ public final class Common {
 
 	public static ServiceResp buildServiceResp(Object obj, String successDescription) {
 		return new ServiceResp().setSuccessData(obj).setSuccessDescription(successDescription);
+	}
+
+
+	public static ServiceRespArray buildServiceRespArrayError(ErrorCode errorCode,
+			String errorDescription) {
+		return new ServiceRespArray().setErrorCode(errorCode).setErrorDescription(errorDescription);
+	}
+
+
+	public static ServiceRespArray buildServiceRespArrayError(ErrorCode errorCode,
+			String errorDescription, Throwable throwable) {
+		return new ServiceRespArray().setErrorCode(errorCode).setErrorDescription(errorDescription)
+				.setThrowable(throwable);
+	}
+
+
+	public static ServiceRespArray buildServiceRespArray(List<?> list) {
+		return new ServiceRespArray().setSuccessData(list);
+	}
+
+
+	public static ServiceRespArray buildServiceRespArray(List<?> list, String successDescription) {
+		return new ServiceRespArray().setSuccessData(list).setSuccessDescription(successDescription);
 	}
 
 }

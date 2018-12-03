@@ -1,6 +1,7 @@
 package org.srh.vipapp.service;
 
 import org.srh.bean.ServiceResp;
+import org.srh.bean.ServiceRespArray;
 
 /**
  * Service Interface to perform the task related to Application Customers.  <br/>
@@ -17,10 +18,16 @@ public interface CustomerService {
 	ServiceResp	getCustomerById(String customerId);
 
 	/**
-	 * Returns the customer data with the given name.
-	 * @param customerName {@link String}
+	 * Returns the user data of the given username.
+	 * @param customerUsername {@link String}
 	 * @return serviceResp {@link ServiceResp}
 	 */
-	ServiceResp getCustomersByName(String customerName);
+	ServiceResp getCustomersByUsername(String customerUsername);
 
+	/**
+	 * Returns the customer data with the given name.
+	 * @param customerName {@link String}
+	 * @return serviceRespArray {@link ServiceRespArray}
+	 */
+	ServiceRespArray getCustomersByName(String customerName);
 }
