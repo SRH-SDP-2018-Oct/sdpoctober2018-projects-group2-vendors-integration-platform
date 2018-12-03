@@ -70,6 +70,9 @@ SELECT * FROM user_master;
 
 
 
+
+
+
 DROP TABLE IF EXISTS customer_master;
 
 CREATE TABLE customer_master (
@@ -102,15 +105,94 @@ DESC customer_master;
 INSERT INTO customer_master (createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn, pwd)
 SELECT um.userId, um.userId, 'john', 'John', 'Doe', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
   '9dae67e870c8b41b24e78f44c6a8f74ea931f2cef5b125fbbb2db87566083860' -- Hello@135
-FROM user_type, user_master um
+FROM user_master um
+  INNER JOIN user_type ON user_type.typeId = um.userType
 WHERE user_type.typeName = 'system' AND um.userName='system';
 
 -- Entry -> Customer
 INSERT INTO customer_master (createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn, pwd)
 SELECT um.userId, um.userId, 'james', 'James', 'Anderson', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
   '9dae67e870c8b41b24e78f44c6a8f74ea931f2cef5b125fbbb2db87566083860' -- Hello@135
-FROM user_type, user_master um
+FROM user_master um
+  INNER JOIN user_type ON user_type.typeId = um.userType
 WHERE user_type.typeName = 'system' AND um.userName='system';
 
 SELECT * FROM customer_master;
+
+
+
+
+/*-------MAITREYEE-------*/
+
+DROP TABLE IF EXISTS vendor_master;
+
+CREATE TABLE vendor_master (
+  vendorId INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Auto generated userid of the system user to perform management/maintenance',
+  vendorName VARCHAR(75) NOT NULL UNIQUE COMMENT 'Vendor name to login within the application as the system user',
+  phone VARCHAR(15) DEFAULT '',
+  email VARCHAR(75) DEFAULT '',
+  country VARCHAR(30) DEFAULT 'Germany',
+  deleteFlag TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'flag to mark the entry as deleted -> 0-Active, 1-Deleted' ,
+  createdBy INT UNSIGNED NOT NULL COMMENT 'user who registered the given Vendor',
+  createdOn DATETIME NOT NULL COMMENT 'Vendor created on',
+  modifiedBy INT UNSIGNED NOT NULL COMMENT 'user who modified the given Vendor',
+  modifiedOn DATETIME NOT NULL COMMENT 'Vendor modified on',
+  FOREIGN KEY (createdBy) REFERENCES user_master(userId) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (modifiedBy) REFERENCES user_master(userId) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+DESC vendor_master;
+
+/* Data for the table `vendor_master` */
+
+-- Entry -> NETTI Vendor
+INSERT INTO vendor_master (createdBy, modifiedBy, vendorName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, 'Netti', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+FROM user_master um
+  INNER JOIN user_type ON user_type.typeId = um.userType
+WHERE user_type.typeName = 'system' AND um.userName='system';
+
+-- Entry -> ALDO Vendor
+INSERT INTO vendor_master (createdBy, modifiedBy, vendorName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, 'Aldo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+FROM user_master um
+  INNER JOIN user_type ON user_type.typeId = um.userType
+WHERE user_type.typeName = 'system' AND um.userName='system';
+
+
+SELECT * FROM vendor_master;
+
+
+
+
+DROP TABLE IF EXISTS vendor_api_config;
+
+CREATE TABLE vendor_api_config (
+  id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Auto generated id',
+  vendorId INT UNSIGNED NOT NULL COMMENT 'Vendor id',
+  connectionUrl VARCHAR(100) NOT NULL,
+  secured TINYINT(1) DEFAULT '0' COMMENT '1-Secured, 0-Open' ,
+  username VARCHAR(30) DEFAULT '',
+  pwd TEXT,
+  deleteFlag TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'flag to mark the entry as deleted -> 0-Active, 1-Deleted' ,
+  createdBy INT UNSIGNED NOT NULL COMMENT 'user who registered the given Vendor',
+  createdOn DATETIME NOT NULL COMMENT 'Vendor created on',
+  modifiedBy INT UNSIGNED NOT NULL COMMENT 'user who modified the given Vendor',
+  modifiedOn DATETIME NOT NULL COMMENT 'Vendor modified on',
+  UNIQUE (vendorId, connectionUrl, secured, username),
+  FOREIGN KEY (createdBy) REFERENCES user_master(userId) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (modifiedBy) REFERENCES user_master(userId) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+DESC vendor_api_config;
+
+
+
+INSERT INTO vendor_api_config (createdBy, modifiedBy, vendorId, connectionUrl, secured, username, pwd, createdOn, modifiedOn )
+SELECT um.userId, um.userId, vm.vendorId, 'http://localhost:8070/nettiapp/products', 1, 'netticlient', 'nettiApiConnnect', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+FROM user_master um, vendor_master vm
+WHERE um.userName='system' AND vm.vendorName = 'Netti';
+
+SELECT * FROM vendor_api_config;
+
 

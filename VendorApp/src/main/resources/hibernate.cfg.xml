@@ -13,5 +13,6 @@
         <mapping class="org.srh.vipapp.hbm.dto.UserType"/>
         <mapping class="org.srh.vipapp.hbm.dto.UserMaster"/>
         <mapping class="org.srh.vipapp.hbm.dto.CustomerMaster"/>
+        <mapping class="org.srh.vipapp.hbm.dto.VendorMaster"/>
     </session-factory>  
 </hibernate-configuration> 
