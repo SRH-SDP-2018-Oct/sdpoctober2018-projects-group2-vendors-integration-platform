@@ -1,16 +1,14 @@
 package org.srh.vipapp.service.impl;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.srh.bean.ServiceResp;
 import org.srh.constants.ErrorCode;
-import org.srh.util.HttpUtil;
+import org.srh.util.Common;
 import org.srh.util.NumberUtil;
 import org.srh.util.StringUtil;
+import org.srh.vipapp.hbm.dao.UserMasterDao;
+import org.srh.vipapp.hbm.dao.impl.UserMasterDaoImpl;
 import org.srh.vipapp.hbm.dto.UserMaster;
-import org.srh.vipapp.hbm.service.UserMasterService;
-import org.srh.vipapp.hbm.service.impl.UserMasterServiceImpl;
 import org.srh.vipapp.service.UserService;
 
 /**
@@ -21,25 +19,25 @@ import org.srh.vipapp.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
-	private UserMasterService userMasterService = new UserMasterServiceImpl();
+	private UserMasterDao userMasterDao = new UserMasterDaoImpl();
 
 	@Override
-	public JSONObject getUserById(String userId, HttpServletResponse resp) {
+	public ServiceResp getUserById(String userId) {
 		//
 		Integer uId = NumberUtil.getInteger(userId);
 		if(uId==null) {
 			String description = StringUtil.append("The user id [", userId, "] is invalid integer.");
-			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_INPUT, description);
+			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 		}
 
-		UserMaster userMaster = userMasterService.findById(uId.intValue());
+		UserMaster userMaster = userMasterDao.findById(uId.intValue());
 		//
 		if(userMaster==null) {
 			String description =  StringUtil.append("No user found with id [", userId, "].");
-			return HttpUtil.errorResponse(resp, ErrorCode.NOT_FOUND, description);
+			return Common.buildServiceRespError(ErrorCode.NOT_FOUND, description);
 		}
 		// 
-		return HttpUtil.successResponse(userMaster);
+		return Common.buildServiceResp(userMaster);
 	}
 
 	

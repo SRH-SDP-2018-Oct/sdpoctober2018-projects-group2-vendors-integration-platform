@@ -2,7 +2,7 @@ package org.srh.vipapp.service;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONObject;
+import org.srh.bean.ServiceResp;
 
 /**
  * Service Interface to perform the task related to Application Users.  <br/>
@@ -12,11 +12,10 @@ import org.json.JSONObject;
 public interface UserService {
 
 	/**
-	 * Returns user data enclosed in JSONObject of the given userId.
+	 * Returns user data of the given userId.
 	 * @param userId {@link String}
-	 * @param response {@link HttpServletResponse}
-	 * @return jsonObject {@link JSONObject}
+	 * @return serviceResp {@link ServiceResp}
 	 */
-	JSONObject getUserById(String userId, HttpServletResponse response);
+	ServiceResp getUserById(String userId);
 
 }

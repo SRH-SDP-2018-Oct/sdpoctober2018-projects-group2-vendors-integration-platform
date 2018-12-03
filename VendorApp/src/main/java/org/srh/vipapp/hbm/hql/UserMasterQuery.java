@@ -1,5 +1,12 @@
 package org.srh.vipapp.hbm.hql;
 
+import org.srh.vipapp.hbm.dto.UserMaster;
+
+/**
+ * Contains HQL for the {@link UserMaster} entity.
+ * Date: 01 Dec 2018
+ * @author Vivek
+ */
 public final class UserMasterQuery {
 
 	private UserMasterQuery() { }
