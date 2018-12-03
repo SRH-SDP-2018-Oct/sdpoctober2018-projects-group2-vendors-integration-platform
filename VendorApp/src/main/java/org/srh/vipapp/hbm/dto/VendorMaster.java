@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -17,10 +16,8 @@ import org.srh.vipapp.hbm.hql.VendorMasterQuery;
 
 @Entity
 @Table(name="vendor_master")
-@NamedQueries({
-	@NamedQuery(name=VendorMasterQuery.GET_ALL_VENDOR_$N, query=VendorMasterQuery.GET_ALL_VENDOR_$Q),
-	@NamedQuery(name=VendorMasterQuery.FIND_VENDOR_BY_VENDORNAME_$N, query=VendorMasterQuery.FIND_VENDOR_BY_VENDORNAME_$Q),
-})
+@NamedQuery(name=VendorMasterQuery.GET_ALL_VENDOR_$N, query=VendorMasterQuery.GET_ALL_VENDOR_$Q)
+@NamedQuery(name=VendorMasterQuery.FIND_VENDOR_BY_VENDORNAME_$N, query=VendorMasterQuery.FIND_VENDOR_BY_VENDORNAME_$Q)
 
 
 /**
@@ -44,5 +41,65 @@ public class VendorMaster {
 	private Date createdOn = new Date();
 	private int modifiedBy;
 	private Date modifiedOn = new Date();
+	public int getVendorId() {
+		return vendorId;
+	}
+	public void setVendorId(int vendorId) {
+		this.vendorId = vendorId;
+	}
+	public String getVendorName() {
+		return vendorName;
+	}
+	public void setVendorName(String vendorName) {
+		this.vendorName = vendorName;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public boolean isDeleteFlag() {
+		return deleteFlag;
+	}
+	public void setDeleteFlag(boolean deleteFlag) {
+		this.deleteFlag = deleteFlag;
+	}
+	public int getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+	public int getModifiedBy() {
+		return modifiedBy;
+	}
+	public void setModifiedBy(int modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+	public Date getModifiedOn() {
+		return modifiedOn;
+	}
+	public void setModifiedOn(Date modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
 
 }
