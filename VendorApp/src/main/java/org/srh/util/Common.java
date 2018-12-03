@@ -6,6 +6,8 @@ import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
 import org.srh.annotation.POJO;
+import org.srh.bean.ServiceResp;
+import org.srh.constants.ErrorCode;
 
 /**
  * Common Utility Class
@@ -77,6 +79,28 @@ public final class Common {
 			}
 		}
 		return obj;
+	}
+
+
+	public static ServiceResp buildServiceRespError(ErrorCode errorCode, String errorDescription) {
+		return new ServiceResp().setErrorCode(errorCode).setErrorDescription(errorDescription);
+	}
+
+
+	public static ServiceResp buildServiceRespError(ErrorCode errorCode, String errorDescription,
+			Throwable throwable) {
+		return new ServiceResp().setErrorCode(errorCode).setErrorDescription(errorDescription)
+				.setThrowable(throwable);
+	}
+
+
+	public static ServiceResp buildServiceResp(Object obj) {
+		return new ServiceResp().setSuccessData(obj);
+	}
+
+
+	public static ServiceResp buildServiceResp(Object obj, String successDescription) {
+		return new ServiceResp().setSuccessData(obj).setSuccessDescription(successDescription);
 	}
 
 }

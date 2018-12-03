@@ -11,9 +11,9 @@ import org.srh.util.Common;
 import org.srh.util.HttpUtil;
 import org.srh.util.NumberUtil;
 import org.srh.util.StringUtil;
+import org.srh.vipapp.hbm.dao.CustomerMasterDao;
+import org.srh.vipapp.hbm.dao.impl.CustomerMasterDaoImpl;
 import org.srh.vipapp.hbm.dto.CustomerMaster;
-import org.srh.vipapp.hbm.service.CustomerMasterService;
-import org.srh.vipapp.hbm.service.impl.CustomerMasterServiceImpl;
 import org.srh.vipapp.service.CustomerService;
 
 /**
@@ -24,7 +24,7 @@ import org.srh.vipapp.service.CustomerService;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-	private CustomerMasterService customerMasterService = new CustomerMasterServiceImpl();
+	private CustomerMasterDao customerMasterDao = new CustomerMasterDaoImpl();
 
 
 	@Override
@@ -36,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
 			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_INPUT, description);
 		}
 
-		CustomerMaster customerMaster = customerMasterService.findById(cId.longValue());
+		CustomerMaster customerMaster = customerMasterDao.findById(cId.longValue());
 		//
 		if(customerMaster==null) {
 			String description =  StringUtil.append("No customer found with id [", customerId, "].");
@@ -55,14 +55,14 @@ public class CustomerServiceImpl implements CustomerService {
 			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_INPUT, description);
 		}
 
-		List<CustomerMaster> customerMaster = customerMasterService.findByName(customerName);
+		List<CustomerMaster> customerMasterList = customerMasterDao.findByName(customerName);
 		//
-		if(customerMaster==null || customerMaster.isEmpty()) {
+		if(customerMasterList==null || customerMasterList.isEmpty()) {
 			String description =  StringUtil.append("No customer found with name [", customerName, "].");
 			return HttpUtil.errorResponse(resp, ErrorCode.NOT_FOUND, description);
 		}
 		// 
-		return HttpUtil.successResponseArray(customerMaster);
+		return HttpUtil.successResponseArray(customerMasterList);
 	}
 
 }

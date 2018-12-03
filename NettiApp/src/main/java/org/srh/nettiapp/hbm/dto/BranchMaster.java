@@ -6,7 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import org.srh.nettiapp.hbm.hql.BranchMasterQuery;
 
 /**
  * The Entity representing the table 'branch_master' from the 'netti_vendor' database.
@@ -16,6 +19,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="branch_master")
+@NamedQuery(name=BranchMasterQuery.GET_ALL_BRANCHES_IN_CITY_$N, query=BranchMasterQuery.GET_ALL_BRANCHES_IN_CITY_$Q)
 public class BranchMaster {
 
 	@Id

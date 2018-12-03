@@ -11,15 +11,15 @@ import org.srh.util.Common;
 import org.srh.util.HttpUtil;
 import org.srh.util.StringUtil;
 import org.srh.util.AppLog;
+import org.srh.vipapp.hbm.dao.CustomerMasterDao;
+import org.srh.vipapp.hbm.dao.impl.CustomerMasterDaoImpl;
 import org.srh.vipapp.hbm.dto.CustomerMaster;
-import org.srh.vipapp.hbm.service.CustomerMasterService;
-import org.srh.vipapp.hbm.service.impl.CustomerMasterServiceImpl;
 import org.srh.vipapp.service.CustomerLoginRegistrationService;
 
 @Service
 public class CustomerLoginRegistrationServiceImpl implements CustomerLoginRegistrationService {
 
-	private CustomerMasterService customerMasterService = new CustomerMasterServiceImpl();
+	private CustomerMasterDao customerMasterDao = new CustomerMasterDaoImpl();
 
 	@Override
 	public JSONObject authenticate(HttpServletRequest req, HttpServletResponse resp, 
@@ -36,19 +36,19 @@ public class CustomerLoginRegistrationServiceImpl implements CustomerLoginRegist
 			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_INPUT, description);
 		}
 
-		CustomerMaster customerMaster = customerMasterService.findByUsername(username);
+		CustomerMaster customerMaster = customerMasterDao.findByUsername(username);
 		String description =  StringUtil.append("Invalid credentials for username [", username, "].");
 		//
 		if(customerMaster==null) {
 			String err = StringUtil.append("Invalid username [", username, "].");
-			AppLog.log(CustomerMasterServiceImpl.class, err);
+			AppLog.log(CustomerServiceImpl.class, err);
 			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_CREDENTIALS, description);
 		}
 		//
 		String pwdEncrypted = StringUtil.sha256(pwd);
 		if(!customerMaster.getPwd().equals(pwdEncrypted)) {
 			String err = StringUtil.append("Invalid password for username [", username, "].");
-			AppLog.log(CustomerMasterServiceImpl.class, err);
+			AppLog.log(CustomerServiceImpl.class, err);
 			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_CREDENTIALS, description);
 		}
 
