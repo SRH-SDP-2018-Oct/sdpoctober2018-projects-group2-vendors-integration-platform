@@ -21,7 +21,7 @@ public class VendorController {
 	
 	@Autowired
 	private VendorService vendorService;
-	
+
 	@RequestMapping(path="/id/{vendorId}", method=RequestMethod.GET)
 	public String getVendorById(@PathVariable String vendorId) {
 		return vendorService.getVendorById(vendorId);

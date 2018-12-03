@@ -2,6 +2,7 @@ package org.srh.vipapp.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.srh.bean.ServiceResp;
+import org.srh.constants.ErrorCode;
+import org.srh.util.AppLog;
+import org.srh.util.HttpUtil;
+import org.srh.util.StringUtil;
 import org.srh.vipapp.service.CustomerLoginRegistrationService;
 import org.srh.vipapp.service.CustomerService;
 
@@ -31,19 +37,39 @@ public class CustomerController {
 	@RequestMapping("/login")
 	public String customerLogin(@RequestParam String username, @RequestParam String pwd, 
 			HttpServletResponse resp, HttpServletRequest req) {
-		return customerLoginRegistrationService.authenticate(req, resp, username, pwd).toString();
+
+		// Authenticate the user
+		ServiceResp serviceResp = customerLoginRegistrationService.authenticate(username, pwd);
+
+		// Error is not null if the request or user invalid
+		ErrorCode errorCode = serviceResp.getErrorCode();
+		if(errorCode!=null) {
+			return HttpUtil.errorResponse(resp, errorCode, serviceResp.getErrorDescription()).toString();
+		}
+
+		// Invalidate Previous Session
+		req.getSession().invalidate();
+		// Create new Session
+		HttpSession session = req.getSession(true);
+
+		String sessionId = session.getId();
+		AppLog.print( StringUtil.append("New session created with id [", sessionId , "].") );
+
+		return HttpUtil.successResponse(serviceResp.getSuccessData(), "sessionId", sessionId).toString();
 	}
 
 
 	@RequestMapping(path="/id/{customerId}", method=RequestMethod.GET)
 	public String getCustomerById(@PathVariable String customerId, HttpServletResponse resp) {
-		return customerService.getCustomerById(resp, customerId).toString();
+		ServiceResp serviceResp = customerService.getCustomerById(customerId);
+		return HttpUtil.buildResponse(resp, serviceResp).toString();
 	}
 
 
 	@RequestMapping(path="/name/{customerName}", method=RequestMethod.GET)
 	public String getCustomerByName(@PathVariable String customerName, HttpServletResponse resp) {
-		return customerService.getCustomersByName(resp, customerName).toString();
+		ServiceResp serviceResp = customerService.getCustomersByName(customerName);
+		return HttpUtil.buildResponse(resp, serviceResp).toString();
 	}
 
 }

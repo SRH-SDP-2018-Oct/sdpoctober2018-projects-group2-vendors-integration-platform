@@ -1,7 +1,5 @@
 package org.srh.vipapp.service;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.srh.bean.ServiceResp;
 
 /**

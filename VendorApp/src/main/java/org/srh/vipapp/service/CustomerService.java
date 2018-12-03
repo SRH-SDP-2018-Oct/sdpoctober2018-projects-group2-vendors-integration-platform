@@ -1,8 +1,6 @@
 package org.srh.vipapp.service;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.json.JSONObject;
+import org.srh.bean.ServiceResp;
 
 /**
  * Service Interface to perform the task related to Application Customers.  <br/>
@@ -12,19 +10,17 @@ import org.json.JSONObject;
 public interface CustomerService {
 
 	/**
-	 * Returns customer data in JSONObject with the given customerId.
+	 * Returns customer data with the given customerId.
 	 * @param userId {@link String}
-	 * @param response {@link HttpServletResponse}
-	 * @return jsonObject {@link JSONObject}
+	 * @return serviceResp {@link ServiceResp}
 	 */
-	JSONObject getCustomerById(HttpServletResponse response, String customerId);
+	ServiceResp	getCustomerById(String customerId);
 
 	/**
-	 * Returns the customer data in JSONArray with the given name.
-	 * @param resp {@link HttpServletResponse}
+	 * Returns the customer data with the given name.
 	 * @param customerName {@link String}
-	 * @return jsonObject {@link JSONObject}
+	 * @return serviceResp {@link ServiceResp}
 	 */
-	JSONObject getCustomersByName(HttpServletResponse resp, String customerName);
+	ServiceResp getCustomersByName(String customerName);
 
 }

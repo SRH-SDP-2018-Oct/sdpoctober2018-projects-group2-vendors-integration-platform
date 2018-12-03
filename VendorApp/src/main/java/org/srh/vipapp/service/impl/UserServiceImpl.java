@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService {
 
 	private UserMasterDao userMasterDao = new UserMasterDaoImpl();
 
+
 	@Override
 	public ServiceResp getUserById(String userId) {
 		//

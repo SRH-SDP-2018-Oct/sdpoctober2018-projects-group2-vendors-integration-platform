@@ -2,13 +2,11 @@ package org.srh.vipapp.service.impl;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.srh.bean.ServiceResp;
 import org.srh.constants.ErrorCode;
 import org.srh.util.Common;
-import org.srh.util.HttpUtil;
 import org.srh.util.NumberUtil;
 import org.srh.util.StringUtil;
 import org.srh.vipapp.hbm.dao.CustomerMasterDao;
@@ -28,41 +26,41 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 	@Override
-	public JSONObject getCustomerById(HttpServletResponse resp, String customerId) {
+	public ServiceResp getCustomerById(String customerId) {
 		//
 		Long cId = NumberUtil.getLong(customerId);
 		if(cId==null) {
 			String description = StringUtil.append("The customer id [", customerId, "] is invalid integer.");
-			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_INPUT, description);
+			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 		}
 
 		CustomerMaster customerMaster = customerMasterDao.findById(cId.longValue());
 		//
 		if(customerMaster==null) {
 			String description =  StringUtil.append("No customer found with id [", customerId, "].");
-			return HttpUtil.errorResponse(resp, ErrorCode.NOT_FOUND, description);
+			return Common.buildServiceRespError(ErrorCode.NOT_FOUND, description);
 		}
 		// 
-		return HttpUtil.successResponse(customerMaster);
+		return Common.buildServiceResp(customerMaster);
 	}
 
 
 	@Override
-	public JSONObject getCustomersByName(HttpServletResponse resp, String customerName) {
+	public ServiceResp getCustomersByName(String customerName) {
 		//
 		if(Common.nullOrEmptyTrim(customerName)) {
 			String description = "The customer name cannot be blank.";
-			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_INPUT, description);
+			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 		}
 
 		List<CustomerMaster> customerMasterList = customerMasterDao.findByName(customerName);
 		//
 		if(customerMasterList==null || customerMasterList.isEmpty()) {
 			String description =  StringUtil.append("No customer found with name [", customerName, "].");
-			return HttpUtil.errorResponse(resp, ErrorCode.NOT_FOUND, description);
+			return Common.buildServiceRespError(ErrorCode.NOT_FOUND, description);
 		}
 		// 
-		return HttpUtil.successResponseArray(customerMasterList);
+		return Common.buildServiceResp(customerMasterList);
 	}
 
 }

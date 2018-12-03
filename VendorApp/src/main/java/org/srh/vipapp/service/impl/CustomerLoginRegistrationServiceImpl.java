@@ -1,14 +1,9 @@
 package org.srh.vipapp.service.impl;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.srh.bean.ServiceResp;
 import org.srh.constants.ErrorCode;
 import org.srh.util.Common;
-import org.srh.util.HttpUtil;
 import org.srh.util.StringUtil;
 import org.srh.util.AppLog;
 import org.srh.vipapp.hbm.dao.CustomerMasterDao;
@@ -22,18 +17,17 @@ public class CustomerLoginRegistrationServiceImpl implements CustomerLoginRegist
 	private CustomerMasterDao customerMasterDao = new CustomerMasterDaoImpl();
 
 	@Override
-	public JSONObject authenticate(HttpServletRequest req, HttpServletResponse resp, 
-			String username, String pwd) {
+	public ServiceResp authenticate(String username, String pwd) {
 
 		//
 		if(Common.nullOrEmptyTrim(username)) {
 			String description = "Username not defined.";
-			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_INPUT, description);
+			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 		}
 		//
 		if(Common.nullOrEmptyTrim(pwd)) {
 			String description = "Password not defined.";
-			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_INPUT, description);
+			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 		}
 
 		CustomerMaster customerMaster = customerMasterDao.findByUsername(username);
@@ -42,25 +36,17 @@ public class CustomerLoginRegistrationServiceImpl implements CustomerLoginRegist
 		if(customerMaster==null) {
 			String err = StringUtil.append("Invalid username [", username, "].");
 			AppLog.log(CustomerServiceImpl.class, err);
-			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_CREDENTIALS, description);
+			return Common.buildServiceRespError(ErrorCode.INVALID_CREDENTIALS, description);
 		}
 		//
 		String pwdEncrypted = StringUtil.sha256(pwd);
 		if(!customerMaster.getPwd().equals(pwdEncrypted)) {
 			String err = StringUtil.append("Invalid password for username [", username, "].");
 			AppLog.log(CustomerServiceImpl.class, err);
-			return HttpUtil.errorResponse(resp, ErrorCode.INVALID_CREDENTIALS, description);
+			return Common.buildServiceRespError(ErrorCode.INVALID_CREDENTIALS, description);
 		}
 
-		// Invalidate Previous Session
-		req.getSession().invalidate();
-		// Create new Session
-		HttpSession session = req.getSession(true);
-
-		String sessionId = session.getId();
-		AppLog.print( StringUtil.append("New session created with id [", sessionId , "].") );
-
-		return HttpUtil.successResponse(customerMaster, "sessionId", sessionId);
+		return Common.buildServiceResp(customerMaster);
 	}
 
 }
