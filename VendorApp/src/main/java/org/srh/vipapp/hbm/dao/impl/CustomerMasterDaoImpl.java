@@ -21,6 +21,7 @@ import org.srh.vipapp.hbm.hql.CustomerMasterQuery;
  */
 public class CustomerMasterDaoImpl implements CustomerMasterDao {
 
+
 	@Override
 	public CustomerMaster findById(long customerId) {
 		CustomerMaster customerMaster = null;
@@ -43,23 +44,22 @@ public class CustomerMasterDaoImpl implements CustomerMasterDao {
 		try ( Session session = RootHB.getSessionFactory().openSession(); ) {
 			@SuppressWarnings("unchecked")
 			Query<CustomerMaster> query = session.createNamedQuery(CustomerMasterQuery.GET_ALL_CUSTOMERS_$N);
-			List<CustomerMaster> customerMasterList = query.getResultList();
-			return customerMasterList;
+			return query.getResultList();
 		}
 	}
 
 
 	@Override
-	public CustomerMaster findByUsername(String username) {
+	public CustomerMaster findByUsername(String customerUsername) {
 		Session session = RootHB.getSessionFactory().openSession();
 		try {
 			@SuppressWarnings("unchecked")
 			Query<CustomerMaster> query = session.createNamedQuery(CustomerMasterQuery.FIND_CUSTOMER_BY_USERNAME_$N);
-			query.setParameter(CustomerMasterQuery.FIND_CUSTOMER_BY_USERNAME_$P1, username);
+			query.setParameter(CustomerMasterQuery.FIND_CUSTOMER_BY_USERNAME_$P1, customerUsername);
 			return query.getSingleResult();
 		}
 		catch(NoResultException ex) {
-			AppLog.log(this.getClass(), StringUtil.append("No Customer exist with Username:", username) );
+			AppLog.log(this.getClass(), StringUtil.append("No Customer exist with Username:", customerUsername) );
 			return null;
 		}
 		finally {

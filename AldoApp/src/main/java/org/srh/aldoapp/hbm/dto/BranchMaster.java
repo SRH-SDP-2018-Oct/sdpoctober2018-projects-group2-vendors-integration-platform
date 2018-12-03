@@ -1,4 +1,4 @@
-package org.srh.nettiapp.hbm.dto;
+package org.srh.aldoapp.hbm.dto;
 
 import java.util.Date;
 
@@ -6,20 +6,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.srh.nettiapp.hbm.hql.BranchMasterQuery;
-
 /**
- * The Entity representing the table 'branch_master' from the 'netti_vendor' database.
+ * The Entity representing the table 'branch_master' from the 'aldo_vendor' database.
  * Date: 01 Dec 2018
- * @author YASHAS
+ * @author Vivek
  */
 
 @Entity
 @Table(name="branch_master")
-@NamedQuery(name=BranchMasterQuery.GET_ALL_BRANCHES_IN_CITY_$N, query=BranchMasterQuery.GET_ALL_BRANCHES_IN_CITY_$Q)
 public class BranchMaster {
 
 	@Id

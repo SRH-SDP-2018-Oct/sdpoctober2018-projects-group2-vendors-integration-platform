@@ -9,20 +9,21 @@ DROP TABLE IF EXISTS branch_master;
 
 CREATE TABLE branch_master (
   branchId INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  branchLocation VARCHAR(100) DEFAULT NULL,
-  branchLocationLat VARCHAR(20) DEFAULT NULL,
-  branchLocationLon VARCHAR(20) DEFAULT NULL,
+  location VARCHAR(100) DEFAULT NULL,
+  locationLat VARCHAR(20) DEFAULT NULL,
+  locationLon VARCHAR(20) DEFAULT NULL,
+  city VARCHAR(30) NOT NULL,
   deleteFlag TINYINT(1) NOT NULL DEFAULT '0',
   createdOn DATETIME NOT NULL,
   modifiedOn DATETIME NOT NULL,
   PRIMARY KEY (branchId),
-  UNIQUE KEY (branchLocation)
+  UNIQUE KEY (location)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1 ;
 
 DESC branch_master;
 
-INSERT INTO branch_master (branchLocation, branchLocationLat, branchLocationLon, createdOn, modifiedOn)
-VALUES ('Czernyring 14, 69115 Heidelberg', '49.404011' , '8.670450', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO branch_master (location, locationLat, locationLon, city, createdOn, modifiedOn)
+VALUES ('Czernyring 14, 69115 Heidelberg', '49.404011' , '8.670450', 'Heidelberg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 SELECT * FROM branch_master;
@@ -55,7 +56,7 @@ DESC branch_timings;
 INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
 SELECT branch_master.branchId, 1, 0, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM branch_master
-WHERE branch_master.branchLocation = 'Czernyring 14, 69115 Heidelberg';
+WHERE branch_master.location = 'Czernyring 14, 69115 Heidelberg';
 
 
 -- Monday
@@ -63,7 +64,7 @@ WHERE branch_master.branchLocation = 'Czernyring 14, 69115 Heidelberg';
 INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
 SELECT branch_master.branchId, 2, 1, '08:00:00', '21:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM branch_master
-WHERE branch_master.branchLocation = 'Czernyring 14, 69115 Heidelberg';
+WHERE branch_master.location = 'Czernyring 14, 69115 Heidelberg';
 
 
 
@@ -72,7 +73,7 @@ WHERE branch_master.branchLocation = 'Czernyring 14, 69115 Heidelberg';
 INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
 SELECT branch_master.branchId, 3, 1, '08:00:00', '21:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM branch_master
-WHERE branch_master.branchLocation = 'Czernyring 14, 69115 Heidelberg';
+WHERE branch_master.location = 'Czernyring 14, 69115 Heidelberg';
 
 
 
@@ -81,7 +82,7 @@ WHERE branch_master.branchLocation = 'Czernyring 14, 69115 Heidelberg';
 INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
 SELECT branch_master.branchId, 4, 1, '08:00:00', '21:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM branch_master
-WHERE branch_master.branchLocation = 'Czernyring 14, 69115 Heidelberg';
+WHERE branch_master.location = 'Czernyring 14, 69115 Heidelberg';
 
 
 
@@ -90,7 +91,7 @@ WHERE branch_master.branchLocation = 'Czernyring 14, 69115 Heidelberg';
 INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
 SELECT branch_master.branchId, 5, 1, '08:00:00', '21:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM branch_master
-WHERE branch_master.branchLocation = 'Czernyring 14, 69115 Heidelberg';
+WHERE branch_master.location = 'Czernyring 14, 69115 Heidelberg';
 
 
 
@@ -99,7 +100,7 @@ WHERE branch_master.branchLocation = 'Czernyring 14, 69115 Heidelberg';
 INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
 SELECT branch_master.branchId, 6, 1, '08:00:00', '21:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM branch_master
-WHERE branch_master.branchLocation = 'Czernyring 14, 69115 Heidelberg';
+WHERE branch_master.location = 'Czernyring 14, 69115 Heidelberg';
 
 
 
@@ -108,7 +109,7 @@ WHERE branch_master.branchLocation = 'Czernyring 14, 69115 Heidelberg';
 INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
 SELECT branch_master.branchId, 7, 1, '08:00:00', '21:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM branch_master
-WHERE branch_master.branchLocation = 'Czernyring 14, 69115 Heidelberg';
+WHERE branch_master.location = 'Czernyring 14, 69115 Heidelberg';
 
 
 

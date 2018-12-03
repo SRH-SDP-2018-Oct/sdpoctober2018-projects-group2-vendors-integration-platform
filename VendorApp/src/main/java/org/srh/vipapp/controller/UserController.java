@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.srh.bean.ServiceResp;
+import org.srh.util.HttpUtil;
 import org.srh.vipapp.service.UserService;
 
 /**
@@ -21,6 +23,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+
 	@RequestMapping("/login")
 	public String userLogin() {
 		return "Success";
@@ -29,6 +32,7 @@ public class UserController {
 
 	@RequestMapping(path="/id/{userId}", method=RequestMethod.GET)
 	public String getUserById(@PathVariable String userId, HttpServletResponse resp) {
-		return userService.getUserById(userId, resp).toString();
+		ServiceResp serviceResp = userService.getUserById(userId);
+		return HttpUtil.buildResponse(resp, serviceResp).toString();
 	}
 }

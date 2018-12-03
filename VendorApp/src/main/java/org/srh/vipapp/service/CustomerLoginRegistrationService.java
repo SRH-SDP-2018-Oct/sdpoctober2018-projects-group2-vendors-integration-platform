@@ -1,9 +1,6 @@
 package org.srh.vipapp.service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.json.JSONObject;
+import org.srh.bean.ServiceResp;
 
 /**
  * Service Interface to perform the task related to Application Customers.  <br/>
@@ -13,14 +10,11 @@ import org.json.JSONObject;
 public interface CustomerLoginRegistrationService {
 
 	/**
-	 * Authenticates the Customer and returns the response in JSON
-	 * @param req {@link HttpServletRequest}
-	 * @param resp {@link HttpServletResponse}
+	 * Authenticates the Customer and returns the response
 	 * @param username {@link String}
 	 * @param pwd {@link String}
-	 * @return jsonObject {@link JSONObject}
+	 * @return serviceResp {@link ServiceResp}
 	 */
-	JSONObject authenticate(HttpServletRequest req, HttpServletResponse resp,
-			String username, String pwd);
+	ServiceResp authenticate(String username, String pwd);
 
 }

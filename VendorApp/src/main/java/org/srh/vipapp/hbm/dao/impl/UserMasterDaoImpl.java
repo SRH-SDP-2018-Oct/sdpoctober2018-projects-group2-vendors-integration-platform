@@ -43,8 +43,7 @@ public class UserMasterDaoImpl implements UserMasterDao {
 		try ( Session session = RootHB.getSessionFactory().openSession(); ) {
 			@SuppressWarnings("unchecked")
 			Query<UserMaster> query = session.createNamedQuery(UserMasterQuery.GET_ALL_USERS_$N);
-			List<UserMaster> userMasterList = query.getResultList();
-			return userMasterList;
+			return query.getResultList();
 		}
 	}
 
