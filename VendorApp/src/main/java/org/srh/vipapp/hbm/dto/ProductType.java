@@ -6,6 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/*
+ * The 'product_type' table entity for 'vendor_app' database.
+ * Date:01 Dec 2018
+ * @author Anglita
+ */
 @Entity
 @Table(name="product_type")
 public class ProductType {

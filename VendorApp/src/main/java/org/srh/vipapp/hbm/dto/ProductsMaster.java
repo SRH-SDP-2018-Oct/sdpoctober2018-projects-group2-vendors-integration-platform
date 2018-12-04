@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 /*
  * The 'product_master' table entity for 'vendor_app' database.
- * Date: 01 Dec 2018
+ * Date:01 Dec 2018
  * @author Anglita
  */
 public class ProductsMaster {
