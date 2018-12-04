@@ -16,23 +16,23 @@ public interface VendorMasterDao {
 	
 	/**
 	 * Gets the {@link VendorMaster} entity with the given 'userId'.
-	 * @param userId {@link Integer}
-	 * @return userMaster {@link UserMaster}
-	 */
-	public VendorMaster findById(int userId);
-
-	/**
-	 * Returns all the {@link UserMaster} entities from persistence database
-	 * @return vendorMasterList {@link List<VendorMaster>}
-	 */
-	public List<VendorMaster> getAllVendor();
-
-	/**
-	 * Gets the {@link VendorMaster} entity with the given 'vendorname'.
-	 * @param vendorname {@link String}
+	 * @param vendorId {@link Integer}
 	 * @return vendorMaster {@link VendorMaster}
 	 */
-	public VendorMaster findByVendorname(String vendorname);
+	public VendorMaster findById(int vendorId);
+
+	/**
+	 * Returns all the {@link VendorMaster} entities from persistence database
+	 * @return vendorMasterList {@link List<VendorMaster>}
+	 */
+	public List<VendorMaster> getAllVendors();
+
+	/**
+	 * Gets the {@link VendorMaster} entity with the given 'vendorName'.
+	 * @param vendorName {@link String}
+	 * @return vendorMaster {@link VendorMaster}
+	 */
+	public VendorMaster findByVendorName(String vendorName);
 
 
 }

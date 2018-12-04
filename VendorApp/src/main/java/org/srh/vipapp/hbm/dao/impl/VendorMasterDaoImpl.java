@@ -41,7 +41,7 @@ public class VendorMasterDaoImpl implements VendorMasterDao {
 	
 
 	@Override
-	public List<VendorMaster> getAllVendor() {
+	public List<VendorMaster> getAllVendors() {
 		try ( Session session = RootHB.getSessionFactory().openSession(); ) {
 			@SuppressWarnings("unchecked")
 			Query<VendorMaster> query = session.createNamedQuery(VendorMasterQuery.GET_ALL_VENDOR_$N);
@@ -52,7 +52,7 @@ public class VendorMasterDaoImpl implements VendorMasterDao {
 
 
 	@Override
-	public VendorMaster findByVendorname(String vendorname) {
+	public VendorMaster findByVendorName(String vendorname) {
 		Session session = RootHB.getSessionFactory().openSession();
 		try {
 			@SuppressWarnings("unchecked")

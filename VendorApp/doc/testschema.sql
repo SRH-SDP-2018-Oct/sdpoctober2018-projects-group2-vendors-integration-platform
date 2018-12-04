@@ -127,19 +127,19 @@ SELECT * FROM customer_master;
 DROP TABLE IF EXISTS vendor_master;
 
 CREATE TABLE vendor_master (
-  vendorId INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Auto generated userid of the system user to perform management/maintenance',
-  vendorName VARCHAR(75) NOT NULL UNIQUE COMMENT 'Vendor name to login within the application as the system user',
+  vendorId BIGINT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Auto generated userid of the vendor ',
+  vendorName VARCHAR(75) NOT NULL UNIQUE COMMENT 'user name to login within the application as a vendor',
   phone VARCHAR(15) DEFAULT '',
   email VARCHAR(75) DEFAULT '',
   country VARCHAR(30) DEFAULT 'Germany',
   deleteFlag TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'flag to mark the entry as deleted -> 0-Active, 1-Deleted' ,
-  createdBy INT UNSIGNED NOT NULL COMMENT 'user who registered the given Vendor',
-  createdOn DATETIME NOT NULL COMMENT 'Vendor created on',
-  modifiedBy INT UNSIGNED NOT NULL COMMENT 'user who modified the given Vendor',
-  modifiedOn DATETIME NOT NULL COMMENT 'Vendor modified on',
+  createdBy INT UNSIGNED NOT NULL COMMENT 'user who registered the given user',
+  createdOn DATETIME NOT NULL COMMENT 'user created on',
+  modifiedBy INT UNSIGNED NOT NULL COMMENT 'user who modified the given user',
+  modifiedOn DATETIME NOT NULL COMMENT 'user modified on',
   FOREIGN KEY (createdBy) REFERENCES user_master(userId) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (modifiedBy) REFERENCES user_master(userId) ON UPDATE CASCADE ON DELETE CASCADE
-);
+) ENGINE=INNODB ;
 
 DESC vendor_master;
 
