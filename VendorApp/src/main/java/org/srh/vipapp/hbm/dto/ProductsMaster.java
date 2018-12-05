@@ -1,4 +1,6 @@
 package org.srh.vipapp.hbm.dto;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +15,7 @@ import javax.persistence.Table;
 @Table(name="products_master")
 
 /*
- * The 'product_master' table entity for 'vendor_app' database.
+ * The 'product_master' table entity for 'vendor_integration_platform' database.
  * Date:01 Dec 2018
  * @author Anglita
  */
@@ -43,18 +45,31 @@ public class ProductsMaster {
 
 	private int branchId;
 	
+	private boolean deleteFlag = false;
+	
+	private int createdBy;
+	
+	private Date createdOn;
+	
+	private int modifiedBy;
+	
+	private Date modifiedOn;
 	
 	public int getId() {
+		
 		return id;
 	}
 	public void setId(int id) {
+		
 		this.id = id;
 	}
 	
 	public int getProductId() {
+		
 		return productId;
 	}
 	public void setProductId(int productId) {
+		
 		this.productId = productId;
 	}	
 	public ProductType getProductTypeId()
@@ -127,4 +142,54 @@ public class ProductsMaster {
 	{
 		this.branchId = branchId;
 	}	
+	
+	public boolean getDeleteFlag() 
+	{
+		return deleteFlag;
+	}
+	
+	public void setDeleteFlag(boolean deleteFlag) 
+	{
+		this.deleteFlag = deleteFlag;
+	}
+	
+	public int getCreatedBy() 
+	{
+		return createdBy;
+	}
+	
+	public void setCreatedBy(int createdBy) 
+	{
+		this.createdBy = createdBy;
+	}
+	
+	public Date getCreatedOn() 
+	{
+		return createdOn;
+	}
+	
+	public void setCreatedOn(Date createdOn) 
+	{
+		this.createdOn = createdOn;
+	}
+	
+	public int getModifiedBy() 
+	{
+		return modifiedBy;
+	}
+	
+	public void setModifiedBy(int modifiedBy) 
+	{
+		this.modifiedBy = modifiedBy;
+	}
+	
+	public Date getModifiedOn() 
+	{
+		return modifiedOn;
+	}
+	
+	public void setModifiedOn(Date modifiedOn) 
+	{
+		this.modifiedOn = modifiedOn;
+	}
 }
