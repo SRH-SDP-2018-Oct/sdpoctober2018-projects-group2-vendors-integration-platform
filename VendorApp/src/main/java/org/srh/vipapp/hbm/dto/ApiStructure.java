@@ -22,7 +22,6 @@ import org.srh.annotation.POJO;
 @Entity
 @Table(name="api_structure")
 @POJO(hidden= {"setCreatedBy","setModifiedBy"}, hiddenParam= {"org.srh.vipapp.hbm.dto.UserMaster","org.srh.vipapp.hbm.dto.UserMaster"})
-
 public class ApiStructure {
 	
 	@Id
