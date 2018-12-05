@@ -14,5 +14,7 @@
         <mapping class="org.srh.vipapp.hbm.dto.UserMaster"/>
         <mapping class="org.srh.vipapp.hbm.dto.CustomerMaster"/>
         <mapping class="org.srh.vipapp.hbm.dto.VendorMaster"/>
+        <mapping class="org.srh.vipapp.hbm.dto.ApiStructureConstants"/>
+        <mapping class="org.srh.vipapp.hbm.dto.ApiStructure"/>
     </session-factory>  
 </hibernate-configuration> 

@@ -9,9 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.srh.annotation.POJO;
+import org.srh.vipapp.hbm.hql.ApiStructureQuery;
 
 /**
  * The Entity representing the table 'branch_timings' from the 'aldi_vendor' database.
@@ -21,6 +23,7 @@ import org.srh.annotation.POJO;
 
 @Entity
 @Table(name="api_structure")
+@NamedQuery(name=ApiStructureQuery.GET_ALL_VENDOR_API_$N, query=ApiStructureQuery.GET_ALL_VENDOR_API_$Q)
 @POJO(hidden= {"setCreatedBy","setModifiedBy"}, hiddenParam= {"org.srh.vipapp.hbm.dto.UserMaster","org.srh.vipapp.hbm.dto.UserMaster"})
 public class ApiStructure {
 	

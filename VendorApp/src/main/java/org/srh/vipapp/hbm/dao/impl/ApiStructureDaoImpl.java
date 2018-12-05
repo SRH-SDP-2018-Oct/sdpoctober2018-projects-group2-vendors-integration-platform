@@ -17,12 +17,13 @@ import org.srh.vipapp.hbm.hql.ApiStructureQuery;
  * @author Maitreyee
  */
 public class ApiStructureDaoImpl implements ApiStructureDao{
-	
+
 	@Override
-	public List<ApiStructure> getAllVendorsApi() {
+	public List<ApiStructure> getVendorsApiStructure(int vendorId) {
 		try ( Session session = RootHB.getSessionFactory().openSession(); ) {
 			@SuppressWarnings("unchecked")
 			Query<ApiStructure> query = session.createNamedQuery(ApiStructureQuery.GET_ALL_VENDOR_API_$N);
+			query.setParameter(ApiStructureQuery.GET_ALL_VENDOR_API_$P1, vendorId);
 			List<ApiStructure> apiStructureList = query.getResultList();
 			return apiStructureList;
 		}

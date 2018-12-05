@@ -13,11 +13,12 @@ import org.srh.vipapp.hbm.dto.ApiStructure;
  * @author Maitreyee
  */
 public interface ApiStructureDao {
-	
+
 	/**
 	 * Returns all the {@link ApiStructure} entities from persistence database
+	 * @param vendorId {@link Integer}
 	 * @return apiStructureList {@link List<ApiStructure>}
 	 */
-	public List<ApiStructure> getAllVendorsApi();
+	public List<ApiStructure> getVendorsApiStructure(int vendorId);
 
 }
