@@ -115,3 +115,61 @@ WHERE branch_master.location = 'Mannheimer Str. 177, 69123 Heidelberg';
 
 
 SELECT * FROM branch_timings;
+
+
+
+DROP TABLE IF EXISTS `product_types` ;
+
+CREATE TABLE `product_types` (
+  `prodTypeId` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `productType` VARCHAR(30) NOT NULL,
+   deleteFlag TINYINT(1) NOT NULL DEFAULT '0',
+  UNIQUE (productType),
+  PRIMARY KEY (`prodtypeId`)
+) ENGINE=InnoDB;
+
+DESC product_types;
+
+
+insert into product_types (productType) values
+('Dairy'), ('Fruits'), ('Vegetables');
+
+
+
+DROP TABLE IF EXISTS `products` ;
+
+
+CREATE TABLE `products` (
+  `productId` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `productTypeId` int UNSIGNED NOT NULL,
+  `productName` varchar(50) DEFAULT NULL,
+  `productDescription` text,
+  `productPrice` decimal(10,0) DEFAULT NULL,
+  `branchId` int UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`productId`),
+  UNIQUE (productName, productTypeId),
+  CONSTRAINT `productTypeId` FOREIGN KEY (`productTypeId`) REFERENCES `product_types` (`prodTypeId` ),
+  CONSTRAINT `branchId` FOREIGN KEY (`branchId`) REFERENCES `branch_master` (`branchid`)
+) ENGINE=InnoDB;
+
+
+
+INSERT INTO products (`productTypeId`,`productName`,`productDescription`,`productPrice`,`branchId`)
+SELECT pt.prodTypeId, 'H-milk','Energy : 197 KJ,1.5 %', '0.79', bm.branchId
+FROM product_types pt, branch_master bm
+WHERE pt.productType = 'Dairy' AND bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
+
+
+INSERT INTO products (`productTypeId`,`productName`,`productDescription`,`productPrice`,`branchId`)
+SELECT pt.prodTypeId, 'Banana','Brand : Chiquita, Mainly grown in columbia,Slight sour to very sweet','1.83', bm.branchId
+FROM product_types pt, branch_master bm
+WHERE pt.productType = 'Fruits' AND bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
+
+
+INSERT INTO products (`productTypeId`,`productName`,`productDescription`, `productPrice`,`branchId`)
+SELECT pt.prodTypeId, 'Broccoli','Origin : Spain Or Italy, Green or Dark Color, Store : In Refrigerator', '1.20', bm.branchId
+FROM product_types pt, branch_master bm
+WHERE pt.productType = 'Vegetables' AND bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
+
+
+ 
