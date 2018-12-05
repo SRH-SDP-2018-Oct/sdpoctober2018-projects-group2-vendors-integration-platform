@@ -23,7 +23,7 @@ public class AppMain {
 
 	public static void main(String[] args) {
 		// testCustomerFunctinalities();
-		JSONObject obj = new BranchServiceImpl().getBranchesInCity(null,"heidelberg");
+		JSONArray obj = new JSONArray(new BranchServiceImpl().getBranchesInCity("heidelberg"));
 		AppLog.print( obj );
 		System.exit(0);
 	}
