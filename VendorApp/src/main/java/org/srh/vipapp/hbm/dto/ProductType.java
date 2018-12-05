@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /*
- * The 'product_type' table entity for 'vendor_app' database.
+ * The 'product_type' table entity for 'vendor_integration_platform' database.
  * Date:01 Dec 2018
  * @author Anglita
  */
