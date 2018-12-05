@@ -50,7 +50,7 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 			AppLog.log(this.getClass(), StringUtil.append("There are no products!",ex.getMessage()) );
 			return productsList;
 		}
-		
+
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 			Query<ProductsMaster> query = session.createNamedQuery(ProductsMasterQuery.FIND_PRODUCT_BY_OFFERS_$N);
 			query.setParameter("isOnOffer", StringUtil.append(isOnOffer,"%"));
 			return query.getResultList();
-			
+
 		}
 		catch(NoResultException ex){
 			AppLog.log(this.getClass(), StringUtil.append("There are no products on Offers!",ex.getMessage()) );
@@ -85,7 +85,26 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 		finally {
 			RootHB.closeSession(session);
 		}
-		
+
+	}
+
+	@Override
+	public List<ProductsMaster> getProductsByProductType(int productTypeId) {
+		Session session = RootHB.getSessionFactory().openSession();
+		try {
+			@SuppressWarnings("unchecked")
+			Query<ProductsMaster> query = session.createNamedQuery(ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$N);
+			query.setParameter(ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$P1, StringUtil.append(productTypeId,"%"));
+			return query.getResultList();
+		}
+		catch(NoResultException ex) {
+			AppLog.log(this.getClass(), StringUtil.append("There are no products of the productType", ex.getMessage()) );
+			return new ArrayList<>();
+		}
+		finally {
+			RootHB.closeSession(session);
+		}
+
 	}
 
 }

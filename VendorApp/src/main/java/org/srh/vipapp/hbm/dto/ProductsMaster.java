@@ -9,10 +9,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import org.srh.vipapp.hbm.hql.ProductsMasterQuery;
 
 
 @Entity
 @Table(name="products_master")
+@NamedQuery(name=ProductsMasterQuery.GET_ALL_PRODUCTS_$N, query=ProductsMasterQuery.GET_ALL_PRODUCTS_$Q)
+@NamedQuery(name=ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$N, query=ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$Q)
+@NamedQuery(name=ProductsMasterQuery.FIND_PRODUCT_BY_OFFERS_$N, query=ProductsMasterQuery.FIND_PRODUCT_BY_OFFERS_$Q)
+@NamedQuery(name=ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$N, query=ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$Q)
+@NamedQuery(name=ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$N, query=ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$N)
 
 /*
  * The 'product_master' table entity for 'vendor_integration_platform' database.
