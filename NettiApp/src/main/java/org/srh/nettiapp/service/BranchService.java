@@ -2,7 +2,7 @@ package org.srh.nettiapp.service;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONObject;
+import org.srh.bean.ServiceRespArray;
 
 /**
  * Service Interface to perform the task related to Vendor Branch.  <br/>
@@ -15,8 +15,8 @@ public interface BranchService {
 	 * Get all the branches located in the city.
 	 * @param resp {@link HttpServletResponse}
 	 * @param city {@link String}
-	 * @return jsonData {@link JSONObject}
+	 * @return serviceRespArray {@link ServiceRespArray}
 	 */
-	JSONObject getBranchesInCity(HttpServletResponse resp, String city);
+	ServiceRespArray getBranchesInCity(String city);
 
 }

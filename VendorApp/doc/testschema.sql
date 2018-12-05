@@ -1,7 +1,7 @@
 
 DROP DATABASE vendor_app;
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`vendor_app` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/vendor_app /*!40100 DEFAULT CHARACTER SET latin1 */;
 
 USE vendor_app;
 
@@ -16,7 +16,7 @@ CREATE TABLE user_type (
 
 DESC user_type;
 
-/*Data for the table `user_master` */
+/*Data for the table user_master */
 
 INSERT INTO user_type(typeName) VALUES ('admin');
 INSERT INTO user_type(typeName) VALUES ('system');
@@ -50,7 +50,7 @@ CREATE TABLE user_master (
 
 DESC user_master;
 
-/*Data for the table `user_master` */
+/*Data for the table user_master */
 
 -- Entry -> ROOT User
 INSERT INTO user_master (userType, createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn, pwd)
@@ -67,9 +67,6 @@ FROM user_type, user_master um
 WHERE user_type.typeName = 'system' AND um.userName='root';
 
 SELECT * FROM user_master;
-
-
-
 
 
 
@@ -105,29 +102,24 @@ DESC customer_master;
 INSERT INTO customer_master (createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn, pwd)
 SELECT um.userId, um.userId, 'john', 'John', 'Doe', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
   '9dae67e870c8b41b24e78f44c6a8f74ea931f2cef5b125fbbb2db87566083860' -- Hello@135
-FROM user_master um
-  INNER JOIN user_type ON user_type.typeId = um.userType
+FROM user_type, user_master um
 WHERE user_type.typeName = 'system' AND um.userName='system';
 
 -- Entry -> Customer
 INSERT INTO customer_master (createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn, pwd)
 SELECT um.userId, um.userId, 'james', 'James', 'Anderson', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
   '9dae67e870c8b41b24e78f44c6a8f74ea931f2cef5b125fbbb2db87566083860' -- Hello@135
-FROM user_master um
-  INNER JOIN user_type ON user_type.typeId = um.userType
+FROM user_type, user_master um
 WHERE user_type.typeName = 'system' AND um.userName='system';
 
 SELECT * FROM customer_master;
 
 
 
-
-/*-------MAITREYEE-------*/
-
 DROP TABLE IF EXISTS vendor_master;
 
 CREATE TABLE vendor_master (
-  vendorId BIGINT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Auto generated userid of the vendor ',
+  vendorId INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Auto generated userid of the vendor ',
   vendorName VARCHAR(75) NOT NULL UNIQUE COMMENT 'user name to login within the application as a vendor',
   phone VARCHAR(15) DEFAULT '',
   email VARCHAR(75) DEFAULT '',
@@ -143,7 +135,7 @@ CREATE TABLE vendor_master (
 
 DESC vendor_master;
 
-/* Data for the table `vendor_master` */
+/* Data for the table vendor_master */
 
 -- Entry -> NETTI Vendor
 INSERT INTO vendor_master (createdBy, modifiedBy, vendorName, createdOn, modifiedOn)
@@ -194,5 +186,54 @@ FROM user_master um, vendor_master vm
 WHERE um.userName='system' AND vm.vendorName = 'Netti';
 
 SELECT * FROM vendor_api_config;
+
+
+
+DROP TABLE IF EXISTS api_structure_constants;
+
+
+CREATE TABLE api_structure_constants (
+  apiStructId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  constantName VARCHAR(50) NOT NULL COMMENT 'constant name of the keys to be mapped',
+  displayName VARCHAR(70) NOT NULL COMMENT 'Display name of the key to be mapped',
+  deleteFlag TINYINT(1) NOT NULL DEFAULT '0' COMMENT '0- Active; 1- Deleted',
+  createdOn DATETIME NOT NULL,
+  createdBy INT UNSIGNED NOT NULL,
+  modifiedOn DATETIME NOT NULL,
+  modifiedBy INT UNSIGNED NOT NULL,
+  PRIMARY KEY (apistructId),
+  UNIQUE KEY (constantName),
+  FOREIGN KEY (createdBy) REFERENCES user_master (userId),
+  FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
+) ENGINE=INNODB ;
+
+
+DESC api_structure_constants;
+
+
+
+DROP TABLE IF EXISTS api_structure;
+
+
+CREATE TABLE api_structure (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  keyConstantId INT UNSIGNED NOT NULL,
+  keyName VARCHAR(75) NOT NULL,
+  vendorId INT UNSIGNED NOT NULL,
+  deleteFlag TINYINT(1) NOT NULL DEFAULT 0,
+  createdOn DATETIME NOT NULL,
+  createdBy INT UNSIGNED NOT NULL,
+  modifiedOn DATETIME NOT NULL,
+  modifiedBy INT UNSIGNED NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE (keyConstantId, keyName, vendorId),
+  FOREIGN KEY (keyConstantId) REFERENCES api_structure_constants (apiStructId),
+  FOREIGN KEY (vendorId) REFERENCES vendor_master (vendorId),
+  FOREIGN KEY (createdBy) REFERENCES user_master (userId),
+  FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
+) ENGINE=INNODB;
+
+
+DESC api_structure_constants;
 
 
