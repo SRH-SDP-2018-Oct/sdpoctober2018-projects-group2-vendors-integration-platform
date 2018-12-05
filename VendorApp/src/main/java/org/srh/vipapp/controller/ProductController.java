@@ -1,42 +1,61 @@
 package org.srh.vipapp.controller;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.srh.bean.ServiceResp;
+import org.srh.bean.ServiceRespArray;
+import org.srh.util.HttpUtil;
+import org.srh.vipapp.service.CustomerService;
+import org.srh.vipapp.service.ProductsService;
 
 
 /**
- * Product Controller of the Spring
- * @author Vivek
+ * Rest Controller to serve the API/HTTP Call related to the Products.
+ * Date: 05 Dec 2018
+ * @author Anglita
  */
-
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
-	@RequestMapping(path="/get", method=RequestMethod.GET)
-	public String getProduct() {
-
-		JSONObject jsonObject;
-		JSONArray jsonArray = new JSONArray();
-
-		jsonObject = new JSONObject();
-		jsonObject.put("Product_Name", "H-Milk 1.5");
-		jsonObject.put("Product_Type", "Dairy");
-		jsonObject.put("Product_Detail", "Milk with fat percentage of 1.5%");
-		jsonObject.put("Product_Brand", "Gutes Land");
-		jsonArray.put(jsonObject);
-		
-		jsonObject = new JSONObject();
-		jsonObject.put("Product_Name", "Milch 1.5");
-		jsonObject.put("Product_Type", "Dairy");
-		jsonObject.put("Product_Detail", "Milk with fat percentage of 3.5%");
-		jsonObject.put("Product_Brand", "Pemmy");
-		jsonArray.put(jsonObject);
-
-		return jsonArray.toString();
+	@Autowired
+	private ProductsService productsService;
+	
+	@RequestMapping(path="/id/{productId}", method=RequestMethod.GET)
+	public String getProductsById(@PathVariable String productId, HttpServletResponse resp) {
+		ServiceResp serviceResp = productsService.getProductByProductId(productId);
+		return HttpUtil.buildResponse(resp, serviceResp).toString();
+	}
+	
+	@RequestMapping(path="/name/{productName}", method=RequestMethod.GET)
+	public String getProductsByName(@PathVariable String productName, HttpServletResponse resp) {
+		ServiceRespArray serviceRespArray = productsService.getProductsbyName(productName);
+		return HttpUtil.buildResponseArray(resp, serviceRespArray).toString();
 	}
 
+	@RequestMapping(path="/all", method=RequestMethod.GET)
+	public String getAllProducts(HttpServletResponse resp) {
+		ServiceRespArray productServiceResponse = productsService.getAllProducts();
+		return HttpUtil.buildResponseArray(resp, productServiceResponse).toString();
+	}
+	
+	@RequestMapping(path="/productsOnOffers", method=RequestMethod.GET)
+	public String getProductsOnOffers(HttpServletResponse resp) {
+		ServiceRespArray serviceResp = productsService.getProductsOnOffers();
+		return HttpUtil.buildResponseArray(resp, serviceResp).toString();
+	}
+	
+	@RequestMapping(path="/productType/{productTypeName}", method=RequestMethod.GET)
+	public String getProductsByProductType(@PathVariable String productTypeName,HttpServletResponse resp) {
+		ServiceRespArray serviceResp = productsService.getProductsByProductType(productTypeName);
+		return HttpUtil.buildResponseArray(resp, serviceResp).toString();
+	}
+	
 }

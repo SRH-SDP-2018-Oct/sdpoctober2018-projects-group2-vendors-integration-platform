@@ -54,12 +54,12 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 	}
 
 	@Override
-	public List<ProductsMaster> getAllProductsOnOffer(boolean isOnOffer) {
+	public List<ProductsMaster> getAllProductsOnOffer() {
 		Session session = RootHB.getSessionFactory().openSession();
 		try {
 			@SuppressWarnings("unchecked")
 			Query<ProductsMaster> query = session.createNamedQuery(ProductsMasterQuery.FIND_PRODUCT_BY_OFFERS_$N);
-			query.setParameter("isOnOffer", StringUtil.append(isOnOffer,"%"));
+			query.setParameter("isOnOffer", StringUtil.append(1,"%"));
 			return query.getResultList();
 
 		}
@@ -89,12 +89,12 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 	}
 
 	@Override
-	public List<ProductsMaster> getProductsByProductType(int productTypeId) {
+	public List<ProductsMaster> getProductsByProductType(String productTypeName) {
 		Session session = RootHB.getSessionFactory().openSession();
 		try {
 			@SuppressWarnings("unchecked")
 			Query<ProductsMaster> query = session.createNamedQuery(ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$N);
-			query.setParameter(ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$P1, StringUtil.append(productTypeId,"%"));
+			query.setParameter(ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$P1, StringUtil.append(productTypeName,"%"));
 			return query.getResultList();
 		}
 		catch(NoResultException ex) {

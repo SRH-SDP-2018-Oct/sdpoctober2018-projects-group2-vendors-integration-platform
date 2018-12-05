@@ -17,7 +17,7 @@ public interface ProductsMasterDao {
 	 * @return productsMaster {@link ProductsMaster}
 	 */
 	public ProductsMaster findById(int productId);
-	
+
 	/**
 	 * Gets the {@link ProductsMaster} entity with the given 'productName'.
 	 * @param productName {@link String}
@@ -33,18 +33,17 @@ public interface ProductsMasterDao {
 
 	/**
 	 * Returns all the {@link ProductsMaster} entities on Offer from persistence database
-	 * @param isOnOffer {@link boolean}
 	 * @return productsMasterList {@link List<ProductsMaster>}
 	 */
-	public List<ProductsMaster> getAllProductsOnOffer(boolean isOnOffer);
-	
+	public List<ProductsMaster> getAllProductsOnOffer();
+
 	/**
 	 * Returns all the {@link ProductsMaster} entities from persistence database with given 'productTypeId'
 	 * @param isOnproductTypeIdOffer {@link Integer}
 	 * @return productsMasterList {@link List<ProductsMaster>}
 	 */
-	public List<ProductsMaster> getProductsByProductType(int productTypeId);
-	
-	
+	public List<ProductsMaster> getProductsByProductType(String productTypeName);
+
+
 
 }
