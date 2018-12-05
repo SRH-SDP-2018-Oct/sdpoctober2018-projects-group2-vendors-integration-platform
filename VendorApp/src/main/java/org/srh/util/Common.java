@@ -29,7 +29,7 @@ public final class Common {
 	 * @return result {@link Boolean}
 	 */
 	public static boolean nullOrEmpty(Object obj) {
-		return obj!=null && "".equals(obj.toString());
+		return obj==null || "".equals(obj.toString());
 	}
 
 
@@ -39,7 +39,7 @@ public final class Common {
 	 * @return result {@link Boolean}
 	 */
 	public static boolean nullOrEmptyTrim(Object obj) {
-		return obj!=null && "".equals(obj.toString().trim());
+		return obj==null || "".equals(obj.toString().trim());
 	}
 
 
