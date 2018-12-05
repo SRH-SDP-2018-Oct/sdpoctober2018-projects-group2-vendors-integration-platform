@@ -119,7 +119,7 @@ SELECT * FROM customer_master;
 DROP TABLE IF EXISTS vendor_master;
 
 CREATE TABLE vendor_master (
-  vendorId BIGINT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Auto generated userid of the vendor ',
+  vendorId INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Auto generated userid of the vendor ',
   vendorName VARCHAR(75) NOT NULL UNIQUE COMMENT 'user name to login within the application as a vendor',
   phone VARCHAR(15) DEFAULT '',
   email VARCHAR(75) DEFAULT '',
@@ -193,13 +193,18 @@ DROP TABLE IF EXISTS api_structure_constants;
 
 
 CREATE TABLE api_structure_constants (
-  apistructId INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  apiStructId INT UNSIGNED NOT NULL AUTO_INCREMENT,
   constantName VARCHAR(50) NOT NULL COMMENT 'constant name of the keys to be mapped',
   displayName VARCHAR(70) NOT NULL COMMENT 'Display name of the key to be mapped',
   deleteFlag TINYINT(1) NOT NULL DEFAULT '0' COMMENT '0- Active; 1- Deleted',
-  createdOn TIMESTAMP NOT NULL,
+  createdOn DATETIME NOT NULL,
+  createdBy INT UNSIGNED NOT NULL,
+  modifiedOn DATETIME NOT NULL,
+  modifiedBy INT UNSIGNED NOT NULL,
   PRIMARY KEY (apistructId),
-  UNIQUE KEY (constantName)
+  UNIQUE KEY (constantName),
+  FOREIGN KEY (createdBy) REFERENCES user_master (userId),
+  FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
 ) ENGINE=INNODB ;
 
 
@@ -207,8 +212,29 @@ DESC api_structure_constants;
 
 
 
+DROP TABLE IF EXISTS api_structure;
 
 
+CREATE TABLE api_structure (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  keyConstantId INT UNSIGNED NOT NULL,
+  keyName VARCHAR(75) NOT NULL,
+  vendorId INT UNSIGNED NOT NULL,
+  deleteFlag TINYINT(1) NOT NULL DEFAULT 0,
+  createdOn DATETIME NOT NULL,
+  createdBy INT UNSIGNED NOT NULL,
+  modifiedOn DATETIME NOT NULL,
+  modifiedBy INT UNSIGNED NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE (keyConstantId, keyName, vendorId),
+  FOREIGN KEY (keyConstantId) REFERENCES api_structure_constants (apiStructId),
+  FOREIGN KEY (vendorId) REFERENCES vendor_master (vendorId),
+  FOREIGN KEY (createdBy) REFERENCES user_master (userId),
+  FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
+) ENGINE=INNODB;
+
+
+DESC api_structure_constants;
 
 
 
