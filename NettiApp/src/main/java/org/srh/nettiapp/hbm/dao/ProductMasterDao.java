@@ -17,7 +17,7 @@ public interface ProductMasterDao {
 	 * Gets the {@link ProductsMaster} entity with the given 'productId'.
 	 * 
 	 * @param productId {@link Integer}
-	 * @return productsMaster {@link ProductsMaster}
+	 * @return productsMaster {@link ProductMaster}
 	 */
 	public ProductMaster findById(int productId);
 
@@ -25,7 +25,7 @@ public interface ProductMasterDao {
 	 * Gets the {@link ProductsMaster} entity with the given 'productName'.
 	 * 
 	 * @param productName {@link String}
-	 * @return productsMaster {@link ProductsMaster}
+	 * @return productsMaster {@link ProductMaster}
 	 */
 	public List<ProductMaster> findbyProductName(String productName);
 
