@@ -2,7 +2,6 @@ package org.srh.vipapp.hbm.dao;
 
 import java.util.List;
 import org.srh.vipapp.hbm.dto.ProductsMaster;
-import org.srh.vipapp.hbm.dto.UserMaster;
 
 /**
  * HBM DAO to perform task related to {@link ProductsMaster} entity.  <br/>

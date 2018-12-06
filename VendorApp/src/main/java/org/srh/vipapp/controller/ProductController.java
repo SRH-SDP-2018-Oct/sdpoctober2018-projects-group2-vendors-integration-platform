@@ -2,8 +2,6 @@ package org.srh.vipapp.controller;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.srh.bean.ServiceResp;
 import org.srh.bean.ServiceRespArray;
 import org.srh.util.HttpUtil;
-import org.srh.vipapp.service.CustomerService;
 import org.srh.vipapp.service.ProductsService;
 
 
