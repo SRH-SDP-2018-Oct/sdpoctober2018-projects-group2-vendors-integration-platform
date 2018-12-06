@@ -12,6 +12,6 @@ package org.srh.aldoapp.hbm.hql;
 		public static final String FIND_BRANCH_BY_DAYINWEEK_$P1 = "dayInWeek";
 		public static final String FIND_BRANCH_BY_DAYINWEEK_$N = "FIND_BRANCH_BY_DAYINWEEK";
 		public static final String FIND_BRANCH_BY_DAYINWEEK_$Q = "FROM BranchTimings "
-				+ " WHERE firstName LIKE :"+FIND_BRANCH_BY_DAYINWEEK_$P1;
+				+ " WHERE dayInWeek LIKE :"+FIND_BRANCH_BY_DAYINWEEK_$P1;
 	}
 
