@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.srh.vipapp.hbm.dao;
 
 import java.util.List;
@@ -13,11 +10,11 @@ import org.srh.vipapp.hbm.dto.ApiStructureConstants;
  * @author Maitreyee
  */
 public interface ApiStructureConstantsDao {
-	
+
 	/**
 	 * Returns all the {@link ApiStructureConstants} entities from persistence database
 	 * @return apiStructureConstantsList {@link List<ApiStructureConstants>}
 	 */
-	public List<ApiStructureConstants> getAllVendorsApi();
+	public List<ApiStructureConstants> getAllApiStructConstants();
 
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.srh.vipapp.hbm.dao.impl;
 
 import java.util.List;
@@ -13,19 +10,24 @@ import org.srh.vipapp.hbm.dto.ApiStructureConstants;
 import org.srh.vipapp.hbm.hql.ApiStructureConstantsQuery;
 
 /**
+ * Implementation class of HBM DAO {@link ApiStructureConstantsDao}
+ * Date: 05 Nov 2018
  * @author Maitreyee
- *
  */
 public class ApiStructureConstantsDaoImpl implements ApiStructureConstantsDao {
-	
+
+	private List<ApiStructureConstants> listApiStructureConstants; 
+
 	@Override
-	public List<ApiStructureConstants> getAllVendorsApi() {
-		try ( Session session = RootHB.getSessionFactory().openSession(); ) {
-			@SuppressWarnings("unchecked")
-			Query<ApiStructureConstants> query = session.createNamedQuery(ApiStructureConstantsQuery.GET_ALL_VENDOR_API_$N);
-			List<ApiStructureConstants> apiStructureConstantsList = query.getResultList();
-			return apiStructureConstantsList;
+	public List<ApiStructureConstants> getAllApiStructConstants() {
+		if(listApiStructureConstants==null) {
+			try ( Session session = RootHB.getSessionFactory().openSession(); ) {
+				@SuppressWarnings("unchecked")
+				Query<ApiStructureConstants> query = session.createNamedQuery(ApiStructureConstantsQuery.GET_ALL_VENDOR_API_$N);
+				listApiStructureConstants = query.getResultList();
+			}
 		}
+		return listApiStructureConstants;
 	}
 
 }
