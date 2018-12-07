@@ -12,5 +12,7 @@
  
         <mapping class="org.srh.nettiapp.hbm.dto.BranchMaster"/>
         <mapping class="org.srh.nettiapp.hbm.dto.BranchTimings"/>
+        <mapping class="org.srh.nettiapp.hbm.dto.ProductType"/>
+        <mapping class="org.srh.nettiapp.hbm.dto.ProductMaster"/>
     </session-factory>  
 </hibernate-configuration> 

@@ -28,7 +28,7 @@ public class BranchTimings {
 
 	@ManyToOne
 	@JoinColumn(name="branchId")
-	private BranchMaster branchId ;
+	private VendorBranch branchId ;
 
 	private int dayInWeek;// '1-Sunday, 2-Monday, 3-Tuesday, 4-Wednesday, 5-Thursday, 6-Friday, 7-Saturday',
 	private boolean isOpen ;
@@ -44,10 +44,10 @@ public class BranchTimings {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public BranchMaster getBranchId() {
+	public VendorBranch getBranchId() {
 		return branchId;
 	}
-	public void setBranchId(BranchMaster branchId) {
+	public void setBranchId(VendorBranch branchId) {
 		this.branchId = branchId;
 	}
 

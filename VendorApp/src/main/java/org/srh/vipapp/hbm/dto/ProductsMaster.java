@@ -38,6 +38,10 @@ public class ProductsMaster {
 	private ProductType productTypeId;
 
 	@ManyToOne
+	@JoinColumn(name="vendorId")
+	private VendorMaster vendorId;
+
+	@ManyToOne
 	@JoinColumn(name="createdBy")
 	private UserMaster createdBy;
 	@ManyToOne
@@ -45,25 +49,21 @@ public class ProductsMaster {
 	private UserMaster modifiedBy;
 
 	@ManyToOne
-	@JoinColumn(name="vendorId")
-	private VendorMaster vendorId;
-
-	@ManyToOne
 	@JoinColumn(name="branchId")
-	private BranchMaster branchId;
+	private VendorBranch branchId;
 
 	private String productName;
 	private BigDecimal productPrice;
 	private String productDescription;
 	private String productShelfLife = "";
 	
-	private boolean hasAnOffer;
+	private Boolean hasAnOffer = false;
 	private String offerDetail;
 
 	private String otherDetails = "{}";
 	private String apiDetails = "{}";
 
-	private boolean deleteFlag = false;
+	private Boolean deleteFlag = false;
 	private Date createdOn = new Date();
 	private Date modifiedOn = new Date();
 
@@ -115,11 +115,11 @@ public class ProductsMaster {
 		this.productShelfLife = productShelfLife;
 	}
 
-	public boolean isHasAnOffer() {
+	public Boolean getHasAnOffer() {
 		return hasAnOffer;
 	}
 
-	public void setHasAnOffer(boolean hasAnOffer) {
+	public void setHasAnOffer(Boolean hasAnOffer) {
 		this.hasAnOffer = hasAnOffer;
 	}
 
@@ -139,11 +139,11 @@ public class ProductsMaster {
 		this.vendorId = vendorId;
 	}
 
-	public BranchMaster getBranchId() {
+	public VendorBranch getBranchId() {
 		return branchId;
 	}
 
-	public void setBranchId(BranchMaster branchId) {
+	public void setBranchId(VendorBranch branchId) {
 		this.branchId = branchId;
 	}
 
@@ -163,11 +163,11 @@ public class ProductsMaster {
 		this.apiDetails = apiDetails;
 	}
 
-	public boolean isDeleteFlag() {
+	public Boolean getDeleteFlag() {
 		return deleteFlag;
 	}
 
-	public void setDeleteFlag(boolean deleteFlag) {
+	public void setDeleteFlag(Boolean deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
 

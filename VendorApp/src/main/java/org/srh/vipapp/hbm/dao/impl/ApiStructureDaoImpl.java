@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.srh.util.AppLog;
 import org.srh.vipapp.hbm.RootHB;
 import org.srh.vipapp.hbm.dao.ApiStructureDao;
 import org.srh.vipapp.hbm.dao.VendorMasterDao;
@@ -27,8 +26,6 @@ public class ApiStructureDaoImpl implements ApiStructureDao {
 	public List<ApiStructure> getApiStructureOfVendor(int vendorId) {
 		try ( Session session = RootHB.getSessionFactory().openSession(); ) {
 			VendorMaster vendor = vendorMasterDao.findById(vendorId, session);
-			AppLog.print("=====>"+vendor);
-			AppLog.print(new org.json.JSONObject(vendor));
 			@SuppressWarnings("unchecked")
 			Query<ApiStructure> query = session.createNamedQuery(ApiStructureQuery.GET_API_STRUCTURE_OF_VENDOR_$N);
 			query.setParameter(ApiStructureQuery.GET_API_STRUCTURE_OF_VENDOR_$P1, vendor);

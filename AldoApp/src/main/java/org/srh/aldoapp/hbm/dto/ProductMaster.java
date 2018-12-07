@@ -1,48 +1,47 @@
 package org.srh.aldoapp.hbm.dto;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.srh.aldoapp.hbm.dto.ProductType;
+import org.srh.aldoapp.hbm.hql.ProductMasterQuery;
 
 @Entity
-@Table(name="products_master")
+@Table(name = "product_master")
+@NamedQuery(name=ProductMasterQuery.GET_ALL_PRODUCTS_$N, query=ProductMasterQuery.GET_ALL_PRODUCTS_$Q)
 
 /**
  * The 'product_master' table entity for 'vendor_integration_platform' database.
- * Date: 05 Dec 2018
+ * Date:05 Dec 2018
+ * 
  * @author Shraddha
  */
-
 public class ProductMaster {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
-	private int id;
-
 	private int productId;
 
 	@ManyToOne
 	@JoinColumn(name = "productTypeId")
 	private ProductType productTypeId;
 
+	@ManyToOne
+	@JoinColumn(name = "branchId")
+	private BranchMaster branchId;
+
 	private String productName;
 	private String productDescription;
-	private float productPrice;
-	private int branchId;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	private BigDecimal productPrice;
+	private boolean deleteFlag = false;
 
 	public int getProductId() {
 		return productId;
@@ -76,20 +75,28 @@ public class ProductMaster {
 		this.productDescription = productDescription;
 	}
 
-	public float getProductPrice() {
+	public BigDecimal getProductPrice() {
 		return productPrice;
 	}
 
-	public void setProductPrice(float productPrice) {
+	public void setProductPrice(BigDecimal productPrice) {
 		this.productPrice = productPrice;
 	}
 
-	public int getBranchId() {
+	public BranchMaster getBranchId() {
 		return branchId;
 	}
 
-	public void setBranchId(int branchId) {
+	public void setBranchId(BranchMaster branchId) {
 		this.branchId = branchId;
+	}
+
+	public boolean getDeleteFlag() {
+		return deleteFlag;
+	}
+
+	public void setDeleteFlag(boolean deleteFlag) {
+		this.deleteFlag = deleteFlag;
 	}
 
 }

@@ -6,9 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
-
-/*
+/**
  * The 'product_type' table entity for 'vendor_integration_platform' database.
  * Date:01 Dec 2018
  * @author Shraddha
@@ -19,35 +17,32 @@ public class ProductType {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int productTypeId;
+	private int prodTypeId;
 
-	private String productType;
-
-	private boolean isDeleted;
+	private String productTypeName;
+	private boolean deleteFlag;
 
 	public int getProductTypeId() {
-		return productTypeId;
+		return prodTypeId;
+	}
+	public void setProductTypeId(int prodTypeId) {
+		this.prodTypeId = prodTypeId;
 	}
 
-	public void setProductTypeId(int productTypeId) {
-		this.productTypeId = productTypeId;
+	public String getProductTypeName() {
+		return productTypeName;
+	}
+	public void setProductTypeName(String productTypeName) {
+		this.productTypeName = productTypeName;
 	}
 
-	public String getProductType() {
-		return productType;
+	public boolean getDeleteFlag() {
+		return deleteFlag;
+	}
+	public void setDeleteFlag(boolean deleteFlag) {
+		this.deleteFlag = deleteFlag;
 	}
 
-	public void setProductType(String productType) {
-		this.productType = productType;
-	}
-
-	public boolean isDeleted() {
-		return isDeleted;
-	}
-
-	public void setDeleted(boolean isDeleted) {
-		this.isDeleted = isDeleted;
-	}
 }
 
 

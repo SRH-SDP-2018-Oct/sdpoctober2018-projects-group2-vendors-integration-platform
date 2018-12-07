@@ -27,8 +27,9 @@ import org.srh.vipapp.hbm.hql.ApiStructureQuery;
 @Table(name="api_structure")
 @NamedQuery(name=ApiStructureQuery.GET_API_STRUCTURE_OF_VENDOR_$N, query=ApiStructureQuery.GET_API_STRUCTURE_OF_VENDOR_$Q)
 @POJO(
-		hidden={"setCreatedBy","setModifiedBy"},
-		hiddenParam={"org.srh.vipapp.hbm.dto.UserMaster","org.srh.vipapp.hbm.dto.UserMaster"},
+		hidden={"setCreatedBy","setModifiedBy","setVendorId","setDeleteFlag"},
+		hiddenParam={"org.srh.vipapp.hbm.dto.UserMaster","org.srh.vipapp.hbm.dto.UserMaster",
+				"org.srh.vipapp.hbm.dto.VendorMaster","java.lang.Boolean" },
 		hideInnerReferredData={"getKeyConstantId","getVendorId"}
 )
 
@@ -54,7 +55,7 @@ public class ApiStructure {
 	private UserMaster modifiedBy;
 	
 	private String keyName;
-	private boolean deleteFlag = false;
+	private Boolean deleteFlag = false;
 	private Date createdOn = new Date();
 	private Date modifiedOn = new Date();
 	
@@ -82,10 +83,10 @@ public class ApiStructure {
 	public void setVendorId(VendorMaster vendorId) {
 		this.vendorId = vendorId;
 	}
-	public boolean isDeleteFlag() {
+	public boolean getDeleteFlag() {
 		return deleteFlag;
 	}
-	public void setDeleteFlag(boolean deleteFlag) {
+	public void setDeleteFlag(Boolean deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
 	public Date getCreatedOn() {

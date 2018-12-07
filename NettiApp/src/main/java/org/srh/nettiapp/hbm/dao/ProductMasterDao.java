@@ -14,12 +14,19 @@ import org.srh.nettiapp.hbm.dto.ProductMaster;
 public interface ProductMasterDao {
 
 	/**
+	 * Returns all the {@link ProductsMaster} entities from persistence database
+	 * 
+	 * @return productsMasterList {@link List<ProductsMaster>}
+	 */
+	public List<ProductMaster> getAllProducts();
+
+	/**
 	 * Gets the {@link ProductsMaster} entity with the given 'productId'.
 	 * 
 	 * @param productId {@link Integer}
 	 * @return productsMaster {@link ProductMaster}
 	 */
-	public ProductMaster findById(int productId);
+	// public ProductMaster findById(int productId);
 
 	/**
 	 * Gets the {@link ProductsMaster} entity with the given 'productName'.
@@ -27,14 +34,7 @@ public interface ProductMasterDao {
 	 * @param productName {@link String}
 	 * @return productsMaster {@link ProductMaster}
 	 */
-	public List<ProductMaster> findbyProductName(String productName);
-
-	/**
-	 * Returns all the {@link ProductsMaster} entities from persistence database
-	 * 
-	 * @return productsMasterList {@link List<ProductsMaster>}
-	 */
-	public List<ProductMaster> getAllProducts();
+	// public List<ProductMaster> findbyProductName(String productName);
 
 	/**
 	 * Returns all the {@link ProductsMaster} entities from persistence database
@@ -43,6 +43,6 @@ public interface ProductMasterDao {
 	 * @param isOnproductTypeIdOffer {@link Integer}
 	 * @return productsMasterList {@link List<ProductsMaster>}
 	 */
-	public List<ProductMaster> getProductsByProductType(int productTypeId);
+	// public List<ProductMaster> getProductsByProductType(int productTypeId);
 
 }
