@@ -25,6 +25,10 @@ public class ProductType {
 	private int productTypeId;
 
 	@ManyToOne
+	@JoinColumn(name="vendorId")
+	private VendorMaster vendorId;
+
+	@ManyToOne
 	@JoinColumn(name="createdBy")
 	private UserMaster createdBy;
 	@ManyToOne
@@ -32,7 +36,7 @@ public class ProductType {
 	private UserMaster modifiedBy;
 
 	private String productTypeName;
-	private boolean deleteFlag = false;
+	private Boolean deleteFlag = false;
 	private Date createdOn = new Date();
 	private Date modifiedOn = new Date();
 
@@ -50,10 +54,17 @@ public class ProductType {
 		this.productTypeName = productTypeName;
 	}
 
-	public boolean isDeleteFlag() {
+	public VendorMaster getVendorId() {
+		return vendorId;
+	}
+	public void setVendorId(VendorMaster vendorId) {
+		this.vendorId = vendorId;
+	}
+
+	public Boolean isDeleteFlag() {
 		return deleteFlag;
 	}
-	public void setDeleteFlag(boolean deleteFlag) {
+	public void setDeleteFlag(Boolean deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
 

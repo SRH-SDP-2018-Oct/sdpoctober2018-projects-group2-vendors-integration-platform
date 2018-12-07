@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.json.JSONArray;
 import org.srh.nettiapp.hbm.RootHB;
+import org.srh.nettiapp.hbm.dao.impl.ProductMasterDaoImpl;
 import org.srh.nettiapp.hbm.dto.BranchMaster;
 import org.srh.nettiapp.service.impl.BranchServiceImpl;
 import org.srh.util.AppLog;
@@ -19,7 +20,7 @@ public class AppMain {
 
 	public static void main(String[] args) {
 		// testCustomerFunctinalities();
-		JSONArray obj = new JSONArray(new BranchServiceImpl().getBranchesInCity("heidelberg"));
+		JSONArray obj = new JSONArray(new ProductMasterDaoImpl().getAllProducts());
 		AppLog.print( obj );
 		System.exit(0);
 	}

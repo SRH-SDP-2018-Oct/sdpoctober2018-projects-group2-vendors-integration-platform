@@ -38,7 +38,6 @@ public class VendorMaster {
 	@ManyToOne
 	@JoinColumn(name="createdBy")
 	private UserMaster createdBy;
-
 	@ManyToOne
 	@JoinColumn(name="modifiedBy")
 	private UserMaster modifiedBy;

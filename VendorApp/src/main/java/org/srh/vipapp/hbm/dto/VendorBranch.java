@@ -2,10 +2,13 @@ package org.srh.vipapp.hbm.dto;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -15,18 +18,29 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="branch_master")
-public class BranchMaster {
+@Table(name="vendor_branches")
+public class VendorBranch {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE) // Auto generate (increment id)
 	private int branchId ;
 
+	@ManyToOne
+	@JoinColumn(name="vendorId")
+	private VendorMaster vendor;
+
+	@ManyToOne
+	@JoinColumn(name="createdBy")
+	private UserMaster createdBy;
+	@ManyToOne
+	@JoinColumn(name="modifiedBy")
+	private UserMaster modifiedBy;
+
 	private String location ;
 	private String  locationLat;
 	private String  locationLon ;
 	private String city;
-	private boolean deleteFlag = false;
+	private Boolean deleteFlag = false;
 	private Date createdOn = new Date();
 	private Date modifiedOn = new Date();
 
@@ -36,12 +50,21 @@ public class BranchMaster {
 	public void setBranchId(int branchId) {
 		this.branchId = branchId;
 	}
+
+	public VendorMaster getVendor() {
+		return vendor;
+	}
+	public void setVendor(VendorMaster vendor) {
+		this.vendor = vendor;
+	}
+
 	public String getLocation() {
 		return location;
 	}
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
 	public String getLocationLat() {
 		return locationLat;
 	}
@@ -60,18 +83,28 @@ public class BranchMaster {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public boolean isDeleteFlag() {
+
+	public Boolean getDeleteFlag() {
 		return deleteFlag;
 	}
-	public void setDeleteFlag(boolean deleteFlag) {
+	public void setDeleteFlag(Boolean deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
+
 	public Date getCreatedOn() {
 		return createdOn;
 	}
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
+
+	public UserMaster getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(UserMaster createdBy) {
+		this.createdBy = createdBy;
+	}
+
 	public Date getModifiedOn() {
 		return modifiedOn;
 	}
@@ -79,5 +112,11 @@ public class BranchMaster {
 		this.modifiedOn = modifiedOn;
 	}
 
+	public UserMaster getModifiedBy() {
+		return modifiedBy;
+	}
+	public void setModifiedBy(UserMaster modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
 
 }
