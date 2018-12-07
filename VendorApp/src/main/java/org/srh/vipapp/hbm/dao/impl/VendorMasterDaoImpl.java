@@ -28,20 +28,33 @@ public class VendorMasterDaoImpl implements VendorMasterDao {
 		try {
 			return session.find(VendorMaster.class, vendorId);
 		}
+		catch(NoResultException noResultEx) {
+			throw noResultEx;
+		}
+		catch(Exception genericEx)
+		{
+			throw genericEx;
+		}
+	}
+
+
+	@Override
+	public VendorMaster findById(int vendorId) {
+		try (Session session = RootHB.getSessionFactory().openSession();) 
+		{
+			return findById(vendorId, session);
+		}
 		catch(NoResultException ex) {
 			System.err.println( StringUtil.append("No Vendor exist with Id:", vendorId) );
 			return null;
 		}
-	}
-	
-
-	@Override
-	public VendorMaster findById(int vendorId) {
-		try (Session session = RootHB.getSessionFactory().openSession();) {
-			return findById(vendorId, session);
+		catch(Exception genericException)
+		{
+			System.err.println( StringUtil.append("Error:", genericException.getMessage()) );
+			return null;
 		}
 	}
-	
+
 
 	@Override
 	public List<VendorMaster> getAllVendors() {
@@ -50,6 +63,16 @@ public class VendorMasterDaoImpl implements VendorMasterDao {
 			Query<VendorMaster> query = session.createNamedQuery(VendorMasterQuery.GET_ALL_VENDOR_$N);
 			List<VendorMaster> vendorMasterList = query.getResultList();
 			return vendorMasterList;
+		}
+		catch(NoResultException noResultEx)
+		{
+			System.err.println( StringUtil.append("No Vendors found:", noResultEx.getMessage()) );
+			return null;
+		}
+		catch(Exception genericException)
+		{
+			System.err.println( StringUtil.append("Error:", genericException.getMessage()) );
+			return null;
 		}
 	}
 
@@ -62,17 +85,30 @@ public class VendorMasterDaoImpl implements VendorMasterDao {
 			query.setParameter(VendorMasterQuery.FIND_VENDOR_BY_VENDORNAME_$P1, vendorname);
 			return query.getSingleResult();
 		}
-		catch(NoResultException ex) {
-			System.err.println( StringUtil.append("No user with exist with Username:", vendorname) );
-			return null;
+		catch(NoResultException noResultEx) {
+			throw noResultEx;
+		}
+		catch(Exception genericEx)
+		{
+			throw genericEx;
 		}
 	}
 
 
 	@Override
 	public VendorMaster findByVendorName(String vendorname) {
-		try (Session session = RootHB.getSessionFactory().openSession();) {
+		try (Session session = RootHB.getSessionFactory().openSession();) 
+		{
 			return findByVendorName(vendorname, session);
+		}
+		catch(NoResultException ex) {
+			System.err.println( StringUtil.append("No user with exist with Username:", vendorname) );
+			return null;
+		}
+		catch(Exception genericException)
+		{
+			System.err.println( StringUtil.append("Error:", genericException.getMessage()) );
+			return null;
 		}
 	}
 
