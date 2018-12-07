@@ -1,4 +1,6 @@
 package org.srh.vipapp.hbm.dto;
+
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -11,191 +13,175 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import org.srh.vipapp.hbm.hql.ProductsMasterQuery;
 
-
 @Entity
-@Table(name="products_master")
-@NamedQuery(name=ProductsMasterQuery.GET_ALL_PRODUCTS_$N, query=ProductsMasterQuery.GET_ALL_PRODUCTS_$Q)
-@NamedQuery(name=ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$N, query=ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$Q)
-@NamedQuery(name=ProductsMasterQuery.FIND_PRODUCT_BY_OFFERS_$N, query=ProductsMasterQuery.FIND_PRODUCT_BY_OFFERS_$Q)
-@NamedQuery(name=ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$N, query=ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$Q)
-@NamedQuery(name=ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$N, query=ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$N)
+@Table(name = "products_master")
+@NamedQuery(name = ProductsMasterQuery.GET_ALL_PRODUCTS_$N, query = ProductsMasterQuery.GET_ALL_PRODUCTS_$Q)
+@NamedQuery(name = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$N, query = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$Q)
+@NamedQuery(name = ProductsMasterQuery.FIND_PRODUCT_BY_OFFERS_$N, query = ProductsMasterQuery.FIND_PRODUCT_BY_OFFERS_$Q)
+@NamedQuery(name = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$N, query = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$Q)
+@NamedQuery(name = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$N, query = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$N)
 
-/*
+/**
  * The 'product_master' table entity for 'vendor_integration_platform' database.
  * Date:01 Dec 2018
+ * 
  * @author Anglita
  */
 public class ProductsMaster {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
-	private int id;
-
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private int productId;
 
 	@ManyToOne
-	@JoinColumn(name="productTypeId")
+	@JoinColumn(name = "productTypeId")
 	private ProductType productTypeId;
 
-	private String product;
+	@ManyToOne
+	@JoinColumn(name="createdBy")
+	private UserMaster createdBy;
+	@ManyToOne
+	@JoinColumn(name="modifiedBy")
+	private UserMaster modifiedBy;
 
-	private String  productDescription;
+	@ManyToOne
+	@JoinColumn(name="vendorId")
+	private VendorMaster vendorId;
 
-	private float productPrice;
+	@ManyToOne
+	@JoinColumn(name="branchId")
+	private BranchMaster branchId;
 
-	private int offersId;
-	
-	private boolean onOffers;
+	private String productName;
+	private BigDecimal productPrice;
+	private String productDescription;
+	private String productShelfLife = "";
 
-	private int vendorId;
+	private String otherDetails = "{}";
+	private String apiDetails = "{}";
 
-	private int branchId;
-	
 	private boolean deleteFlag = false;
-	
-	private int createdBy;
-	
-	private Date createdOn;
-	
-	private int modifiedBy;
-	
-	private Date modifiedOn;
-	
-	public int getId() {
-		
-		return id;
-	}
-	public void setId(int id) {
-		
-		this.id = id;
-	}
-	
+	private Date createdOn = new Date();
+	private Date modifiedOn = new Date();
+
 	public int getProductId() {
-		
 		return productId;
 	}
+
 	public void setProductId(int productId) {
-		
 		this.productId = productId;
-	}	
-	public ProductType getProductTypeId()
-	{
+	}
+
+	public ProductType getProductTypeId() {
 		return productTypeId;
 	}
-	public void setProductTypeId(ProductType productTypeId)
-	{
+
+	public void setProductTypeId(ProductType productTypeId) {
 		this.productTypeId = productTypeId;
 	}
 
-	public String getProduct()
-	{
-		return product;
+	public String getProductName() {
+		return productName;
 	}
-	
-	public void setProduct(String product)
-	{
-		this.product = product;
+
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
-	
-	public String getProductDescription()
-	{
-		return productDescription;
-	}
-	public void setProductDescription(String productDescription)
-	{
-		this.productDescription = productDescription;
-	}
-	
-	public boolean getOnOffers() 
-	{
-		return onOffers;
-	}
-	public void setOnOffers(boolean onOffers) 
-	{
-		this.onOffers = onOffers;
-	}	
-	public float getProductPrice() 
-	{
+
+	public BigDecimal getProductPrice() {
 		return productPrice;
 	}
-	public void setProductPrice(int productPrice) 
-	{
+
+	public void setProductPrice(BigDecimal productPrice) {
 		this.productPrice = productPrice;
-	}	
-	
-	public int getOffersId() 
-	{
-		return offersId;
 	}
-	public void setOffersId(int offersId) 
-	{
-		this.offersId = offersId;
-	}	
-	
-	public int getVendorsId() 
-	{
+
+	public String getProductDescription() {
+		return productDescription;
+	}
+
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
+	}
+
+	public String getProductShelfLife() {
+		return productShelfLife;
+	}
+
+	public void setProductShelfLife(String productShelfLife) {
+		this.productShelfLife = productShelfLife;
+	}
+
+	public VendorMaster getVendorId() {
 		return vendorId;
 	}
-	public void setVendorsId(int vendorId) 
-	{
+
+	public void setVendorId(VendorMaster vendorId) {
 		this.vendorId = vendorId;
-	}	
-	public int getbranchId() 
-	{
+	}
+
+	public BranchMaster getBranchId() {
 		return branchId;
 	}
-	public void setbranchId(int branchId) 
-	{
+
+	public void setBranchId(BranchMaster branchId) {
 		this.branchId = branchId;
-	}	
-	
-	public boolean getDeleteFlag() 
-	{
+	}
+
+	public String getOtherDetails() {
+		return otherDetails;
+	}
+
+	public void setOtherDetails(String otherDetails) {
+		this.otherDetails = otherDetails;
+	}
+
+	public String getApiDetails() {
+		return apiDetails;
+	}
+
+	public void setApiDetails(String apiDetails) {
+		this.apiDetails = apiDetails;
+	}
+
+	public boolean isDeleteFlag() {
 		return deleteFlag;
 	}
-	
-	public void setDeleteFlag(boolean deleteFlag) 
-	{
+
+	public void setDeleteFlag(boolean deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
-	
-	public int getCreatedBy() 
-	{
+
+	public UserMaster getCreatedBy() {
 		return createdBy;
 	}
-	
-	public void setCreatedBy(int createdBy) 
-	{
+
+	public void setCreatedBy(UserMaster createdBy) {
 		this.createdBy = createdBy;
 	}
-	
-	public Date getCreatedOn() 
-	{
+
+	public Date getCreatedOn() {
 		return createdOn;
 	}
-	
-	public void setCreatedOn(Date createdOn) 
-	{
+
+	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-	
-	public int getModifiedBy() 
-	{
+
+	public UserMaster getModifiedBy() {
 		return modifiedBy;
 	}
-	
-	public void setModifiedBy(int modifiedBy) 
-	{
+
+	public void setModifiedBy(UserMaster modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
-	
-	public Date getModifiedOn() 
-	{
+
+	public Date getModifiedOn() {
 		return modifiedOn;
 	}
-	
-	public void setModifiedOn(Date modifiedOn) 
-	{
+
+	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
+
 }

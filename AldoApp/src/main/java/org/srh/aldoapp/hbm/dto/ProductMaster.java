@@ -13,13 +13,14 @@ import org.srh.aldoapp.hbm.dto.ProductType;
 @Entity
 @Table(name="products_master")
 
-/*
+/**
  * The 'product_master' table entity for 'vendor_integration_platform' database.
- * Date:05 Dec 2018
+ * Date: 05 Dec 2018
  * @author Shraddha
  */
 
 public class ProductMaster {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private int id;
@@ -29,6 +30,7 @@ public class ProductMaster {
 	@ManyToOne
 	@JoinColumn(name = "productTypeId")
 	private ProductType productTypeId;
+
 	private String productName;
 	private String productDescription;
 	private float productPrice;

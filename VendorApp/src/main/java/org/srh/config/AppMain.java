@@ -1,18 +1,14 @@
 package org.srh.config;
 
-import java.nio.charset.StandardCharsets;
-import java.util.List;
+
+import org.srh.vipapp.hbm.dto.*;
 
 import org.hibernate.Session;
-import org.hibernate.query.Query;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.srh.util.AppLog;
+import org.srh.util.Common;
 import org.srh.vipapp.hbm.RootHB;
-import org.srh.vipapp.hbm.dao.impl.ApiStructureDaoImpl;
-import org.srh.vipapp.hbm.dto.ApiStructure;
-import org.srh.vipapp.hbm.dto.UserMaster;
-import org.srh.vipapp.hbm.hql.ApiStructureQuery;
-
-import com.google.common.hash.Hashing;
 
 
 /**
@@ -27,10 +23,13 @@ public class AppMain {
 
 	public static void main(String[] args) {
 		// testCustomerFunctinalities();
+		JSONObject jsonObject = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
 		try {
 
 			try ( Session session = RootHB.getSessionFactory().openSession(); ) {
-				session.find(UserMaster.class, 1);
+				Object obj = Common.hidePojoData(session.find(ApiStructure.class, 2));
+				jsonObject = new JSONObject(obj);
 			}
 			
 			/*List list = new ApiStructureDaoImpl().getVendorsApiStructure(1);
@@ -41,6 +40,8 @@ public class AppMain {
 			AppLog.log(AppMain.class, ex);
 		}
 		finally {
+			AppLog.print("JSONObject ===>>> "+jsonObject);
+			AppLog.print("JSONArray ===>>> "+jsonArray);
 			System.exit(0);
 		}
 	}
