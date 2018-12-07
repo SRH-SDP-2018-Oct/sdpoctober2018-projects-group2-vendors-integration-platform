@@ -1,5 +1,6 @@
 package org.srh.vipapp.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -81,17 +82,6 @@ public class ProductsServiceImpl implements ProductsService{
 	}
 
 	@Override
-	public ServiceRespArray getProductsOnOffers() {
-		List<ProductsMaster> productsOnOffersList = productsMasterDao.getAllProductsOnOffer();
-		if(productsOnOffersList == null) {
-			String err = "No Products on Offers.";
-			AppLog.log(ProductsServiceImpl.class, err);
-			return Common.buildServiceRespArrayError(ErrorCode.NOT_FOUND, err);
-		}
-		return Common.buildServiceRespArray(productsOnOffersList);
-	}
-
-	@Override
 	public ServiceRespArray getProductsByProductType(String productTypeName) {
 		// Input Validation
 		if(Common.nullOrEmptyTrim(productTypeName))
@@ -110,6 +100,20 @@ public class ProductsServiceImpl implements ProductsService{
 
 		// Data Exist, Return Success
 		return Common.buildServiceRespArray(productsByProductTypeList);
+	}
+
+
+	// TODO - Implement this function later with offers
+	@Override
+	public ServiceRespArray getProductsOnOffers() {
+		List<ProductsMaster> productsOnOffersList = new ArrayList<>();
+		// List<ProductsMaster> productsOnOffersList = productsMasterDao.getAllProductsOnOffer();
+		if(productsOnOffersList == null) {
+			String err = "No Products on Offers.";
+			AppLog.log(ProductsServiceImpl.class, err);
+			return Common.buildServiceRespArrayError(ErrorCode.NOT_FOUND, err);
+		}
+		return Common.buildServiceRespArray(productsOnOffersList);
 	}
 
 }
