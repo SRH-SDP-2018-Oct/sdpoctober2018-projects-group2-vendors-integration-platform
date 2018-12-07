@@ -91,7 +91,7 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 
 	}
 
-	/*
+
 	@Override
 	public List<ProductsMaster> getAllProductsOnOffer() {
 		Session session = RootHB.getSessionFactory().openSession();
@@ -105,8 +105,8 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 		catch(NoResultException ex){
 			AppLog.log(this.getClass(), StringUtil.append("There are no products on Offers!",ex.getMessage()) );
 		}
-		return null;
+		return new ArrayList<>();
 	}
-	*/
+	
 
 }

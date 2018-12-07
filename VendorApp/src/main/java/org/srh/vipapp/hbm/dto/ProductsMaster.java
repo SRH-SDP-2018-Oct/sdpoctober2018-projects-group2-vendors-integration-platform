@@ -19,6 +19,7 @@ import org.srh.vipapp.hbm.hql.ProductsMasterQuery;
 @NamedQuery(name = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$N, query = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$Q)
 @NamedQuery(name = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$N, query = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$Q)
 @NamedQuery(name = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$N, query = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$N)
+@NamedQuery(name = ProductsMasterQuery.FIND_PRODUCT_BY_OFFERS_$N, query = ProductsMasterQuery.FIND_PRODUCT_BY_OFFERS_$Q)
 
 /**
  * The 'product_master' table entity for 'vendor_integration_platform' database.
@@ -55,6 +56,9 @@ public class ProductsMaster {
 	private BigDecimal productPrice;
 	private String productDescription;
 	private String productShelfLife = "";
+	
+	private boolean hasAnOffer;
+	private String offerDetail;
 
 	private String otherDetails = "{}";
 	private String apiDetails = "{}";
@@ -109,6 +113,22 @@ public class ProductsMaster {
 
 	public void setProductShelfLife(String productShelfLife) {
 		this.productShelfLife = productShelfLife;
+	}
+
+	public boolean isHasAnOffer() {
+		return hasAnOffer;
+	}
+
+	public void setHasAnOffer(boolean hasAnOffer) {
+		this.hasAnOffer = hasAnOffer;
+	}
+
+	public String getOfferDetail() {
+		return offerDetail;
+	}
+
+	public void setOfferDetail(String offerDetail) {
+		this.offerDetail = offerDetail;
 	}
 
 	public VendorMaster getVendorId() {

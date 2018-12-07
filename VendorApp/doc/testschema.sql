@@ -1,5 +1,5 @@
 
-DROP DATABASE vendor_app;
+DROP DATABASE IF EXISTS vendor_app;
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/vendor_app /*!40100 DEFAULT CHARACTER SET latin1 */;
 
@@ -70,6 +70,12 @@ SELECT * FROM user_master;
 
 
 
+
+
+/* ********************************************************************************** */
+-- CUSTOMER
+/* ********************************************************************************** */
+
 DROP TABLE IF EXISTS customer_master;
 
 CREATE TABLE customer_master (
@@ -116,6 +122,10 @@ SELECT * FROM customer_master;
 
 
 
+/* ********************************************************************************** */
+-- VENDOR
+/* ********************************************************************************** */
+
 DROP TABLE IF EXISTS vendor_master;
 
 CREATE TABLE vendor_master (
@@ -155,6 +165,141 @@ WHERE user_type.typeName = 'system' AND um.userName='system';
 SELECT * FROM vendor_master;
 
 
+DROP TABLE IF EXISTS vendor_branches;
+
+
+CREATE TABLE vendor_branches (
+  branchId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  vendorId INT UNSIGNED NOT NULL, 
+  location VARCHAR(100) DEFAULT NULL,
+  locationLat VARCHAR(20) DEFAULT NULL,
+  locationLon VARCHAR(20) DEFAULT NULL,
+  city VARCHAR(30) NOT NULL,
+  deleteFlag TINYINT(1) NOT NULL DEFAULT '0',
+  createdBy INT UNSIGNED NOT NULL COMMENT 'user who registered the given user',
+  createdOn DATETIME NOT NULL COMMENT 'user created on',
+  modifiedBy INT UNSIGNED NOT NULL COMMENT 'user who modified the given user',
+  modifiedOn DATETIME NOT NULL COMMENT 'user modified on',
+  PRIMARY KEY (branchId),
+  UNIQUE KEY (vendorId, location),
+  FOREIGN KEY (vendorId) REFERENCES vendor_master(vendorId) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (createdBy) REFERENCES user_master(userId) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (modifiedBy) REFERENCES user_master(userId) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=INNODB DEFAULT CHARSET=latin1 ;
+
+DESC vendor_branches;
+
+
+INSERT INTO vendor_branches (vendorId, createdBy, modifiedBy, location, locationLat, locationLon, city, createdOn, modifiedOn)
+SELECT vm.vendorId, um.userId, um.userId,
+  'Mannheimer Str. 177, 69123 Heidelberg', '49.419090' , '8.651890', 'Heidelberg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+FROM vendor_master vm, user_master um
+WHERE vm.vendorName = 'Netti' AND um.username='system';
+
+
+INSERT INTO vendor_branches (vendorId, createdBy, modifiedBy, location, locationLat, locationLon, city, createdOn, modifiedOn)
+SELECT vm.vendorId, um.userId, um.userId,
+  'Czernyring 14, 69115 Heidelberg', '49.404011' , '8.670450', 'Heidelberg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+FROM vendor_master vm, user_master um
+WHERE vm.vendorName = 'Aldo' AND um.username='system';
+
+
+
+SELECT * FROM vendor_branches ;
+
+
+
+DROP TABLE IF EXISTS branch_timings;
+
+CREATE TABLE branch_timings (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  branchId INT UNSIGNED NOT NULL,
+  dayInWeek TINYINT(1) NOT NULL COMMENT '1-Sunday, 2-Monday, 3-Tuesday, 4-Wednesday, 5-Thursday, 6-Friday, 7-Saturday',
+  isOpen TINYINT(1) NOT NULL,
+  openingTime TIME,
+  closingTime TIME,
+  deleteFlag TINYINT(1) NOT NULL DEFAULT '0',
+  createdOn DATETIME NOT NULL,
+  modifiedOn DATETIME NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY (branchId, dayInWeek),
+  FOREIGN KEY (branchId) REFERENCES vendor_branches(branchId) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=INNODB DEFAULT CHARSET=latin1 ;
+
+DESC branch_timings;
+
+
+-- Sunday
+
+INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
+SELECT bm.branchId, 1, 0, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+FROM vendor_branches bm
+WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
+
+
+-- Monday
+
+INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
+SELECT bm.branchId, 2, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+FROM vendor_branches bm
+WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
+
+
+
+-- Tuesday
+
+INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
+SELECT bm.branchId, 3, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+FROM vendor_branches bm
+WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
+
+
+
+-- Wednesday
+
+INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
+SELECT bm.branchId, 4, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+FROM vendor_branches bm
+WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
+
+
+
+-- Thursday
+
+INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
+SELECT bm.branchId, 5, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+FROM vendor_branches bm
+WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
+
+
+
+-- Friday
+
+INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
+SELECT bm.branchId, 6, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+FROM vendor_branches bm
+WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
+
+
+
+-- Saturday
+
+INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
+SELECT bm.branchId, 7, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+FROM vendor_branches bm
+WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
+
+
+
+SELECT * FROM branch_timings;
+
+
+
+
+
+/* ********************************************************************************** */
+-- API CONFIG
+/* ********************************************************************************** */
 
 
 DROP TABLE IF EXISTS vendor_api_config;
@@ -211,6 +356,38 @@ CREATE TABLE api_structure_constants (
 DESC api_structure_constants;
 
 
+INSERT INTO api_structure_constants (createdBy, modifiedBy, constantName, displayName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, 'product_id', 'Product Id', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um
+WHERE um.username = 'system';
+
+INSERT INTO api_structure_constants (createdBy, modifiedBy, constantName, displayName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, 'product_name', 'Product Name', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um
+WHERE um.username = 'system';
+
+INSERT INTO api_structure_constants (createdBy, modifiedBy, constantName, displayName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, 'product_description', 'Product Description', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um
+WHERE um.username = 'system';
+
+INSERT INTO api_structure_constants (createdBy, modifiedBy, constantName, displayName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, 'product_type', 'Product Type', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um
+WHERE um.username = 'system';
+
+INSERT INTO api_structure_constants (createdBy, modifiedBy, constantName, displayName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, 'product_price', 'Product Price', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um
+WHERE um.username = 'system';
+
+INSERT INTO api_structure_constants (createdBy, modifiedBy, constantName, displayName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, 'vendor_id', 'Vendor Id', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um
+WHERE um.username = 'system';
+
+SELECT * FROM api_structure_constants;
+
 
 DROP TABLE IF EXISTS api_structure;
 
@@ -234,6 +411,73 @@ CREATE TABLE api_structure (
 ) ENGINE=INNODB;
 
 
-DESC api_structure_constants;
+DESC api_structure;
 
+-- Netti - Product Id
+INSERT INTO api_structure (createdBy, modifiedBy, keyConstantId, vendorId, keyName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'id', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um, api_structure_constants apisc, vendor_master vm
+WHERE um.username = 'system'  AND  apisc.constantName='product_id' AND vm.vendorName = 'Netti' ;
+
+-- Netti - Product Name
+INSERT INTO api_structure (createdBy, modifiedBy, keyConstantId, vendorId, keyName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'name', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um, api_structure_constants apisc, vendor_master vm
+WHERE um.username = 'system'  AND  apisc.constantName='product_name' AND vm.vendorName = 'Netti' ;
+
+
+
+
+
+/* ********************************************************************************** */
+-- Product
+/* ********************************************************************************** */
+
+DROP TABLE IF EXISTS product_type;
+
+CREATE TABLE product_type(
+  productTypeId INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  productTypeName VARCHAR(30) NOT NULL,
+  deleteFlag TINYINT(1) DEFAULT '0' NOT NULL,
+  createdOn DATETIME NOT NULL,
+  createdBy INT UNSIGNED NOT NULL,
+  modifiedOn DATETIME NOT NULL,
+  modifiedBy INT UNSIGNED NOT NULL,
+  FOREIGN KEY (createdBy) REFERENCES user_master (userId),
+  FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
+);
+
+DESC product_type;
+
+
+
+
+DROP TABLE IF EXISTS product_master;
+
+CREATE TABLE products_master(
+  productId INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  productTypeId INT UNSIGNED NOT NULL,
+  productName VARCHAR(50) NOT NULL,
+  productPrice DECIMAL(10,0) DEFAULT NULL,
+  productDescription TEXT,
+  productShelfLife VARCHAR(50) DEFAULT '',
+  hasAnOffer TINYINT(1) DEFAULT '0' NOT NULL,
+  offerDetail TEXT NOT NULL DEFAULT '',
+  vendorId INT UNSIGNED NOT NULL,
+  branchId INT UNSIGNED NOT NULL,
+  otherDetails TEXT NOT NULL DEFAULT '',
+  apiDetails TEXT NOT NULL DEFAULT '',
+  deleteFlag TINYINT(1) DEFAULT '0' NOT NULL,
+  createdOn DATETIME NOT NULL,
+  createdBy INT UNSIGNED NOT NULL,
+  modifiedOn DATETIME NOT NULL,
+  modifiedBy INT UNSIGNED NOT NULL,
+  FOREIGN KEY (productTypeId) REFERENCES product_type (productTypeId),
+  FOREIGN KEY (vendorId) REFERENCES vendor_master (vendorId),
+  FOREIGN KEY (branchId) REFERENCES vendor_branches (branchId),
+  FOREIGN KEY (createdBy) REFERENCES user_master (userId),
+  FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
+);
+
+DESC product_master;
 

@@ -39,10 +39,10 @@ public interface ProductsMasterDao {
 
 
 
-	/*
+	/**
 	 * Returns all the {@link ProductsMaster} entities on Offer from persistence database
 	 * @return productsMasterList {@link List<ProductsMaster>}
 	 */
-	// public List<ProductsMaster> getAllProductsOnOffer();
+	public List<ProductsMaster> getAllProductsOnOffer();
 
 }

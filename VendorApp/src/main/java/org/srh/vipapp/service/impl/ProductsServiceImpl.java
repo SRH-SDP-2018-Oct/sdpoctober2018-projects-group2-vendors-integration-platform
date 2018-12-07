@@ -1,6 +1,5 @@
 package org.srh.vipapp.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -103,11 +102,9 @@ public class ProductsServiceImpl implements ProductsService{
 	}
 
 
-	// TODO - Implement this function later with offers
 	@Override
 	public ServiceRespArray getProductsOnOffers() {
-		List<ProductsMaster> productsOnOffersList = new ArrayList<>();
-		// List<ProductsMaster> productsOnOffersList = productsMasterDao.getAllProductsOnOffer();
+		List<ProductsMaster> productsOnOffersList = productsMasterDao.getAllProductsOnOffer();
 		if(productsOnOffersList == null) {
 			String err = "No Products on Offers.";
 			AppLog.log(ProductsServiceImpl.class, err);
