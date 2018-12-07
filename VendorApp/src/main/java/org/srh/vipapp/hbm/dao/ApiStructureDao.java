@@ -16,6 +16,7 @@ public interface ApiStructureDao {
 
 	/**
 	 * Returns all the {@link ApiStructure} entities from persistence database
+	 * associated to the given vendor id.
 	 * @param vendorId {@link Integer}
 	 * @return apiStructureList {@link List<ApiStructure>}
 	 */
@@ -23,6 +24,7 @@ public interface ApiStructureDao {
 
 	/**
 	 * Returns all the {@link ApiStructure} entities from persistence database
+	 * associated to the given vendor name.
 	 * @param vendorName {@link String}
 	 * @return apiStructureList {@link List<ApiStructure>}
 	 */

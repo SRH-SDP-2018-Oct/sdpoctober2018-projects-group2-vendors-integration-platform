@@ -2,23 +2,26 @@ package org.srh.vipapp.hbm.dto;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.srh.vipapp.hbm.hql.VendorBranchQuery;
+
 /**
- * The Entity representing the table 'branch_master' from the 'netti_vendor' database.
- * Date: 01 Dec 2018
- * @author YASHAS
+ * The Entity representing the table 'vendor_brach'.
+ * Date: 07 Dec 2018
+ * @author Vivek
  */
 
 @Entity
 @Table(name="vendor_branches")
+@NamedQuery(name=VendorBranchQuery.GET_ALL_VENDOR_BRANCHES_$N,query=VendorBranchQuery.GET_ALL_VENDOR_BRANCHES_$Q)
 public class VendorBranch {
 
 	@Id
@@ -27,7 +30,7 @@ public class VendorBranch {
 
 	@ManyToOne
 	@JoinColumn(name="vendorId")
-	private VendorMaster vendor;
+	private VendorMaster vendorId;
 
 	@ManyToOne
 	@JoinColumn(name="createdBy")
@@ -51,11 +54,11 @@ public class VendorBranch {
 		this.branchId = branchId;
 	}
 
-	public VendorMaster getVendor() {
-		return vendor;
+	public VendorMaster getVendorId() {
+		return vendorId;
 	}
-	public void setVendor(VendorMaster vendor) {
-		this.vendor = vendor;
+	public void setVendorId(VendorMaster vendorId) {
+		this.vendorId = vendorId;
 	}
 
 	public String getLocation() {

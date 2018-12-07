@@ -11,6 +11,7 @@ import org.srh.util.AppLog;
 import org.srh.util.Common;
 import org.srh.vipapp.hbm.RootHB;
 import org.srh.vipapp.hbm.dao.impl.ApiStructureDaoImpl;
+import org.srh.vipapp.hbm.dao.impl.VendorBranchDaoImpl;
 import org.srh.vipapp.hbm.dao.impl.VendorMasterDaoImpl;
 
 
@@ -25,14 +26,19 @@ public class AppMain {
 
 	public static void main(String[] args) {
 		// ETL PROCESS
-		testHbmEntityId();
+		String vendorName = "Netti";
 
 		// Get Vendor
-		VendorMaster vendorMaster = new VendorMasterDaoImpl().findByVendorName("Netti");
-		if(vendorMaster!=null)
+		VendorMaster vendorMaster = new VendorMasterDaoImpl().findByVendorName(vendorName);
+		if(vendorMaster==null)
 			return;
 
-		
+		List<VendorBranch> listBranchMaster = new VendorBranchDaoImpl().getAllBranches(vendorName);
+		if(listBranchMaster==null)
+			return;
+
+
+		AppLog.print("========>>>>>>>>  "+ new JSONArray(listBranchMaster));
 		
 		// 1. Get API Structure for the Vendor
 		List<ApiStructure> list = new ApiStructureDaoImpl().getApiStructureOfVendor(1);
