@@ -19,6 +19,13 @@ public interface ApiStructureDao {
 	 * @param vendorId {@link Integer}
 	 * @return apiStructureList {@link List<ApiStructure>}
 	 */
-	public List<ApiStructure> getVendorsApiStructure(int vendorId);
+	public List<ApiStructure> getApiStructureOfVendor(int vendorId);
+
+	/**
+	 * Returns all the {@link ApiStructure} entities from persistence database
+	 * @param vendorName {@link String}
+	 * @return apiStructureList {@link List<ApiStructure>}
+	 */
+	public List<ApiStructure> getApiStructureOfVendor(String vendorName);
 
 }

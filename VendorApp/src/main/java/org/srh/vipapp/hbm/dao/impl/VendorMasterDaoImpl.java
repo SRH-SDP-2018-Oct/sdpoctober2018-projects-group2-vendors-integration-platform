@@ -21,23 +21,26 @@ import org.srh.vipapp.hbm.hql.VendorMasterQuery;
  * @author Maitreyee
  */
 public class VendorMasterDaoImpl implements VendorMasterDao {
+
+
+	@Override
+	public VendorMaster findById(int vendorId, Session session) {
+		try {
+			return session.find(VendorMaster.class, vendorId);
+		}
+		catch(NoResultException ex) {
+			System.err.println( StringUtil.append("No Vendor exist with Id:", vendorId) );
+			return null;
+		}
+	}
 	
 
 	@Override
 	public VendorMaster findById(int vendorId) {
-		VendorMaster vendorMaster = null;
-		Session session = RootHB.getSessionFactory().openSession();
-		try {
-			vendorMaster = session.find(VendorMaster.class, vendorId);
+		try (Session session = RootHB.getSessionFactory().openSession();) {
+			return findById(vendorId, session);
 		}
-		catch(NoResultException ex) {
-			System.err.println( StringUtil.append("No Vendor exist with Id:", vendorId) );
-		}
-		finally {
-			RootHB.closeSession(session);
-		}
-		return vendorMaster;
-	}	
+	}
 	
 
 	@Override
@@ -52,8 +55,7 @@ public class VendorMasterDaoImpl implements VendorMasterDao {
 
 
 	@Override
-	public VendorMaster findByVendorName(String vendorname) {
-		Session session = RootHB.getSessionFactory().openSession();
+	public VendorMaster findByVendorName(String vendorname, Session session) {
 		try {
 			@SuppressWarnings("unchecked")
 			Query<VendorMaster> query = session.createNamedQuery(VendorMasterQuery.FIND_VENDOR_BY_VENDORNAME_$N);
@@ -64,8 +66,13 @@ public class VendorMasterDaoImpl implements VendorMasterDao {
 			System.err.println( StringUtil.append("No user with exist with Username:", vendorname) );
 			return null;
 		}
-		finally {
-			RootHB.closeSession(session);
+	}
+
+
+	@Override
+	public VendorMaster findByVendorName(String vendorname) {
+		try (Session session = RootHB.getSessionFactory().openSession();) {
+			return findByVendorName(vendorname, session);
 		}
 	}
 

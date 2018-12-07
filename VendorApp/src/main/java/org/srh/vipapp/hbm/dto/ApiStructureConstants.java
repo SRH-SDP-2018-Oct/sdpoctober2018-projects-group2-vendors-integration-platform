@@ -11,9 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.srh.annotation.POJO;
+import org.srh.vipapp.hbm.hql.ApiStructureConstantsQuery;
 
 /**
  * The Entity representing the table 'branch_timings' from the 'aldi_vendor' database.
@@ -23,9 +25,10 @@ import org.srh.annotation.POJO;
 
 @Entity
 @Table(name="api_structure_constants")
+@NamedQuery(name=ApiStructureConstantsQuery.GET_ALL_STRUCTURE_API_$N,query=ApiStructureConstantsQuery.GET_ALL_STRUCTURE_API_$Q)
 @POJO(hidden= {"setCreatedBy","setModifiedBy"}, hiddenParam= {"org.srh.vipapp.hbm.dto.UserMaster","org.srh.vipapp.hbm.dto.UserMaster"})
 public class ApiStructureConstants {
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int apiStructId;

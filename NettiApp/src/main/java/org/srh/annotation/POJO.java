@@ -13,4 +13,6 @@ public @interface POJO {
 
 	public String[] hiddenParam() default "";
 
+	public String[] hideInnerReferredData() default "";
+
 }

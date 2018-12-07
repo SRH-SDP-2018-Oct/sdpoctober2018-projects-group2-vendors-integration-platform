@@ -7,11 +7,11 @@ package org.srh.vipapp.hbm.hql;
  * @author Maitreyee
  *
  */
-public class ApiStructureConstantsQuery {
+public final class ApiStructureConstantsQuery {
 	
 	private ApiStructureConstantsQuery() { }
 
-	public static final String GET_ALL_VENDOR_API_$N = "GET_ALL_VENDOR_API";
-	public static final String GET_ALL_VENDOR_API_$Q = "FROM ApiStructureConstants WHERE deleteFlag=0";
+	public static final String GET_ALL_STRUCTURE_API_$N = "GET_ALL_STRUCTURE_API";
+	public static final String GET_ALL_STRUCTURE_API_$Q = "FROM ApiStructureConstants WHERE deleteFlag=0";
 
 }

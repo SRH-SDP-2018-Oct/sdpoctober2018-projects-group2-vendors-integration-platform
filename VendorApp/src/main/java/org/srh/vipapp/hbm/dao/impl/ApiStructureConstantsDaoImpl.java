@@ -23,7 +23,7 @@ public class ApiStructureConstantsDaoImpl implements ApiStructureConstantsDao {
 		if(listApiStructureConstants==null) {
 			try ( Session session = RootHB.getSessionFactory().openSession(); ) {
 				@SuppressWarnings("unchecked")
-				Query<ApiStructureConstants> query = session.createNamedQuery(ApiStructureConstantsQuery.GET_ALL_VENDOR_API_$N);
+				Query<ApiStructureConstants> query = session.createNamedQuery(ApiStructureConstantsQuery.GET_ALL_STRUCTURE_API_$N);
 				listApiStructureConstants = query.getResultList();
 			}
 		}

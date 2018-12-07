@@ -1,9 +1,9 @@
 
-DROP DATABASE IF EXISTS vendor_app;
+DROP DATABASE IF EXISTS vendor_integration_app;
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/vendor_app /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/vendor_integration_app /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-USE vendor_app;
+USE vendor_integration_app;
 
 
 DROP TABLE IF EXISTS user_type;

@@ -125,6 +125,29 @@ public final class Common {
 	}
 
 
+	/**
+	 * Checks if the given list has classes annotated with {@link POJO},
+	 * if yes then the setter fields mentioned in annotation are nullified.
+	 * @param list {@link List<?>}
+	 * @return flag {@link Boolean}
+	 */
+	public static boolean hidePojoDataList(List<?> list) {
+		if(list==null || list.isEmpty())
+			return false;
+		int len = list.size();
+		for(int i=len-1; i>-1; i--) {
+			Object obj = list.get(i);
+			POJO pojo = checkPojoAnnotation(obj);
+			if(pojo==null)
+				continue;
+			Class<?> cls = obj.getClass();
+			hidePojoDataSetNull(obj, pojo, cls);
+			hidePojoDataSetInnerNull(obj, pojo, cls);
+		}
+		return true;
+	}
+
+
 	public static ServiceResp buildServiceRespError(ErrorCode errorCode, String errorDescription) {
 		return new ServiceResp().setErrorCode(errorCode).setErrorDescription(errorDescription);
 	}

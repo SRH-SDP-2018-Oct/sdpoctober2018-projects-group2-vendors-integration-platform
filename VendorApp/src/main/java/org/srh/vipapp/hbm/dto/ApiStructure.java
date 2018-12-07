@@ -25,7 +25,7 @@ import org.srh.vipapp.hbm.hql.ApiStructureQuery;
 
 @Entity
 @Table(name="api_structure")
-@NamedQuery(name=ApiStructureQuery.GET_ALL_VENDOR_API_$N, query=ApiStructureQuery.GET_ALL_VENDOR_API_$Q)
+@NamedQuery(name=ApiStructureQuery.GET_API_STRUCTURE_OF_VENDOR_$N, query=ApiStructureQuery.GET_API_STRUCTURE_OF_VENDOR_$Q)
 @POJO(
 		hidden={"setCreatedBy","setModifiedBy"},
 		hiddenParam={"org.srh.vipapp.hbm.dto.UserMaster","org.srh.vipapp.hbm.dto.UserMaster"},

@@ -50,16 +50,18 @@ public final class Common {
 	 * @return modified {@link Object}
 	 */
 	public static Object hidePojoData(Object obj) {
-		if(obj==null)
+		POJO pojo = checkPojoAnnotation(obj);
+		if(pojo==null)
 			return obj;
-
 		Class<?> cls = obj.getClass();
+		hidePojoDataSetNull(obj, pojo, cls);
+		hidePojoDataSetInnerNull(obj, pojo, cls);
+		return obj;
+	}
 
-		Annotation annotation = cls.getAnnotation(POJO.class);
-		if(annotation==null)
-			return obj;
 
-		POJO pojo = (POJO) annotation;
+	private static Object hidePojoDataSetNull(Object obj, POJO pojo, Class<?>cls) {
+
 		String[] hidden = pojo.hidden();
 		String[] hiddenParam = pojo.hiddenParam();
 
@@ -68,7 +70,7 @@ public final class Common {
 
 		if(Common.nullOrEmptyTrim(hidden[0]) || Common.nullOrEmptyTrim(hiddenParam[0]) )
 			return obj;
-		
+
 		for(int i=hidden.length-1; i>-1; i--) {
 			String hiddenField = hidden[i];
 			String hiddenClass = hiddenParam[i];
@@ -77,10 +79,72 @@ public final class Common {
 				m.invoke(obj, new Object[1]);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
 					| NoSuchMethodException | SecurityException | ClassNotFoundException ex) {
-				LOGGER.error("Exception occurred during hidden POJO data", ex);
+				LOGGER.error("Exception occurred during hiding POJO data", ex);
 			}
 		}
 		return obj;
+	}
+
+
+	private static Object hidePojoDataSetInnerNull(Object obj, POJO pojo, Class<?>cls) {
+		String[] hidden = pojo.hideInnerReferredData();
+
+		if(hidden.length==0)
+			return obj;
+
+		if(Common.nullOrEmptyTrim(hidden[0]))
+			return obj;
+
+		for(int i=hidden.length-1; i>-1; i--) {
+			String hiddenField = hidden[i];
+			try {
+				Method m = cls.getMethod(hiddenField);
+				Object objRefer = m.invoke(obj);
+				hidePojoData(objRefer);
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+					| NoSuchMethodException | SecurityException ex) {
+				LOGGER.error("Exception occurred during hiding POJO inner data", ex);
+			}
+		}
+		return obj;
+	}
+
+
+	private static POJO checkPojoAnnotation(Object obj) {
+		if(obj==null)
+			return null;
+
+		Class<?> cls = obj.getClass();
+
+		Annotation annotation = cls.getAnnotation(POJO.class);
+		if(annotation==null)
+			return null;
+
+		POJO pojo = (POJO) annotation;
+		return pojo;
+	}
+
+
+	/**
+	 * Checks if the given list has classes annotated with {@link POJO},
+	 * if yes then the setter fields mentioned in annotation are nullified.
+	 * @param list {@link List<?>}
+	 * @return flag {@link Boolean}
+	 */
+	public static boolean hidePojoDataList(List<?> list) {
+		if(list==null || list.isEmpty())
+			return false;
+		int len = list.size();
+		for(int i=len-1; i>-1; i--) {
+			Object obj = list.get(i);
+			POJO pojo = checkPojoAnnotation(obj);
+			if(pojo==null)
+				continue;
+			Class<?> cls = obj.getClass();
+			hidePojoDataSetNull(obj, pojo, cls);
+			hidePojoDataSetInnerNull(obj, pojo, cls);
+		}
+		return true;
 	}
 
 
