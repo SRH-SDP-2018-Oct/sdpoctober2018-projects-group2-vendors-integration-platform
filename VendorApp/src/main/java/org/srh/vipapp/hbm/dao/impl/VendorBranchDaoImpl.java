@@ -14,6 +14,12 @@ import org.srh.vipapp.hbm.dto.VendorBranch;
 import org.srh.vipapp.hbm.dto.VendorMaster;
 import org.srh.vipapp.hbm.hql.VendorBranchQuery;
 
+
+/**
+ * Implementation class of HBM DAO {@link VendorBranchDao} <br/>
+ * Date: 07 Dec 2018
+ * @author Vivek
+ */
 public class VendorBranchDaoImpl implements VendorBranchDao {
 
 	private VendorMasterDao vendorMasterDao = new VendorMasterDaoImpl();

@@ -8,7 +8,7 @@ import java.util.List;
 import org.srh.vipapp.hbm.dto.ApiStructure;
 
 /**
- * Implementation class of HBM DAO {@link ApiStructureDao}
+ * HBM DAO to perform task related to {@link ApiStructure} entity.  <br/>
  * Date: 05 Nov 2018
  * @author Maitreyee
  */
