@@ -11,6 +11,7 @@ import org.srh.util.AppLog;
 import org.srh.util.Common;
 import org.srh.vipapp.hbm.RootHB;
 import org.srh.vipapp.hbm.dao.impl.ApiStructureDaoImpl;
+import org.srh.vipapp.hbm.dao.impl.VendorBranchDaoImpl;
 import org.srh.vipapp.hbm.dao.impl.VendorMasterDaoImpl;
 
 
@@ -25,14 +26,19 @@ public class AppMain {
 
 	public static void main(String[] args) {
 		// ETL PROCESS
-		testHbmEntityId();
+		String vendorName = "Netti";
 
 		// Get Vendor
-		VendorMaster vendorMaster = new VendorMasterDaoImpl().findByVendorName("Netti");
-		if(vendorMaster!=null)
+		VendorMaster vendorMaster = new VendorMasterDaoImpl().findByVendorName(vendorName);
+		if(vendorMaster==null)
 			return;
 
-		
+		List<VendorBranch> listBranchMaster = new VendorBranchDaoImpl().getAllBranches(vendorName);
+		if(listBranchMaster==null)
+			return;
+
+
+		AppLog.print("========>>>>>>>>  "+ new JSONArray(listBranchMaster));
 		
 		// 1. Get API Structure for the Vendor
 		List<ApiStructure> list = new ApiStructureDaoImpl().getApiStructureOfVendor(1);
@@ -40,7 +46,7 @@ public class AppMain {
 		// 2. Get Product Data from Vendor API
 		String data = "[{\"deleteFlag\":false,\"branchId\":1,\"productId\":1,\"productTypeId\":1,\"productDescription\":\"Energy : 197 KJ,1.5 %\",\"productName\":\"H-milk\",\"productPrice\":1},{\"deleteFlag\":false,\"branchId\":1,\"productId\":2,\"productTypeId\":2,\"productDescription\":\"Brand : Chiquita, Mainly grown in columbia,Slight sour to very sweet\",\"productName\":\"Banana\",\"productPrice\":2},{\"deleteFlag\":false,\"branchId\":1,\"productId\":3,\"productTypeId\":3,\"productDescription\":\"Origin : Spain Or Italy, Green or Dark Color, Store : In Refrigerator\",\"productName\":\"Broccoli\",\"productPrice\":1}]";
 		JSONArray apiJSONArray = null;
-		
+
 		try {
 			apiJSONArray = new JSONArray(data);
 		}
