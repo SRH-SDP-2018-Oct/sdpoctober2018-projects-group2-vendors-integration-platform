@@ -37,8 +37,10 @@ public final class HttpUtil {
 	 */
 	public static JSONObject successResponse(Object obj) {
 		JSONObject jsonObject;
-		if(obj!=null)
-			jsonObject = new JSONObject(Common.hidePojoData(obj));
+		if(obj!=null) {
+			Object newObj = Common.hidePojoData(obj);
+			jsonObject = new JSONObject(newObj);
+		}
 		else
 			jsonObject = new JSONObject();
 		return new JSONObject().put(KEY_DATA, jsonObject).put(KEY_STATUS, KEY_SUCCESS);

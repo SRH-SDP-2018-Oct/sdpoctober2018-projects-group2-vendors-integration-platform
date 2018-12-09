@@ -2,10 +2,12 @@ package org.srh.vipapp.service.impl;
 
 import java.util.List;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.srh.bean.ServiceResp;
 import org.srh.bean.ServiceRespArray;
 import org.srh.constants.ErrorCode;
+import org.srh.util.AppLog;
 import org.srh.util.Common;
 import org.srh.util.NumberUtil;
 import org.srh.util.StringUtil;
@@ -79,6 +81,32 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 		}
 		// Data Exist, Return Success
 		return Common.buildServiceRespArray(customerCart);
+	}
+
+
+	@Override
+	public ServiceResp addProduct(String data) {
+		if(Common.nullOrEmpty(data)) {
+			String description = StringUtil.append("Invalid data [", data, "] provided as an input.");
+			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
+		}
+		JSONObject jsonData;
+		try {
+			AppLog.print(data);
+			jsonData = new JSONObject(data).getJSONObject("data");
+			AppLog.print(jsonData);
+		}
+		catch(Exception ex) {
+			String description = StringUtil.append("Invalid data format [", data, "] provided as an input.");
+			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
+		}
+		return Common.buildServiceResp(jsonData);
+	}
+
+
+	@Override
+	public ServiceResp addAllProduct(String data) {
+		return null;
 	}
 
 }
