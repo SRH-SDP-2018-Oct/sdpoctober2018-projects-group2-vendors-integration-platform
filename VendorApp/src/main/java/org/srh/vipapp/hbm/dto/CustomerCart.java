@@ -28,20 +28,20 @@ public class CustomerCart {
 	private long cartId;
 
 	@ManyToOne
+	@JoinColumn(name="productId")
+	private ProductsMaster productId;
+
+	@ManyToOne
+	@JoinColumn(name="customerId")
+	private CustomerMaster customerId;
+
+	@ManyToOne
 	@JoinColumn(name="createdBy")
 	private UserMaster createdBy;
 
 	@ManyToOne
 	@JoinColumn(name="modifiedBy")
 	private UserMaster modifiedBy;
-
-	@ManyToOne
-	@JoinColumn(name="userId")
-	private  UserMaster userId;
-
-	@ManyToOne
-	@JoinColumn(name="productId")
-	private ProductsMaster productId;
 
 	private String displayName;
 
@@ -83,14 +83,14 @@ public class CustomerCart {
 		this.modifiedBy = modifiedBy;
 	}
 	
-	public UserMaster getId() 
+	public CustomerMaster getId() 
 	{
-		return userId;
+		return customerId;
 	}
 	
-	public void setId(UserMaster userId) 
+	public void setId(CustomerMaster customerId) 
 	{
-		this.userId = userId;
+		this.customerId = customerId;
 	}
 	
 	public ProductsMaster getProductId() 

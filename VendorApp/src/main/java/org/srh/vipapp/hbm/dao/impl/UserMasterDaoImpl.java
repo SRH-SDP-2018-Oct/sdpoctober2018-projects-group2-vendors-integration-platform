@@ -66,4 +66,39 @@ public class UserMasterDaoImpl implements UserMasterDao {
 		}
 	}
 
+
+	@Override
+	public UserMaster findSystemUser() {
+		Session session = RootHB.getSessionFactory().openSession();
+		try {
+			@SuppressWarnings("unchecked")
+			Query<UserMaster> query = session.createNamedQuery(UserMasterQuery.FIND_USER_BY_USERNAME_$N);
+			query.setParameter(UserMasterQuery.FIND_USER_BY_USERNAME_$P1, SYSTEM_USER);
+			return query.getSingleResult();
+		}
+		catch(NoResultException ex) {
+			AppLog.log(this.getClass(), StringUtil.append("No user with exist with Username:", SYSTEM_USER) );
+			return null;
+		}
+		finally {
+			RootHB.closeSession(session);
+		}
+	}
+
+
+	@Override
+	public UserMaster findSystemUser(Session session) {
+		try {
+			@SuppressWarnings("unchecked")
+			Query<UserMaster> query = session.createNamedQuery(UserMasterQuery.FIND_USER_BY_USERNAME_$N);
+			query.setParameter(UserMasterQuery.FIND_USER_BY_USERNAME_$P1, SYSTEM_USER);
+			return query.getSingleResult();
+		}
+		catch(NoResultException ex) {
+			AppLog.log(this.getClass(), StringUtil.append("No user with exist with Username:", SYSTEM_USER) );
+			return null;
+		}
+	}
+
+
 }

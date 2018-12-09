@@ -22,12 +22,31 @@ public interface CustomerCartService {
 	 * @return serviceResp {@link ServiceResp}
 	 */
 	ServiceResp	getCartsByCartId(String cartId);
-	
+
 	/**
 	 * Returns carts for the given userId.
 	 * @param userId {@link String}
 	 * @return serviceRespArray {@link ServiceRespArray}
 	 */
 	ServiceRespArray getCartsByUserId(String userId);
+
+	/**
+	 * Create cart and a add single product to the cart
+	 * and provide cart detail in return.
+	 * @param data {@link String}
+	 * @param customerId {@link String}
+	 * @return serviceResp {@link ServiceResp}
+	 */
+	ServiceResp	addProduct(String data, String customerId);
+
+	/**
+	 * Create cart and a add multiple products to the cart
+	 * and provide cart detail in return.
+	 * @param data {@link String}
+	 * @return serviceResp {@link ServiceResp}
+	 */
+	ServiceResp	addAllProduct(String data, String customerId);
+
+	
 	
 }
