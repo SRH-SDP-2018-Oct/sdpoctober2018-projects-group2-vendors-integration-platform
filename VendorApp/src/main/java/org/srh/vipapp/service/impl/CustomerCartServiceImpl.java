@@ -85,7 +85,7 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 
 
 	@Override
-	public ServiceResp addProduct(String data) {
+	public ServiceResp addProduct(String data, String customerId) {
 		if(Common.nullOrEmpty(data)) {
 			String description = StringUtil.append("Invalid data [", data, "] provided as an input.");
 			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
@@ -105,7 +105,7 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 
 
 	@Override
-	public ServiceResp addAllProduct(String data) {
+	public ServiceResp addAllProduct(String data, String customerId) {
 		return null;
 	}
 

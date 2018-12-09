@@ -56,7 +56,8 @@ public class CustomerCartController {
 	
 	@RequestMapping(path="/add", method=RequestMethod.POST)
 	public String add(@RequestBody String data, HttpServletResponse resp) {
-		ServiceResp customerCartServiceResp = customerCartService.addProduct(data);
+		String customerId = "1";
+		ServiceResp customerCartServiceResp = customerCartService.addProduct(data, customerId);
 		return HttpUtil.buildResponse(resp, customerCartServiceResp).toString();
 	}
 

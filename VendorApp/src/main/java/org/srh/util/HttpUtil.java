@@ -38,8 +38,12 @@ public final class HttpUtil {
 	public static JSONObject successResponse(Object obj) {
 		JSONObject jsonObject;
 		if(obj!=null) {
-			Object newObj = Common.hidePojoData(obj);
-			jsonObject = new JSONObject(newObj);
+			if(obj instanceof JSONObject)
+				jsonObject = (JSONObject) obj;
+			else {
+				Object newObj = Common.hidePojoData(obj);
+				jsonObject = new JSONObject(newObj);
+			}
 		}
 		else
 			jsonObject = new JSONObject();

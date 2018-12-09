@@ -528,7 +528,7 @@ CREATE TABLE customer_cart(
   cartId BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   productId INT UNSIGNED NOT NULL,
   productCount INT UNSIGNED NOT NULL,
-  userId INT UNSIGNED NOT NULL,
+  customerId INT UNSIGNED NOT NULL,
   displayName DECIMAL(10,0) DEFAULT NULL,
   deleteFlag TINYINT(1) DEFAULT '0' NOT NULL,
   createdOn DATETIME NOT NULL,
@@ -536,7 +536,7 @@ CREATE TABLE customer_cart(
   modifiedOn DATETIME NOT NULL,
   modifiedBy INT UNSIGNED NOT NULL,
   FOREIGN KEY (productId) REFERENCES products_master (productId),
-  FOREIGN KEY (userId) REFERENCES user_master (userId),
+  FOREIGN KEY (customerId) REFERENCES customer_master (customerId),
   FOREIGN KEY (createdBy) REFERENCES user_master (userId),
   FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
 );
