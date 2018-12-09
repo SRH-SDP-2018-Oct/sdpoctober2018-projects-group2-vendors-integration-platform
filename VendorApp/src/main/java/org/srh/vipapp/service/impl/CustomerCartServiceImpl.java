@@ -2,6 +2,7 @@ package org.srh.vipapp.service.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
 import org.srh.bean.ServiceResp;
 import org.srh.bean.ServiceRespArray;
 import org.srh.constants.ErrorCode;
@@ -19,6 +20,7 @@ import org.srh.vipapp.service.CustomerCartService;
  * Date: 09 Dec 2018
  * @author Anglita
  */
+@Service
 public class CustomerCartServiceImpl implements CustomerCartService {
 
 	private CustomerCartDao customerCartDao = new CustomerCartDaoImpl();
