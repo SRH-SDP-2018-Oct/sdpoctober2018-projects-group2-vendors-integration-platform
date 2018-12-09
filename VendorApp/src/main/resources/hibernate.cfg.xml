@@ -18,5 +18,6 @@
         <mapping class="org.srh.vipapp.hbm.dto.ApiStructureConstants"/>
         <mapping class="org.srh.vipapp.hbm.dto.ApiStructure"/>
         <mapping class="org.srh.vipapp.hbm.dto.ProductType"/>
+        <mapping class="org.srh.vipapp.hbm.dto.ProductsMaster"/>
     </session-factory>  
 </hibernate-configuration> 
