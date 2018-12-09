@@ -490,7 +490,7 @@ CREATE TABLE products_master(
   productId INT UNSIGNED NOT NULL,
   productTypeId INT UNSIGNED NOT NULL,
   productName VARCHAR(50) NOT NULL,
-  productPrice DECIMAL(10,0) DEFAULT NULL,
+  productPrice DECIMAL DEFAULT NULL,
   productDescription TEXT,
   productShelfLife VARCHAR(50) DEFAULT '',
   hasAnOffer TINYINT(1) DEFAULT '0' NOT NULL,
@@ -514,3 +514,33 @@ CREATE TABLE products_master(
 DESC products_master;
 
 SELECT * FROM products_master;
+
+
+
+/* ********************************************************************************** */
+-- Customer Cart
+/* ********************************************************************************** */
+
+
+DROP TABLE IF EXISTS customer_cart;
+
+CREATE TABLE customer_cart(
+  cartId BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  productId INT UNSIGNED NOT NULL,
+  productCount INT UNSIGNED NOT NULL,
+  userId INT UNSIGNED NOT NULL,
+  displayName DECIMAL(10,0) DEFAULT NULL,
+  deleteFlag TINYINT(1) DEFAULT '0' NOT NULL,
+  createdOn DATETIME NOT NULL,
+  createdBy INT UNSIGNED NOT NULL,
+  modifiedOn DATETIME NOT NULL,
+  modifiedBy INT UNSIGNED NOT NULL,
+  FOREIGN KEY (productId) REFERENCES products_master (productId),
+  FOREIGN KEY (userId) REFERENCES user_master (userId),
+  FOREIGN KEY (createdBy) REFERENCES user_master (userId),
+  FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
+);
+
+DESC customer_cart;
+
+SELECT * FROM customer_cart;
