@@ -8,7 +8,9 @@ import org.srh.util.AppLog;
 import org.srh.util.StringUtil;
 import org.srh.vipapp.hbm.RootHB;
 import org.srh.vipapp.hbm.dao.CustomerCartDao;
+import org.srh.vipapp.hbm.dao.CustomerMasterDao;
 import org.srh.vipapp.hbm.dto.CustomerCart;
+import org.srh.vipapp.hbm.dto.CustomerMaster;
 import org.srh.vipapp.hbm.hql.CustomerCartQuery;
 
 
@@ -18,6 +20,8 @@ import org.srh.vipapp.hbm.hql.CustomerCartQuery;
  * @author Anglita
  */
 public class CustomerCartDaoImpl implements CustomerCartDao {
+
+	CustomerMasterDao customerMasterDao = new CustomerMasterDaoImpl();
 
 	@Override
 	public CustomerCart findByCartId(long cartId) {
@@ -53,14 +57,14 @@ public class CustomerCartDaoImpl implements CustomerCartDao {
 	}
 
 	@Override
-	public List<CustomerCart> findCartbyUserId(int userId) {
+	public List<CustomerCart> getCartByCustomerId(long customerId) {
 		List<CustomerCart> cartsList = null;
-		try ( Session session = RootHB.getSessionFactory().openSession(); ) 
-		{
+		try ( Session session = RootHB.getSessionFactory().openSession(); ){
+			CustomerMaster customerMaster = customerMasterDao.findById(customerId);
 			@SuppressWarnings("unchecked")
-			Query<CustomerCart> query = session.createNamedQuery(CustomerCartQuery.GET_ALL_CUSTOMER_CARTS_BY_USERID_$N);
-			cartsList = query.getResultList();
-			return cartsList;
+			Query<CustomerCart> query = session.createNamedQuery(CustomerCartQuery.GET_CUSTOMER_CARTS_BY_CUSTOMERID_$N);
+			query.setParameter(CustomerCartQuery.GET_CUSTOMER_CARTS_BY_CUSTOMERID_$P1, customerMaster);
+			return query.getResultList();
 		}
 		catch(NoResultException ex)
 		{

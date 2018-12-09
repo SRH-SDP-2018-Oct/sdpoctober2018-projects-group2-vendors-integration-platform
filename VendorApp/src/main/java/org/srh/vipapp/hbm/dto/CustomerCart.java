@@ -11,150 +11,111 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.srh.annotation.POJO;
 import org.srh.vipapp.hbm.hql.CustomerCartQuery;
 
 @Entity
-@Table(name="customer_cart")
-@NamedQuery(name=CustomerCartQuery.GET_ALL_CUSTOMER_CARTS_$N, query=CustomerCartQuery.GET_ALL_CUSTOMER_CARTS_$Q)
-@NamedQuery(name= CustomerCartQuery.GET_ALL_CUSTOMER_CARTS_BY_USERID_$N,query = CustomerCartQuery.GET_ALL_CUSTOMER_CARTS_BY_USERID_$Q)
+@Table(name = "customer_cart")
+@NamedQuery(name = CustomerCartQuery.GET_ALL_CUSTOMER_CARTS_$N, query = CustomerCartQuery.GET_ALL_CUSTOMER_CARTS_$Q)
+@NamedQuery(name = CustomerCartQuery.GET_CUSTOMER_CARTS_BY_CUSTOMERID_$N, query = CustomerCartQuery.GET_CUSTOMER_CARTS_BY_CUSTOMERID_$Q)
+@POJO(hidden= {"setProductId","setCustomerId","setCreatedBy","setModifiedBy"},
+	hiddenParam= {"org.srh.vipapp.hbm.dto.ProductsMaster","org.srh.vipapp.hbm.dto.CustomerMaster",
+			"org.srh.vipapp.hbm.dto.UserMaster","org.srh.vipapp.hbm.dto.UserMaster"}
+)
 /**
- * The Entity representing the table 'customer_cart' from the 'vendor_integration_app' database.
- * Date: 08 Dec 2018
+ * The Entity representing the table 'customer_cart' from the
+ * 'vendor_integration_app' database. Date: 08 Dec 2018
+ * 
  * @author Anglita
  */
 public class CustomerCart {
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long cartId;
 
 	@ManyToOne
-	@JoinColumn(name="productId")
+	@JoinColumn(name = "productId")
 	private ProductsMaster productId;
 
 	@ManyToOne
-	@JoinColumn(name="customerId")
+	@JoinColumn(name = "customerId")
 	private CustomerMaster customerId;
 
 	@ManyToOne
-	@JoinColumn(name="createdBy")
+	@JoinColumn(name = "createdBy")
 	private UserMaster createdBy;
 
 	@ManyToOne
-	@JoinColumn(name="modifiedBy")
+	@JoinColumn(name = "modifiedBy")
 	private UserMaster modifiedBy;
 
 	private String displayName;
-
 	private int productCount;
-
-	private boolean deleteFlag = false; 
-
+	private boolean deleteFlag = false;
 	private Date createdOn = new Date();
-
 	private Date modifiedOn = new Date();
 
-	public long getCartId() 
-	{
+	public long getCartId() {
 		return cartId;
 	}
-	
-	public void setCustomerId(long cartId) 
-	{
+	public void setCartId(long cartId) {
 		this.cartId = cartId;
 	}
-	
-	public UserMaster getCreatedBy() 
-	{
-		return createdBy;
-	}
-	
-	public void setCreatedBy(UserMaster createdBy) 
-	{
-		this.createdBy = createdBy;
-	}
-	
-	public UserMaster getModifiedBy() 
-	{
-		return modifiedBy;
-	}
-	
-	public void setModifiedBy(UserMaster modifiedBy) 
-	{
-		this.modifiedBy = modifiedBy;
-	}
-	
-	public CustomerMaster getId() 
-	{
-		return customerId;
-	}
-	
-	public void setId(CustomerMaster customerId) 
-	{
-		this.customerId = customerId;
-	}
-	
-	public ProductsMaster getProductId() 
-	{
+	public ProductsMaster getProductId() {
 		return productId;
 	}
-	
-	public void setProductId(ProductsMaster productId) 
-	{
+	public void setProductId(ProductsMaster productId) {
 		this.productId = productId;
 	}
+	public CustomerMaster getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(CustomerMaster customerId) {
+		this.customerId = customerId;
+	}
 
-	public String getDisplayName()
-	{
+	public UserMaster getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(UserMaster createdBy) {
+		this.createdBy = createdBy;
+	}
+	public UserMaster getModifiedBy() {
+		return modifiedBy;
+	}
+	public void setModifiedBy(UserMaster modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public String getDisplayName() {
 		return displayName;
 	}
-
-	public void SetDisplayName(String displayName) 
-	{
+	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
-	
-	public int getProductCount()
-	{
+	public int getProductCount() {
 		return productCount;
 	}
-	
-	public void setProductCount(int productCount)
-	{
+	public void setProductCount(int productCount) {
 		this.productCount = productCount;
 	}
-	
-	public boolean isDeleteFlag() 
-	{
+	public boolean isDeleteFlag() {
 		return deleteFlag;
 	}
-	
-	public void setDeleteFlag(boolean deleteFlag) 
-	{
+	public void setDeleteFlag(boolean deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
-	
-	public Date getCreatedOn() 
-	{
+	public Date getCreatedOn() {
 		return createdOn;
 	}
-	
-	public void setCreatedOn(Date createdOn) 
-	{
+	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-	
-	public Date getModifiedOn() 
-	{
+	public Date getModifiedOn() {
 		return modifiedOn;
 	}
-	
-	public void setModifiedOn(Date modifiedOn) 
-	{
+	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-
-
-
-
 
 }

@@ -15,8 +15,8 @@ public class CustomerCartQuery {
 	public static final String GET_ALL_CUSTOMER_CARTS_$Q = "FROM CustomerCart"
 			+ " WHERE deleteFlag=0";
 
-	public static final String GET_ALL_CUSTOMER_CARTS_BY_USERID_$P1 = "userId";
-	public static final String GET_ALL_CUSTOMER_CARTS_BY_USERID_$N = "GET_CUSTOMER_CARTS_BY_USERID";
-	public static final String GET_ALL_CUSTOMER_CARTS_BY_USERID_$Q = "FROM CustomerCart"
-			+ " WHERE deleteFlag=0 AND userId=:" + GET_ALL_CUSTOMER_CARTS_BY_USERID_$P1;
+	public static final String GET_CUSTOMER_CARTS_BY_CUSTOMERID_$P1 = "customerId";
+	public static final String GET_CUSTOMER_CARTS_BY_CUSTOMERID_$N = "GET_CUSTOMER_CARTS_BY_CUSTOMERID";
+	public static final String GET_CUSTOMER_CARTS_BY_CUSTOMERID_$Q = "FROM CustomerCart"
+			+ " WHERE deleteFlag=0 AND customerId=:" + GET_CUSTOMER_CARTS_BY_CUSTOMERID_$P1;
 }

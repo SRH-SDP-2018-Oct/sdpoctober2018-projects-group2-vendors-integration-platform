@@ -10,7 +10,8 @@ public enum ErrorCode {
 	ERROR( Codes.ERROR, "Error"),
 	INVALID_INPUT( Codes.INVALID_INPUT, "Invalid Input"),
 	NOT_FOUND( Codes.NOT_FOUND, "Not Found"),
-	INVALID_CREDENTIALS( Codes.INVALID_CREDENTIALS, "Invalid Credentials");
+	INVALID_CREDENTIALS( Codes.INVALID_CREDENTIALS, "Invalid Credentials"),
+	EXCEPTION( Codes.EXCEPTION, "Exception Occurred");
 
 	private String code;
 	private String message;

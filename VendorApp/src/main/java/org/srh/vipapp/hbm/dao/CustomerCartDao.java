@@ -26,9 +26,9 @@ public interface CustomerCartDao {
 	
 	/**
 	 * Returns all the {@link CustomerCart} entities with the given 'userId'.
-	 * @param userId {@link Integer}
+	 * @param customerId {@link Long}
 	 * @return customerCartList {@link CustomerCart}
 	 */
-	public List<CustomerCart> findCartbyUserId(int userId);
+	public List<CustomerCart> getCartByCustomerId(long customerId);
 
 }

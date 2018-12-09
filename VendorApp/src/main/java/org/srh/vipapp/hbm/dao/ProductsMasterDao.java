@@ -1,6 +1,8 @@
 package org.srh.vipapp.hbm.dao;
 
 import java.util.List;
+
+import org.hibernate.Session;
 import org.srh.vipapp.hbm.dto.ProductsMaster;
 
 /**
@@ -15,27 +17,35 @@ public interface ProductsMasterDao {
 	 * @param productId {@link Integer}
 	 * @return productsMaster {@link ProductsMaster}
 	 */
-	public ProductsMaster findById(int productId);
+	ProductsMaster findById(long productId);
+
+	/**
+	 * Gets the {@link ProductsMaster} entity with the given 'productId'.
+	 * @param productId {@link Integer}
+	 * @param session {@link Session}
+	 * @return productsMaster {@link ProductsMaster}
+	 */
+	ProductsMaster findById(long productId, Session session);
 
 	/**
 	 * Gets the {@link ProductsMaster} entity with the given 'productName'.
 	 * @param productName {@link String}
 	 * @return productsMaster {@link ProductsMaster}
 	 */
-	public List<ProductsMaster> findbyProductName(String productName);
+	List<ProductsMaster> findbyProductName(String productName);
 
 	/**
 	 * Returns all the {@link ProductsMaster} entities from persistence database
 	 * @return productsMasterList {@link List<ProductsMaster>}
 	 */
-	public List<ProductsMaster> getAllProducts();
+	List<ProductsMaster> getAllProducts();
 
 	/**
 	 * Returns all the {@link ProductsMaster} entities from persistence database with given 'productTypeId'
 	 * @param isOnproductTypeIdOffer {@link Integer}
 	 * @return productsMasterList {@link List<ProductsMaster>}
 	 */
-	public List<ProductsMaster> getProductsByProductType(String productTypeName);
+	List<ProductsMaster> getProductsByProductType(String productTypeName);
 
 
 
@@ -43,6 +53,6 @@ public interface ProductsMasterDao {
 	 * Returns all the {@link ProductsMaster} entities on Offer from persistence database
 	 * @return productsMasterList {@link List<ProductsMaster>}
 	 */
-	public List<ProductsMaster> getAllProductsOnOffer();
+	List<ProductsMaster> getAllProductsOnOffer();
 
 }

@@ -19,7 +19,7 @@ import org.srh.vipapp.hbm.hql.ProductsMasterQuery;
 public class ProductsMasterDaoImpl implements ProductsMasterDao {
 
 	@Override
-	public ProductsMaster findById(int productId) {
+	public ProductsMaster findById(long productId) {
 		ProductsMaster productMaster = null;
 		Session session = RootHB.getSessionFactory().openSession();
 		try {
@@ -32,8 +32,20 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 			RootHB.closeSession(session);
 		}
 		return productMaster;
-
 	}
+
+	@Override
+	public ProductsMaster findById(long productId, Session session) {
+		ProductsMaster productMaster = null;
+		try {
+			productMaster = session.find(ProductsMaster.class, productId);
+		}
+		catch(NoResultException ex) {
+			AppLog.log(this.getClass(), StringUtil.append("No user exist with product Id:", productId) );
+		}
+		return productMaster;
+	}
+
 
 	@Override
 	public List<ProductsMaster> getAllProducts() {

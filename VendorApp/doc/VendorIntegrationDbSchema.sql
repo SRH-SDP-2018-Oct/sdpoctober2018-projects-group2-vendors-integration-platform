@@ -533,15 +533,13 @@ CREATE TABLE customer_cart(
   displayName VARCHAR(50) DEFAULT NULL,
   deleteFlag TINYINT(1) DEFAULT '0' NOT NULL,
   createdOn DATETIME NOT NULL,
-  createdBy BIGINT UNSIGNED NOT NULL,
+  createdBy INT UNSIGNED NOT NULL,
   modifiedOn DATETIME NOT NULL,
-  modifiedBy BIGINT UNSIGNED NOT NULL,
-  modifiedByUser INT UNSIGNED NOT NULL,
+  modifiedBy INT UNSIGNED NOT NULL,
   FOREIGN KEY (productId) REFERENCES products_master (id),
   FOREIGN KEY (customerId) REFERENCES customer_master (customerId),
-  FOREIGN KEY (createdBy) REFERENCES customer_master (customerId),
-  FOREIGN KEY (modifiedBy) REFERENCES customer_master (customerId),
-  FOREIGN KEY (modifiedByUser) REFERENCES user_master (userId)
+  FOREIGN KEY (createdBy) REFERENCES user_master (userId),
+  FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
 );
 
 DESC customer_cart;

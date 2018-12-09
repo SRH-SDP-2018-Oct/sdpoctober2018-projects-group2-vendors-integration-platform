@@ -19,5 +19,6 @@
         <mapping class="org.srh.vipapp.hbm.dto.ApiStructure"/>
         <mapping class="org.srh.vipapp.hbm.dto.ProductType"/>
         <mapping class="org.srh.vipapp.hbm.dto.ProductsMaster"/>
+        <mapping class="org.srh.vipapp.hbm.dto.CustomerCart"/>
     </session-factory>  
 </hibernate-configuration> 

@@ -10,7 +10,6 @@ import org.hibernate.Transaction;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.srh.constants.ValueConstants;
 import org.srh.util.AppLog;
 import org.srh.util.ProductUtil;
 import org.srh.util.StringUtil;
@@ -113,12 +112,6 @@ public class ProductActivity {
 
 	private boolean saveProducts(JSONArray apiJSONArray, List<ApiStructure> listApiStruct,
 			Map<Integer,ProductType> mapProductType, Map<Integer,VendorBranch> mapVendorBranch) {
-		// 
-		/* *** GET USER *** */
-		String username = ValueConstants.USER_SYSTEM;
-		UserMaster user = new UserMasterDaoImpl().findByUsername(username);
-		if(user==null)
-			return false;
 
 
 		/* *********************************************************************** */
@@ -131,6 +124,12 @@ public class ProductActivity {
 		List<JSONObject> jsonList = new ArrayList<>(apiDataLen*2);
 		int apiCount = 0;
 		try {
+			// 
+			/* *** GET USER *** */
+			UserMaster user = new UserMasterDaoImpl().findSystemUser(session);
+			if(user==null)
+				return false;
+
 			int lenStructAPI = listApiStruct.size();
 			ProductsMaster productsMaster;
 			for(; apiCount<apiDataLen; apiCount++) {
@@ -206,6 +205,5 @@ public class ProductActivity {
 			AppLog.print(ProductActivity.class, StringUtil.append(strSep,"\n",strSep));
 		}
 	}
-
 
 }
