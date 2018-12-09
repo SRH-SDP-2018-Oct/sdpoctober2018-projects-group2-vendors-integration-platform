@@ -382,7 +382,7 @@ FROM user_master um
 WHERE um.username = 'system';
 
 INSERT INTO api_structure_constants (createdBy, modifiedBy, constantName, displayName, createdOn, modifiedOn)
-SELECT um.userId, um.userId, 'vendor_id', 'Vendor Id', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+SELECT um.userId, um.userId, 'product_branch', 'Product Available At', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
 FROM user_master um
 WHERE um.username = 'system';
 
@@ -415,15 +415,39 @@ DESC api_structure;
 
 -- Netti - Product Id
 INSERT INTO api_structure (createdBy, modifiedBy, keyConstantId, vendorId, keyName, createdOn, modifiedOn)
-SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'id', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'productId', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
 FROM user_master um, api_structure_constants apisc, vendor_master vm
 WHERE um.username = 'system'  AND  apisc.constantName='product_id' AND vm.vendorName = 'Netti' ;
 
 -- Netti - Product Name
 INSERT INTO api_structure (createdBy, modifiedBy, keyConstantId, vendorId, keyName, createdOn, modifiedOn)
-SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'name', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'productName', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
 FROM user_master um, api_structure_constants apisc, vendor_master vm
 WHERE um.username = 'system'  AND  apisc.constantName='product_name' AND vm.vendorName = 'Netti' ;
+
+-- Netti - Product Name
+INSERT INTO api_structure (createdBy, modifiedBy, keyConstantId, vendorId, keyName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'productDescription', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um, api_structure_constants apisc, vendor_master vm
+WHERE um.username = 'system'  AND  apisc.constantName='product_description' AND vm.vendorName = 'Netti' ;
+
+-- Netti - Product Name
+INSERT INTO api_structure (createdBy, modifiedBy, keyConstantId, vendorId, keyName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'productPrice', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um, api_structure_constants apisc, vendor_master vm
+WHERE um.username = 'system'  AND  apisc.constantName='product_price' AND vm.vendorName = 'Netti' ;
+
+-- Netti - Product Name
+INSERT INTO api_structure (createdBy, modifiedBy, keyConstantId, vendorId, keyName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'productTypeId', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um, api_structure_constants apisc, vendor_master vm
+WHERE um.username = 'system'  AND  apisc.constantName='product_type' AND vm.vendorName = 'Netti' ;
+
+-- Netti - Product Name
+INSERT INTO api_structure (createdBy, modifiedBy, keyConstantId, vendorId, keyName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'branchId', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um, api_structure_constants apisc, vendor_master vm
+WHERE um.username = 'system'  AND  apisc.constantName='product_branch' AND vm.vendorName = 'Netti' ;
 
 
 
@@ -452,12 +476,18 @@ CREATE TABLE product_type(
 DESC product_type;
 
 
+INSERT INTO product_type (productTypeId, productTypeName, vendorId, createdBy, createdOn, modifiedBy, modifiedOn) VALUES
+(1, 'Dairy', 1, 2, CURRENT_TIMESTAMP, 2, CURRENT_TIMESTAMP),
+(2, 'Fruits', 1, 2, CURRENT_TIMESTAMP, 2, CURRENT_TIMESTAMP),
+(3, 'Vegetables', 1, 2, CURRENT_TIMESTAMP, 2, CURRENT_TIMESTAMP);
+
 
 
 DROP TABLE IF EXISTS products_master;
 
 CREATE TABLE products_master(
-  productId INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  productId INT UNSIGNED NOT NULL,
   productTypeId INT UNSIGNED NOT NULL,
   productName VARCHAR(50) NOT NULL,
   productPrice DECIMAL(10,0) DEFAULT NULL,
@@ -467,8 +497,8 @@ CREATE TABLE products_master(
   offerDetail TEXT NOT NULL,
   vendorId INT UNSIGNED NOT NULL,
   branchId INT UNSIGNED NOT NULL,
-  otherDetails TEXT NOT NULL,
-  apiDetails TEXT NOT NULL,
+  productData TEXT NOT NULL,
+  apiData TEXT NOT NULL,
   deleteFlag TINYINT(1) DEFAULT '0' NOT NULL,
   createdOn DATETIME NOT NULL,
   createdBy INT UNSIGNED NOT NULL,
@@ -483,3 +513,4 @@ CREATE TABLE products_master(
 
 DESC products_master;
 
+SELECT * FROM products_master;
