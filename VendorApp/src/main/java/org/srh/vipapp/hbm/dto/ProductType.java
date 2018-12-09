@@ -8,7 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import org.srh.vipapp.hbm.hql.ProductTypeQuery;
 
 
 /**
@@ -18,6 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="product_type")
+@NamedQuery(name=ProductTypeQuery.GET_PRODUCT_TYPES_FOR_VENDOR_$N, query=ProductTypeQuery.GET_PRODUCT_TYPES_FOR_VENDOR_$Q)
 public class ProductType {
 
 	@Id

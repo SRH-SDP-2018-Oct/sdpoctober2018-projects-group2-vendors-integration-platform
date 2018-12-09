@@ -76,10 +76,13 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 	public List<ProductsMaster> getProductsByProductType(String productTypeName) {
 		Session session = RootHB.getSessionFactory().openSession();
 		try {
+			/*
 			@SuppressWarnings("unchecked")
 			Query<ProductsMaster> query = session.createNamedQuery(ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$N);
 			query.setParameter(ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$P1, StringUtil.append(productTypeName,"%"));
 			return query.getResultList();
+			*/
+			return new ArrayList<>();
 		}
 		catch(NoResultException ex) {
 			AppLog.log(this.getClass(), StringUtil.append("There are no products of the productType", ex.getMessage()) );

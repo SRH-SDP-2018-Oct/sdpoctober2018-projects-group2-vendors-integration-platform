@@ -438,11 +438,13 @@ DROP TABLE IF EXISTS product_type;
 CREATE TABLE product_type(
   productTypeId INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   productTypeName VARCHAR(30) NOT NULL,
+  vendorId INT UNSIGNED NOT NULL,
   deleteFlag TINYINT(1) DEFAULT '0' NOT NULL,
   createdOn DATETIME NOT NULL,
   createdBy INT UNSIGNED NOT NULL,
   modifiedOn DATETIME NOT NULL,
   modifiedBy INT UNSIGNED NOT NULL,
+  FOREIGN KEY (vendorId) REFERENCES vendor_master (vendorId),
   FOREIGN KEY (createdBy) REFERENCES user_master (userId),
   FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
 );
