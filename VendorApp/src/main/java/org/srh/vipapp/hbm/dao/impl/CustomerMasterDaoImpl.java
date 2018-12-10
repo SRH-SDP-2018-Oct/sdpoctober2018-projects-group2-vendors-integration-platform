@@ -6,11 +6,13 @@ import java.util.List;
 import javax.persistence.NoResultException;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.srh.util.StringUtil;
 import org.srh.util.AppLog;
 import org.srh.vipapp.hbm.RootHB;
 import org.srh.vipapp.hbm.dao.CustomerMasterDao;
+import org.srh.vipapp.hbm.dto.CustomerCart;
 import org.srh.vipapp.hbm.dto.CustomerMaster;
 import org.srh.vipapp.hbm.dto.UserMaster;
 import org.srh.vipapp.hbm.hql.CustomerMasterQuery;
@@ -35,6 +37,19 @@ public class CustomerMasterDaoImpl implements CustomerMasterDao {
 		}
 		finally {
 			RootHB.closeSession(session);
+		}
+		return customerMaster;
+	}
+
+
+	@Override
+	public CustomerMaster findById(long customerId, Session session) {
+		CustomerMaster customerMaster = null;
+		try {
+			customerMaster = session.find(CustomerMaster.class, customerId);
+		}
+		catch(NoResultException ex) {
+			AppLog.log(this.getClass(), StringUtil.append("No customer exist with Id:", customerId) );
 		}
 		return customerMaster;
 	}
@@ -89,6 +104,7 @@ public class CustomerMasterDaoImpl implements CustomerMasterDao {
 	}
 	
 	//MAITREYEE	
+	
 	@Override
 	public int registerCustomer(CustomerMaster customerMaster) {
 		CustomerMaster cm= customerMaster;
@@ -109,6 +125,26 @@ public class CustomerMasterDaoImpl implements CustomerMasterDao {
 		catch(NoResultException ex) {
 			//AppLog.log(this.getClass(), StringUtil.append("No Customer exist with first name or last name:"+customerMaster2.getUsername()) );
 			return 0;
+		}
+		finally {
+			RootHB.closeSession(session);
+		}
+	}
+
+
+	@Override
+	public CustomerCart saveProduct(CustomerCart customerCart) {
+		Session session = RootHB.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		try {
+			session.save(customerCart);
+			transaction.commit();
+			return customerCart;
+		}
+		catch(NoResultException ex) {
+			transaction.rollback();
+			AppLog.log(this.getClass(), "An error occurred while saving the customer cart.", ex);
+			return null;
 		}
 		finally {
 			RootHB.closeSession(session);

@@ -52,6 +52,7 @@ public class CustomerLoginRegistrationServiceImpl implements CustomerLoginRegist
 	}
 	
 	//MAITREYEE	
+	
 	@Override
 	public ServiceResp setCustomerDetails(String username, String firstName, String lastName, String pwd) {
 		CustomerMaster customerMaster = new CustomerMaster();		

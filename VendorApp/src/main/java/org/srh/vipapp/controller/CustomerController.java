@@ -51,6 +51,7 @@ public class CustomerController {
 	}
 
 	//MAITREYEE
+	
 	@RequestMapping(path = "/register/{username}/{firstName}/{lastName}/{pwd}", method = RequestMethod.GET)
 	public String registerCustomer(@PathVariable String username, @PathVariable String firstName,
 			@PathVariable String lastName, @PathVariable String pwd, HttpServletResponse resp) {
