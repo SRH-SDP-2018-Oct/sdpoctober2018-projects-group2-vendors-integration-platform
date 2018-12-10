@@ -1,9 +1,9 @@
 package org.srh.vipapp.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.srh.bean.ServiceResp;
@@ -15,19 +15,10 @@ import org.srh.util.Common;
 import org.srh.util.DateUtil;
 import org.srh.util.NumberUtil;
 import org.srh.util.StringUtil;
-import org.srh.vipapp.hbm.RootHB;
+import org.srh.vipapp.activity.CartActivity;
 import org.srh.vipapp.hbm.dao.CustomerCartDao;
-import org.srh.vipapp.hbm.dao.CustomerMasterDao;
-import org.srh.vipapp.hbm.dao.ProductsMasterDao;
-import org.srh.vipapp.hbm.dao.UserMasterDao;
 import org.srh.vipapp.hbm.dao.impl.CustomerCartDaoImpl;
-import org.srh.vipapp.hbm.dao.impl.CustomerMasterDaoImpl;
-import org.srh.vipapp.hbm.dao.impl.ProductsMasterDaoImpl;
-import org.srh.vipapp.hbm.dao.impl.UserMasterDaoImpl;
 import org.srh.vipapp.hbm.dto.CustomerCart;
-import org.srh.vipapp.hbm.dto.CustomerMaster;
-import org.srh.vipapp.hbm.dto.ProductsMaster;
-import org.srh.vipapp.hbm.dto.UserMaster;
 import org.srh.vipapp.service.CustomerCartService;
 
 
@@ -39,10 +30,9 @@ import org.srh.vipapp.service.CustomerCartService;
 @Service
 public class CustomerCartServiceImpl implements CustomerCartService {
 
-	private UserMasterDao userMasterDao = new UserMasterDaoImpl();
 	private CustomerCartDao customerCartDao = new CustomerCartDaoImpl();
-	private CustomerMasterDao customerMasterDao = new CustomerMasterDaoImpl();
-	private ProductsMasterDao productsMasterDao = new ProductsMasterDaoImpl();
+	private CartActivity cartActivity = new CartActivity();
+
 
 	@Override
 	public ServiceRespArray getAllCarts() {
@@ -77,6 +67,7 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 		// Data Exist, Return Success
 		return Common.buildServiceResp(customerCart);
 	}
+
 
 	@Override
 	public ServiceRespArray getCartsByUserId(String customerId) {
@@ -116,11 +107,11 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 		Integer productCount;
 		String displayName;
 		try {
-			JSONObject jsonData = new JSONObject(data).getJSONObject("data");
+			JSONObject jsonData = new JSONObject(data).getJSONObject(KeyPairConstants.CART_DATA);
 			productId = Long.valueOf(jsonData.getString(KeyPairConstants.CART_PRODUCT_ID));
 			productCount = Integer.valueOf(jsonData.getString(KeyPairConstants.CART_PRODUCT_COUNT));
 			if(jsonData.has(KeyPairConstants.CART_DISPLAY_NAME)) {
-				displayName = KeyPairConstants.CART_DISPLAY_NAME;
+				displayName = jsonData.getString(KeyPairConstants.CART_DISPLAY_NAME);
 			}
 			else {
 				displayName = DateUtil.getMMDDYYYY_HHMMSS();
@@ -132,59 +123,55 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 		}
 
-
-		// Create session object
-		Session session = RootHB.getSessionFactory().openSession();
-
-		// 
-		ProductsMaster productMaster = productsMasterDao.findById(productId, session);
-		if(productMaster==null) {
-			RootHB.closeSession(session);
-			String description = StringUtil.append("The product id [", productId, "] is invalid integer.");
-			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
-		}
-		//
-		CustomerMaster customerMaster = customerMasterDao.findById(cId, session);
-		if(customerMaster==null) {
-			RootHB.closeSession(session);
-			String description = StringUtil.append("The customer id [", cId, "] is invalid integer.");
-			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
-		}
-		// 
-		UserMaster systemUser = userMasterDao.findSystemUser(session);
-		if(systemUser==null) {
-			RootHB.closeSession(session);
-			return Common.buildServiceRespError(ErrorCode.EXCEPTION, "System Error");
-		}
-
-		Transaction transaction = session.beginTransaction();
-		try {
-			// Create [CustomerCart] entity object to save it.
-			CustomerCart customerCart = new CustomerCart();
-			customerCart.setProductId(productMaster);
-			customerCart.setProductCount(productCount);
-			customerCart.setCustomerId(customerMaster);
-			customerCart.setCreatedBy(systemUser);
-			customerCart.setModifiedBy(systemUser);
-			customerCart.setDisplayName(displayName);
-			session.save(customerCart);
-			transaction.commit();
-			return Common.buildServiceResp(customerCart);
-		}
-		catch(Exception ex) {
-			transaction.rollback();
-			String desc = ex.getMessage();
-			return Common.buildServiceRespError(ErrorCode.EXCEPTION, desc);
-		}
-		finally {
-			RootHB.closeSession(session);
-		}
+		// Logic to save cart
+		return cartActivity.saveCart(cId, displayName, productId, productCount);
 	}
 
 
 	@Override
-	public ServiceResp addAllProduct(String data, String customerId) {
-		return null;
+	public ServiceRespArray addAllProduct(String data, String customerId) {
+		if(Common.nullOrEmpty(data)) {
+			String description = StringUtil.append("Invalid data [", data, "] provided as an input.");
+			return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
+		}
+		Long cId = NumberUtil.getLong(customerId);
+		if(cId==null){
+			String description = StringUtil.append("The customer id [", cId, "] is invalid integer.");
+			return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
+		}
+
+		// Fetch data from the request
+		List<Long> productId;
+		List<Integer> productCount;
+		String displayName;
+		JSONArray jsonDataArray;
+		try {
+			JSONObject jsonData = new JSONObject(data).getJSONObject(KeyPairConstants.CART_DATA);
+			if(jsonData.has(KeyPairConstants.CART_DISPLAY_NAME)) {
+				displayName = jsonData.getString(KeyPairConstants.CART_DISPLAY_NAME);
+			}
+			else {
+				displayName = DateUtil.getMMDDYYYY_HHMMSS();
+			}
+			jsonDataArray = jsonData.getJSONArray(KeyPairConstants.CART_PRODUCT_DATA);
+			int len = jsonData.length();
+			productId = new ArrayList<>(len);
+			productCount = new ArrayList<>(len);
+			for(int i=0; i<len; i++) {
+				JSONObject jsonObject = jsonDataArray.getJSONObject(i);
+				productId.add(Long.valueOf(jsonObject.getString(KeyPairConstants.CART_PRODUCT_ID)));
+				productCount.add(Integer.valueOf(jsonObject.getString(KeyPairConstants.CART_PRODUCT_COUNT)));
+			}
+		}
+		catch(Exception ex) {
+			String description = StringUtil.append("Invalid data format [", data, "] provided as an input.");
+			AppLog.log(CustomerCartServiceImpl.class, description, ex);
+			return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
+		}
+
+		// Logic to save cart
+		return Common.buildServiceRespArray(jsonDataArray.toList());
+		//return cartActivity.saveCart(productId, cId, productCount, displayName);
 	}
 
 }

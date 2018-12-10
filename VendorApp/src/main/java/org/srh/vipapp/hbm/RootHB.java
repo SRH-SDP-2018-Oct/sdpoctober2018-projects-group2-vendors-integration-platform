@@ -3,6 +3,9 @@ package org.srh.vipapp.hbm;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.srh.util.AppLog;
+import org.srh.vipapp.hbm.dao.impl.UserMasterDaoImpl;
+import org.srh.vipapp.hbm.dto.UserMaster;
 
 
 /**
@@ -14,7 +17,8 @@ public class RootHB {
 
 	private static final String HIBERNATE_CFG = "hibernate.cfg.xml";
 
-	private static final SessionFactory sessionFactory;
+	private static final SessionFactory SESSION_FACTORY;
+	private static final UserMaster USER_MASTER_SYSTEM;
 
 	/**
 	 * Perform the Framework Configuration from HBM file
@@ -26,10 +30,20 @@ public class RootHB {
 			obj = new Configuration().configure(HIBERNATE_CFG).buildSessionFactory();
 		}
 		catch(Exception ex) {
-			ex.printStackTrace();
+			AppLog.log(RootHB.class, "Hibernate Root Class Initialization failed.", ex);
 			System.exit(0);
 		}
-		sessionFactory = (SessionFactory) obj;
+		SESSION_FACTORY = (SessionFactory) obj;
+
+		Object objUser = null;
+		try {
+			objUser = new UserMasterDaoImpl().findSystemUser();
+		}
+		catch(Exception ex) {
+			AppLog.log(RootHB.class, "Hibernate Root Class Initialization failed.", ex);
+			System.exit(0);
+		}
+		USER_MASTER_SYSTEM = (UserMaster) objUser;
 	}
 
 
@@ -38,7 +52,7 @@ public class RootHB {
 	 * @return sessionFactory {@link SessionFactory}
 	 */
 	public static SessionFactory getSessionFactory() {
-		return sessionFactory;
+		return SESSION_FACTORY;
 	}
 
 
@@ -54,6 +68,11 @@ public class RootHB {
 			return true;
 		}
 		return false;
+	}
+
+
+	public static UserMaster getSystemUser() {
+		return USER_MASTER_SYSTEM;
 	}
 
 }

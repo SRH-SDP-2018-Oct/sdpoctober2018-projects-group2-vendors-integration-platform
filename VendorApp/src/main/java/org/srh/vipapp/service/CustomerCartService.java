@@ -43,9 +43,10 @@ public interface CustomerCartService {
 	 * Create cart and a add multiple products to the cart
 	 * and provide cart detail in return.
 	 * @param data {@link String}
-	 * @return serviceResp {@link ServiceResp}
+	 * @param customerId {@link String}
+	 * @return serviceResp {@link ServiceRespArray}
 	 */
-	ServiceResp	addAllProduct(String data, String customerId);
+	ServiceRespArray addAllProduct(String data, String customerId);
 
 	
 	

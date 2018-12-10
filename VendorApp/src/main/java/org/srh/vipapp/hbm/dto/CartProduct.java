@@ -8,19 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.srh.annotation.POJO;
-import org.srh.vipapp.hbm.hql.CustomerCartQuery;
 
 @Entity
-@Table(name = "customer_cart")
-@NamedQuery(name = CustomerCartQuery.GET_ALL_CUSTOMER_CARTS_$N, query = CustomerCartQuery.GET_ALL_CUSTOMER_CARTS_$Q)
-@NamedQuery(name = CustomerCartQuery.GET_CUSTOMER_CARTS_BY_CUSTOMERID_$N, query = CustomerCartQuery.GET_CUSTOMER_CARTS_BY_CUSTOMERID_$Q)
-@POJO(hidden= {"setCustomerId","setCreatedBy","setModifiedBy"},
-	hiddenParam= {"org.srh.vipapp.hbm.dto.CustomerMaster",
-			"org.srh.vipapp.hbm.dto.UserMaster","org.srh.vipapp.hbm.dto.UserMaster"}
+@Table(name = "cart_product")
+@POJO(hidden= {"setCreatedBy","setModifiedBy"},
+	hiddenParam= {"org.srh.vipapp.hbm.dto.UserMaster","org.srh.vipapp.hbm.dto.UserMaster"}
 )
 /**
  * The Entity representing the table 'customer_cart' from the
@@ -28,14 +23,19 @@ import org.srh.vipapp.hbm.hql.CustomerCartQuery;
  * 
  * @author Anglita
  */
-public class CustomerCart {
+public class CartProduct {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long cartId;
+	private long id;
 
 	@ManyToOne
-	@JoinColumn(name = "customerId")
-	private CustomerMaster customerId;
+	@JoinColumn(name = "cartId")
+	private CustomerCart cartId;
+
+	@ManyToOne
+	@JoinColumn(name = "productId")
+	private ProductsMaster productId;
 
 	@ManyToOne
 	@JoinColumn(name = "createdBy")
@@ -45,23 +45,30 @@ public class CustomerCart {
 	@JoinColumn(name = "modifiedBy")
 	private UserMaster modifiedBy;
 
-	private String displayName;
+	private int productCount;
 	private boolean deleteFlag = false;
 	private Date createdOn = new Date();
 	private Date modifiedOn = new Date();
 
-	public long getCartId() {
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public CustomerCart getCartId() {
 		return cartId;
 	}
-	public void setCartId(long cartId) {
+	public void setCartId(CustomerCart cartId) {
 		this.cartId = cartId;
 	}
 
-	public CustomerMaster getCustomerId() {
-		return customerId;
+	public ProductsMaster getProductId() {
+		return productId;
 	}
-	public void setCustomerId(CustomerMaster customerId) {
-		this.customerId = customerId;
+	public void setProductId(ProductsMaster productId) {
+		this.productId = productId;
 	}
 
 	public UserMaster getCreatedBy() {
@@ -78,11 +85,11 @@ public class CustomerCart {
 		this.modifiedBy = modifiedBy;
 	}
 
-	public String getDisplayName() {
-		return displayName;
+	public int getProductCount() {
+		return productCount;
 	}
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
+	public void setProductCount(int productCount) {
+		this.productCount = productCount;
 	}
 
 	public boolean getDeleteFlag() {
