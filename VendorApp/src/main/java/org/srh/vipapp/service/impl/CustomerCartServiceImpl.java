@@ -129,20 +129,20 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 
 
 	@Override
-	public ServiceRespArray addAllProduct(String data, String customerId) {
+	public ServiceResp addAllProduct(String data, String customerId) {
 		if(Common.nullOrEmpty(data)) {
 			String description = StringUtil.append("Invalid data [", data, "] provided as an input.");
-			return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
+			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 		}
 		Long cId = NumberUtil.getLong(customerId);
 		if(cId==null){
 			String description = StringUtil.append("The customer id [", cId, "] is invalid integer.");
-			return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
+			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 		}
 
 		// Fetch data from the request
-		List<Long> productId;
-		List<Integer> productCount;
+		List<Long> productIdList;
+		List<Integer> productCountList;
 		String displayName;
 		JSONArray jsonDataArray;
 		try {
@@ -155,23 +155,22 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 			}
 			jsonDataArray = jsonData.getJSONArray(KeyPairConstants.CART_PRODUCT_DATA);
 			int len = jsonData.length();
-			productId = new ArrayList<>(len);
-			productCount = new ArrayList<>(len);
+			productIdList = new ArrayList<>(len);
+			productCountList = new ArrayList<>(len);
 			for(int i=0; i<len; i++) {
 				JSONObject jsonObject = jsonDataArray.getJSONObject(i);
-				productId.add(Long.valueOf(jsonObject.getString(KeyPairConstants.CART_PRODUCT_ID)));
-				productCount.add(Integer.valueOf(jsonObject.getString(KeyPairConstants.CART_PRODUCT_COUNT)));
+				productIdList.add(Long.valueOf(jsonObject.getString(KeyPairConstants.CART_PRODUCT_ID)));
+				productCountList.add(Integer.valueOf(jsonObject.getString(KeyPairConstants.CART_PRODUCT_COUNT)));
 			}
 		}
 		catch(Exception ex) {
 			String description = StringUtil.append("Invalid data format [", data, "] provided as an input.");
 			AppLog.log(CustomerCartServiceImpl.class, description, ex);
-			return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
+			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 		}
 
 		// Logic to save cart
-		return Common.buildServiceRespArray(jsonDataArray.toList());
-		//return cartActivity.saveCart(productId, cId, productCount, displayName);
+		return cartActivity.saveCart(cId, displayName, productIdList, productCountList);
 	}
 
 }

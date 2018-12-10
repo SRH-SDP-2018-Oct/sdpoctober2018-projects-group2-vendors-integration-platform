@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 import org.srh.bean.ServiceResp;
 import org.srh.bean.ServiceRespArray;
 import org.srh.constants.ErrorCode;
@@ -18,10 +19,12 @@ import org.srh.vipapp.hbm.dao.impl.CustomerFavouriteListDaoImpl;
 import org.srh.vipapp.hbm.dto.CustomerFavouriteList;
 import org.srh.vipapp.service.CustomerFavouriteListService;
 
+@Service
 public class CustomerFavouriteListServiceImpl implements CustomerFavouriteListService {
 
 	private CustomerFavouriteListDao customerFavouriteListDao = new CustomerFavouriteListDaoImpl();
 	private FavouriteListActivity favouriteListActivity = new FavouriteListActivity();
+
 
 	@Override
 	public ServiceResp getFavouriteListById(String listId) {
@@ -36,13 +39,14 @@ public class CustomerFavouriteListServiceImpl implements CustomerFavouriteListSe
 
 		// Validate Data Existence
 		if(favouriteList==null) {
-			String description =  StringUtil.append("No customer found with id [", lstId, "].");
+			String description =  StringUtil.append("No favourite list found with id [", lstId, "].");
 			return Common.buildServiceRespError(ErrorCode.NOT_FOUND, description);
 		}
 
 		// Data Exist, Return Success
 		return Common.buildServiceResp(favouriteList);
 	}
+
 
 	@Override
 	public ServiceResp getFavouriteListByCustomerId(String customerId) {
@@ -57,12 +61,13 @@ public class CustomerFavouriteListServiceImpl implements CustomerFavouriteListSe
 
 		// Validate Data Existence
 		if(favouriteList==null) {
-			String description =  StringUtil.append("No favourite list found with id [", cId, "].");
+			String description =  StringUtil.append("No favourite list found for the customer id [", cId, "].");
 			return Common.buildServiceRespError(ErrorCode.NOT_FOUND, description);
 		}
 		// Data Exist, Return Success
 		return Common.buildServiceResp(favouriteList);
 	}
+
 
 	@Override
 	public ServiceResp addProductToFavouriteList(String data, String customerId) {
@@ -92,6 +97,7 @@ public class CustomerFavouriteListServiceImpl implements CustomerFavouriteListSe
 		// Logic to save favourite list
 		return favouriteListActivity.saveFavouriteList(cId, productId);
 	}
+
 
 	@Override
 	public ServiceRespArray addProductsToFavouriteList(String data, String customerId) {

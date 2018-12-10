@@ -44,7 +44,6 @@ public class FavouriteListProduct {
 	@JoinColumn(name = "modifiedBy")
 	private UserMaster modifiedBy;
 
-	private int productCount;
 	private boolean deleteFlag = false;
 	private Date createdOn = new Date();
 	private Date modifiedOn = new Date();
@@ -82,13 +81,6 @@ public class FavouriteListProduct {
 	}
 	public void setModifiedBy(UserMaster modifiedBy) {
 		this.modifiedBy = modifiedBy;
-	}
-
-	public int getProductCount() {
-		return productCount;
-	}
-	public void setProductCount(int productCount) {
-		this.productCount = productCount;
 	}
 
 	public boolean getDeleteFlag() {

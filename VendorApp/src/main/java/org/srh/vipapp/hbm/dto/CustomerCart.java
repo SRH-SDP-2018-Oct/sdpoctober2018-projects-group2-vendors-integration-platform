@@ -1,5 +1,6 @@
 package org.srh.vipapp.hbm.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -45,6 +46,7 @@ public class CustomerCart {
 	@JoinColumn(name = "modifiedBy")
 	private UserMaster modifiedBy;
 
+	private BigDecimal totalPrice = new BigDecimal("0.00");
 	private String displayName;
 	private boolean deleteFlag = false;
 	private Date createdOn = new Date();
@@ -104,6 +106,12 @@ public class CustomerCart {
 	}
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 }
