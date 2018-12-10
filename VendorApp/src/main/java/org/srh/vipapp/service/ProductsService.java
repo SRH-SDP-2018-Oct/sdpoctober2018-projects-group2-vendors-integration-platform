@@ -18,7 +18,7 @@ public interface ProductsService {
 
 	/**
 	 * Returns product with the given ProductId.
-	 * @param productId {@link Integer}
+	 * @param productId {@link String}
 	 * @return serviceResp {@link ServiceResp}
 	 */
 	ServiceResp	getProductByProductId(String productId);
@@ -38,7 +38,7 @@ public interface ProductsService {
 
 	/**
 	 * Returns all the products with given product type Id.
-	 * @param productTypeId {@link Integer}
+	 * @param productTypeName {@link String}
 	 * @return serviceRespArray {@link ServiceRespArray}
 	 */
 	ServiceRespArray getProductsByProductType(String productTypeName);

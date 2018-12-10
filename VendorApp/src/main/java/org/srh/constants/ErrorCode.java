@@ -11,7 +11,7 @@ public enum ErrorCode {
 	INVALID_INPUT( Codes.INVALID_INPUT, "Invalid Input"),
 	NOT_FOUND( Codes.NOT_FOUND, "Not Found"),
 	INVALID_CREDENTIALS( Codes.INVALID_CREDENTIALS, "Invalid Credentials"),
-	USER_EXISTS(Codes.USER_EXISTS, "User already exists");
+	EXCEPTION( Codes.EXCEPTION, "Exception Occurred");
 
 	private String code;
 	private String message;

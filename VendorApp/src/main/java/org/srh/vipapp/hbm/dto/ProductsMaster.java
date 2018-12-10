@@ -30,7 +30,7 @@ public class ProductsMaster {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 
 	private int productId;
 
@@ -68,10 +68,10 @@ public class ProductsMaster {
 	private Date createdOn = new Date();
 	private Date modifiedOn = new Date();
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

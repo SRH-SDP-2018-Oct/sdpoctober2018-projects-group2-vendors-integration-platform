@@ -2,6 +2,7 @@ package org.srh.vipapp.service.impl;
 
 import java.util.List;
 
+
 import org.springframework.stereotype.Service;
 import org.srh.bean.ServiceResp;
 import org.srh.bean.ServiceRespArray;
@@ -88,6 +89,5 @@ public class CustomerServiceImpl implements CustomerService {
 		// Data Exist, Return Success
 		return Common.buildServiceRespArray(customerMasterList);
 	}
-	
 
 }

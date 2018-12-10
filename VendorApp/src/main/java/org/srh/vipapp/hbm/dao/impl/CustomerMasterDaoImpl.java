@@ -14,7 +14,6 @@ import org.srh.vipapp.hbm.RootHB;
 import org.srh.vipapp.hbm.dao.CustomerMasterDao;
 import org.srh.vipapp.hbm.dto.CustomerCart;
 import org.srh.vipapp.hbm.dto.CustomerMaster;
-import org.srh.vipapp.hbm.dto.UserMaster;
 import org.srh.vipapp.hbm.hql.CustomerMasterQuery;
 
 /**
@@ -97,34 +96,6 @@ public class CustomerMasterDaoImpl implements CustomerMasterDao {
 		catch(NoResultException ex) {
 			AppLog.log(this.getClass(), StringUtil.append("No Customer exist with first name or last name:", name) );
 			return new ArrayList<>();
-		}
-		finally {
-			RootHB.closeSession(session);
-		}
-	}
-	
-	//MAITREYEE	
-	
-	@Override
-	public int registerCustomer(CustomerMaster customerMaster) {
-		CustomerMaster cm= customerMaster;
-		Session session = RootHB.getSessionFactory().openSession();
-		try {			
-			session.beginTransaction();			
-			UserMaster userMaster = (UserMaster)session.get(UserMaster.class, new Integer(2));
-			cm.setCreatedBy(userMaster); 
-			cm.setModifiedBy(userMaster);
-	        session.save(cm);
-			
-//			@SuppressWarnings("unchecked")
-//			Query<CustomerMaster> query = session.createQuery( "INSERT INTO customer_master ( username, firstName, lastName, pwd)"+
-//					"+cm.getUsername()+"+"+cm.getFirstName()+"+"+cm.getLastName()+"+"+cm.getPwd()+");
-			session.getTransaction().commit();
-			return 1;
-		}
-		catch(NoResultException ex) {
-			//AppLog.log(this.getClass(), StringUtil.append("No Customer exist with first name or last name:"+customerMaster2.getUsername()) );
-			return 0;
 		}
 		finally {
 			RootHB.closeSession(session);

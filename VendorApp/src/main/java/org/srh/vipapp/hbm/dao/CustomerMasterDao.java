@@ -49,15 +49,6 @@ public interface CustomerMasterDao {
 	 */
 
 	public List<CustomerMaster> findByName(String name);
-	
-	//MAITREYEE
-	
-	/**
-	 * Registers the {@link CustomerMaster} new customer by input values username, firstname, lastname and pwd.
-	 * @param name {@link String}
-	 * @return customerMaster {@link List<CustomerMaster>}
-	 */
-	public int registerCustomer(CustomerMaster customerMaster);
 
 	/**
 	 * Saves the customer cart entry to the persistent database.

@@ -31,7 +31,7 @@ hiddenParam= {"java.lang.String","org.srh.vipapp.hbm.dto.UserMaster","org.srh.vi
 public class CustomerMaster {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.TABLE)
 	private long customerId;
 
 	@ManyToOne
@@ -168,6 +168,5 @@ public class CustomerMaster {
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-	
 
 }

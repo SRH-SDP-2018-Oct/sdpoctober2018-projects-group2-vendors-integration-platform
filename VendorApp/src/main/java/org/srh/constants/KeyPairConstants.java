@@ -12,4 +12,9 @@ public final class KeyPairConstants {
 	public static final String PRODUCT_PRICE = "product_price";
 	public static final String PRODUCT_BRANCH = "product_branch";
 
+	public static final String CART_DATA = "data";
+	public static final String CART_PRODUCT_ID = "product_id";
+	public static final String CART_PRODUCT_COUNT = "product_count";
+	public static final String CART_DISPLAY_NAME = "display_name";
+	public static final String CART_PRODUCT_DATA = "product_data";
 }

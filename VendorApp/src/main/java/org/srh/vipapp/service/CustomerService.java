@@ -30,6 +30,4 @@ public interface CustomerService {
 	 * @return serviceRespArray {@link ServiceRespArray}
 	 */
 	ServiceRespArray getCustomersByName(String customerName);
-	
-	
 }

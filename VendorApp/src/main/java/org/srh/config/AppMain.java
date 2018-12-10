@@ -1,15 +1,27 @@
 package org.srh.config;
 import org.srh.vipapp.hbm.dto.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.srh.constants.ValueConstants;
 import org.srh.util.AppLog;
 import org.srh.util.Common;
+import org.srh.util.ProductUtil;
+import org.srh.util.StringUtil;
+import org.srh.vipapp.activity.ProductActivity;
 import org.srh.vipapp.hbm.RootHB;
 import org.srh.vipapp.hbm.dao.impl.ApiStructureDaoImpl;
+import org.srh.vipapp.hbm.dao.impl.ProductTypeDaoImpl;
+import org.srh.vipapp.hbm.dao.impl.UserMasterDaoImpl;
+import org.srh.vipapp.hbm.dao.impl.VendorBranchDaoImpl;
+import org.srh.vipapp.hbm.dao.impl.VendorMasterDaoImpl;
 
 
 /**
@@ -22,17 +34,8 @@ public class AppMain {
 
 
 	public static void main(String[] args) {
-		// ETL PROCESS
-		// 1. Get API Structure for the Vendor
-		
-		
-		// 2. Get Product Data from Vendor API
-		
-		
-		// 3. Associate the data with constant structure
-		
-		
-		// 4. Save the data
+		ProductActivity productActivity = new ProductActivity();
+		productActivity.registerProducts("Netti");
 	}
 
 
@@ -41,6 +44,7 @@ public class AppMain {
 		Common.hidePojoDataList(list);
 		JSONArray array = new JSONArray(list);
 		AppLog.print(array);
+		System.exit(0);
 	}
 
 
@@ -49,7 +53,7 @@ public class AppMain {
 		JSONArray jsonArray = new JSONArray();
 		try {
 			try ( Session session = RootHB.getSessionFactory().openSession(); ) {
-				Object obj = Common.hidePojoData(session.find(VendorMaster.class, 2));
+				Object obj = Common.hidePojoData(session.find(VendorBranch.class, 1));
 				jsonObject = new JSONObject(obj);
 			}
 		}
@@ -59,7 +63,6 @@ public class AppMain {
 		finally {
 			AppLog.print("JSONObject ===>>> "+jsonObject);
 			AppLog.print("JSONArray ===>>> "+jsonArray);
-			System.exit(0);
 		}
 	}
 

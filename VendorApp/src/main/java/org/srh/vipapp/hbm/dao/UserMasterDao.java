@@ -2,6 +2,7 @@ package org.srh.vipapp.hbm.dao;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.srh.vipapp.hbm.dto.UserMaster;
 
 
@@ -12,24 +13,40 @@ import org.srh.vipapp.hbm.dto.UserMaster;
  */
 public interface UserMasterDao {
 
+	static final String ROOT_USER = "root";
+	static final String SYSTEM_USER = "system";
+
 	/**
 	 * Gets the {@link UserMaster} entity with the given 'userId'.
 	 * @param userId {@link Integer}
 	 * @return userMaster {@link UserMaster}
 	 */
-	public UserMaster findById(int userId);
+	UserMaster findById(int userId);
 
 	/**
 	 * Returns all the {@link UserMaster} entities from persistence database
 	 * @return userMasterList {@link List<UserMaster>}
 	 */
-	public List<UserMaster> getAllUsers();
+	List<UserMaster> getAllUsers();
 
 	/**
 	 * Gets the {@link UserMaster} entity with the given 'username'.
 	 * @param username {@link String}
 	 * @return userMaster {@link UserMaster}
 	 */
-	public UserMaster findByUsername(String username);
+	UserMaster findByUsername(String username);
+
+	/**
+	 * Gets the system user from database.
+	 * @return systemUserMaster {@link UserMaster}
+	 */
+	UserMaster findSystemUser();
+
+	/**
+	 * Gets the system user from database.
+	 * @param session {@link Session}
+	 * @return systemUserMaster {@link UserMaster}
+	 */
+	UserMaster findSystemUser(Session session);
 
 }

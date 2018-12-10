@@ -15,6 +15,6 @@ public final class Codes {
 	public static final String INVALID_INPUT = "02";
 	public static final String NOT_FOUND = "03";
 	public static final String INVALID_CREDENTIALS = "04";
-	public static final String USER_EXISTS = "05";
+	public static final String EXCEPTION = "05";
 
 }
