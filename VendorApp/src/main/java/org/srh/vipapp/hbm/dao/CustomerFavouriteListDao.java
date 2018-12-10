@@ -14,13 +14,13 @@ public interface CustomerFavouriteListDao {
 	 * @return customerFavouriteList {@link CustomerFavouriteList}
 	 */
 	public CustomerFavouriteList findById(long id);
-	
+
 	/**
 	 * Gets the {@link CustomerFavouriteList} entity with the given 'customerId'.
 	 * @param customerId {@link Long}
 	 * @return customerFavouriteList {@link CustomerFavouriteList}
 	 */
 	public CustomerFavouriteList findByCustomerId(long customerId);
-	
-	
+
+
 }

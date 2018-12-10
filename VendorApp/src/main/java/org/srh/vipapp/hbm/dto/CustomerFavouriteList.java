@@ -1,18 +1,26 @@
 package org.srh.vipapp.hbm.dto;
 
 import java.util.Date;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import org.srh.annotation.POJO;
+import org.srh.vipapp.hbm.hql.CustomerFavouriteListQuery;
 
 @Entity
 @Table(name="customer_favouritelist")
-/**
+
+@NamedQuery(name = CustomerFavouriteListQuery.GET_FAVOURITE_CART_BY_CUSTOMERID_$N, query = CustomerFavouriteListQuery.GET_FAVOURITE_CART_BY_CUSTOMERID_$Q)
+@POJO(hidden= {"setCustomerId","setCreatedBy","setModifiedBy"},
+	hiddenParam= {"org.srh.vipapp.hbm.dto.CustomerMaster",
+			"org.srh.vipapp.hbm.dto.UserMaster","org.srh.vipapp.hbm.dto.UserMaster"}
+)
+/**l
  * The Entity representing the table 'customer_favouritelist' from the 'vendor_integration_app' database.
  * Date: 09 Dec 2018
  * @author Anglita
@@ -22,7 +30,7 @@ public class CustomerFavouriteList {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
-	private long id;
+	private long listId;
 	
 	@ManyToOne
 	@JoinColumn(name="customerId")
@@ -48,18 +56,14 @@ public class CustomerFavouriteList {
 	
 	public long getListId() 
 	{
-		return id;
+		return listId;
 	}
 	
-	public void setListId(long id) 
+	public void setListId(long listId) 
 	{
-		this.id = id;
+		this.listId = listId;
 	}
 	
-	public CustomerMaster getId() 
-	{
-		return customerId;
-	}
 	
 	public CustomerMaster getCustomerId() 
 	{

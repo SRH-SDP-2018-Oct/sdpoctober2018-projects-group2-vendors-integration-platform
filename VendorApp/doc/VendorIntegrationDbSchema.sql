@@ -490,7 +490,7 @@ CREATE TABLE products_master(
   productId INT UNSIGNED NOT NULL,
   productTypeId INT UNSIGNED NOT NULL,
   productName VARCHAR(50) NOT NULL,
-  productPrice DECIMAL(10,0) DEFAULT NULL,
+  productPrice DECIMAL(9,2) DEFAULT NULL,
   productDescription TEXT,
   productShelfLife VARCHAR(50) DEFAULT '',
   hasAnOffer TINYINT(1) DEFAULT '0' NOT NULL,
@@ -529,6 +529,7 @@ CREATE TABLE customer_cart(
   cartId BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   customerId BIGINT UNSIGNED NOT NULL,
   displayName VARCHAR(50) DEFAULT NULL,
+  totalPrice DECIMAL(9,2) NOT NULL,
   deleteFlag TINYINT(1) DEFAULT '0' NOT NULL,
   createdOn DATETIME NOT NULL,
   createdBy INT UNSIGNED NOT NULL,
@@ -567,3 +568,53 @@ CREATE TABLE cart_product(
 DESC cart_product;
 
 SELECT * FROM cart_product;
+
+/* ********************************************************************************** */
+-- Customer Favourite List
+/* ********************************************************************************** */
+
+DROP TABLE IF EXISTS customer_favouritelist;
+
+CREATE TABLE customer_favouritelist(
+  listId BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  customerId BIGINT UNSIGNED NOT NULL,
+  deleteFlag TINYINT(1) DEFAULT '0' NOT NULL,
+  createdOn DATETIME NOT NULL,
+  createdBy INT UNSIGNED NOT NULL,
+  modifiedOn DATETIME NOT NULL,
+  modifiedBy INT UNSIGNED NOT NULL,
+  FOREIGN KEY (customerId) REFERENCES customer_master (customerId),
+  FOREIGN KEY (createdBy) REFERENCES user_master (userId),
+  FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
+);
+
+DESC customer_favouritelist;
+
+SELECT * FROM customer_favouritelist;
+
+
+
+
+DROP TABLE IF EXISTS favouritelist_product;
+
+CREATE TABLE favouritelist_product(
+  id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  listId BIGINT UNSIGNED NOT NULL,
+  productId BIGINT UNSIGNED NOT NULL,
+  deleteFlag TINYINT(1) DEFAULT '0' NOT NULL,
+  createdOn DATETIME NOT NULL,
+  createdBy INT UNSIGNED NOT NULL,
+  modifiedOn DATETIME NOT NULL,
+  modifiedBy INT UNSIGNED NOT NULL,
+  FOREIGN KEY (listId) REFERENCES customer_favouritelist(listId),
+  FOREIGN KEY (productId) REFERENCES products_master (id),
+  FOREIGN KEY (createdBy) REFERENCES user_master (userId),
+  FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
+);
+
+DESC favouritelist_product;
+
+SELECT * FROM favouritelist_product;
+
+
+
