@@ -514,3 +514,56 @@ CREATE TABLE products_master(
 DESC products_master;
 
 SELECT * FROM products_master;
+
+
+
+/* ********************************************************************************** */
+-- Customer Cart
+/* ********************************************************************************** */
+
+
+
+DROP TABLE IF EXISTS customer_cart;
+
+CREATE TABLE customer_cart(
+  cartId BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  customerId BIGINT UNSIGNED NOT NULL,
+  displayName VARCHAR(50) DEFAULT NULL,
+  deleteFlag TINYINT(1) DEFAULT '0' NOT NULL,
+  createdOn DATETIME NOT NULL,
+  createdBy INT UNSIGNED NOT NULL,
+  modifiedOn DATETIME NOT NULL,
+  modifiedBy INT UNSIGNED NOT NULL,
+  FOREIGN KEY (customerId) REFERENCES customer_master (customerId),
+  FOREIGN KEY (createdBy) REFERENCES user_master (userId),
+  FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
+);
+
+DESC customer_cart;
+
+SELECT * FROM customer_cart;
+
+
+
+
+DROP TABLE IF EXISTS cart_product;
+
+CREATE TABLE cart_product(
+  id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  cartId BIGINT UNSIGNED NOT NULL,
+  productId BIGINT UNSIGNED NOT NULL,
+  productCount INT UNSIGNED NOT NULL,
+  deleteFlag TINYINT(1) DEFAULT '0' NOT NULL,
+  createdOn DATETIME NOT NULL,
+  createdBy INT UNSIGNED NOT NULL,
+  modifiedOn DATETIME NOT NULL,
+  modifiedBy INT UNSIGNED NOT NULL,
+  FOREIGN KEY (cartId) REFERENCES customer_cart (cartId),
+  FOREIGN KEY (productId) REFERENCES products_master (id),
+  FOREIGN KEY (createdBy) REFERENCES user_master (userId),
+  FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
+);
+
+DESC cart_product;
+
+SELECT * FROM cart_product;

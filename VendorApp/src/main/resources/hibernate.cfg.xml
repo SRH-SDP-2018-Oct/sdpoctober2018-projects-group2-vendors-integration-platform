@@ -8,8 +8,7 @@
 		<property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
 		<property name="connection.url">jdbc:mysql://localhost:3306/vendor_integration_app</property>
 		<property name="connection.username">root</property>
-		<property name="connection.password">root</property> 
-		  
+		<property name="connection.password">root</property>    
  
         <mapping class="org.srh.vipapp.hbm.dto.UserType"/>
         <mapping class="org.srh.vipapp.hbm.dto.UserMaster"/>
@@ -20,5 +19,7 @@
         <mapping class="org.srh.vipapp.hbm.dto.ApiStructure"/>
         <mapping class="org.srh.vipapp.hbm.dto.ProductType"/>
         <mapping class="org.srh.vipapp.hbm.dto.ProductsMaster"/>
+        <mapping class="org.srh.vipapp.hbm.dto.CustomerCart"/>
+        <mapping class="org.srh.vipapp.hbm.dto.CartProduct"/>
     </session-factory>  
 </hibernate-configuration> 
