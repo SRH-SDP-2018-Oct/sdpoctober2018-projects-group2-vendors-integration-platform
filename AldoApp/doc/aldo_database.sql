@@ -143,7 +143,7 @@ CREATE TABLE product_master (
   productTypeId INT UNSIGNED NOT NULL,
   productName VARCHAR(50) DEFAULT NULL,
   productDescription TEXT,
-  productPrice DECIMAL(10,0) DEFAULT NULL,
+  productPrice DECIMAL(9,2) DEFAULT NULL,
   branchId INT UNSIGNED DEFAULT NULL,
   deleteFlag TINYINT(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (productId),
