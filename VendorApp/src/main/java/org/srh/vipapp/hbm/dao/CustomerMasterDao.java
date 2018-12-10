@@ -38,4 +38,12 @@ public interface CustomerMasterDao {
 	 * @return customerMaster {@link List<CustomerMaster>}
 	 */
 	public List<CustomerMaster> findByName(String name);
+	
+	//MAITREYEE
+	/**
+	 * Registers the {@link CustomerMaster} new customer by input values username, firstname, lastname and pwd.
+	 * @param name {@link String}
+	 * @return customerMaster {@link List<CustomerMaster>}
+	 */
+	public int registerCustomer(CustomerMaster customerMaster);
 }

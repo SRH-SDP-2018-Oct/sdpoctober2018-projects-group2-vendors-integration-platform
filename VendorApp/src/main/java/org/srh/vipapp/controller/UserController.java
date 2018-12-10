@@ -28,8 +28,8 @@ public class UserController {
 	public String userLogin() {
 		return "Success";
 	}
-
-
+	
+	
 	@RequestMapping(path="/id/{userId}", method=RequestMethod.GET)
 	public String getUserById(@PathVariable String userId, HttpServletResponse resp) {
 		ServiceResp serviceResp = userService.getUserById(userId);

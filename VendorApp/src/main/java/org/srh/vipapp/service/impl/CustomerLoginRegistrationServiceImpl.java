@@ -1,5 +1,7 @@
 package org.srh.vipapp.service.impl;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Service;
 import org.srh.bean.ServiceResp;
 import org.srh.constants.ErrorCode;
@@ -46,6 +48,25 @@ public class CustomerLoginRegistrationServiceImpl implements CustomerLoginRegist
 			return Common.buildServiceRespError(ErrorCode.INVALID_CREDENTIALS, description);
 		}
 
+		return Common.buildServiceResp(customerMaster);
+	}
+	
+	//MAITREYEE	
+	@Override
+	public ServiceResp setCustomerDetails(String username, String firstName, String lastName, String pwd) {
+		CustomerMaster customerMaster = new CustomerMaster();		
+		customerMaster.setUsername(username);
+		customerMaster.setFirstName(firstName);
+		customerMaster.setLastName(lastName);
+		customerMaster.setPwd(pwd);
+		customerMaster.setCreatedOn(new Date());
+		customerMaster.setModifiedOn(new Date());
+		
+		if(customerMasterDao.registerCustomer(customerMaster)==0) {
+			String description =  StringUtil.append("Customer registration failed [", customerMaster.getUsername(), "].");
+			return Common.buildServiceRespError(ErrorCode.NOT_FOUND, description);
+		}
+		
 		return Common.buildServiceResp(customerMaster);
 	}
 

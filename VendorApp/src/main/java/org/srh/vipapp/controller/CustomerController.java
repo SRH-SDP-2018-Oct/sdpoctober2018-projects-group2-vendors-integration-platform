@@ -20,8 +20,9 @@ import org.srh.vipapp.service.CustomerLoginRegistrationService;
 import org.srh.vipapp.service.CustomerService;
 
 /**
- * Rest Controller to serve the API/HTTP Call related to the Application Customer.
- * Date: 01 Dec 2018
+ * Rest Controller to serve the API/HTTP Call related to the Application
+ * Customer. Date: 01 Dec 2018
+ * 
  * @author Vivek
  */
 @RestController
@@ -31,42 +32,45 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 
-
-	@RequestMapping(path="/id/{customerId}", method=RequestMethod.GET)
+	@RequestMapping(path = "/id/{customerId}", method = RequestMethod.GET)
 	public String getCustomerById(@PathVariable String customerId, HttpServletResponse resp) {
 		ServiceResp serviceResp = customerService.getCustomerById(customerId);
 		return HttpUtil.buildResponse(resp, serviceResp).toString();
 	}
 
-
-	@RequestMapping(path="/username/{customerUsername}", method=RequestMethod.GET)
+	@RequestMapping(path = "/username/{customerUsername}", method = RequestMethod.GET)
 	public String getCustomerByUsername(@PathVariable String customerUsername, HttpServletResponse resp) {
 		ServiceResp serviceResp = customerService.getCustomersByUsername(customerUsername);
 		return HttpUtil.buildResponse(resp, serviceResp).toString();
 	}
 
-
-	@RequestMapping(path="/name/{customerName}", method=RequestMethod.GET)
+	@RequestMapping(path = "/name/{customerName}", method = RequestMethod.GET)
 	public String getCustomerByName(@PathVariable String customerName, HttpServletResponse resp) {
 		ServiceRespArray serviceResp = customerService.getCustomersByName(customerName);
 		return HttpUtil.buildResponseArray(resp, serviceResp).toString();
 	}
 
-
+	//MAITREYEE
+	@RequestMapping(path = "/register/{username}/{firstName}/{lastName}/{pwd}", method = RequestMethod.GET)
+	public String registerCustomer(@PathVariable String username, @PathVariable String firstName,
+			@PathVariable String lastName, @PathVariable String pwd, HttpServletResponse resp) {
+		ServiceResp serviceResp = customerLoginRegistrationService.setCustomerDetails(username, firstName, lastName, pwd);
+		return HttpUtil.buildResponse(resp, serviceResp).toString();
+	}
 
 	@Autowired
 	private CustomerLoginRegistrationService customerLoginRegistrationService;
 
 	@RequestMapping("/login")
-	public String customerLogin(@RequestParam String username, @RequestParam String pwd, 
-			HttpServletResponse resp, HttpServletRequest req) {
+	public String customerLogin(@RequestParam String username, @RequestParam String pwd, HttpServletResponse resp,
+			HttpServletRequest req) {
 
 		// Authenticate the user
 		ServiceResp serviceResp = customerLoginRegistrationService.authenticate(username, pwd);
 
 		// Error is not null if the request or user invalid
 		ErrorCode errorCode = serviceResp.getErrorCode();
-		if(errorCode!=null) {
+		if (errorCode != null) {
 			return HttpUtil.errorResponse(resp, errorCode, serviceResp.getErrorDescription()).toString();
 		}
 
@@ -76,7 +80,7 @@ public class CustomerController {
 		HttpSession session = req.getSession(true);
 
 		String sessionId = session.getId();
-		AppLog.print( StringUtil.append("New session created with id [", sessionId , "].") );
+		AppLog.print(StringUtil.append("New session created with id [", sessionId, "]."));
 
 		return HttpUtil.successResponse(serviceResp.getSuccessData(), "sessionId", sessionId).toString();
 	}

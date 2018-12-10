@@ -16,5 +16,16 @@ public interface CustomerLoginRegistrationService {
 	 * @return serviceResp {@link ServiceResp}
 	 */
 	ServiceResp authenticate(String username, String pwd);
+	
+	//MAITREYEE	
+	/**
+	 * Registers the new customer and save its record to DB.
+	 * @param username {@link String}
+	 * @param firstName {@link String}
+	 * @param lastName {@link String}
+	 * @param pwd {@link String}
+	 * @return serviceResp {@link ServiceResp}
+	 */
+	ServiceResp setCustomerDetails(String username, String firstName, String lastName, String pwd);
 
 }

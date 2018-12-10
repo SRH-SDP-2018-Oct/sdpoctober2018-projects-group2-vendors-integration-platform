@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
 		// 
 		return Common.buildServiceResp(userMaster);
 	}
+	
 
 	
 }
