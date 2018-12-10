@@ -61,7 +61,11 @@ public class CustomerFavouriteList {
 		return customerId;
 	}
 	
-	public void setId(CustomerMaster customerId) 
+	public CustomerMaster getCustomerId() 
+	{
+		return customerId;
+	}
+	public void setCustomerId(CustomerMaster customerId) 
 	{
 		this.customerId = customerId;
 	}
