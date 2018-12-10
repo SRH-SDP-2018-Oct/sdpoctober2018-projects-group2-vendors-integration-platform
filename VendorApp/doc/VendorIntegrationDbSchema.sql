@@ -567,3 +567,53 @@ CREATE TABLE cart_product(
 DESC cart_product;
 
 SELECT * FROM cart_product;
+
+/* ********************************************************************************** */
+-- Customer Favourite List
+/* ********************************************************************************** */
+
+DROP TABLE IF EXISTS customer_favouritelist;
+
+CREATE TABLE customer_favouritelist(
+  listId BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  customerId BIGINT UNSIGNED NOT NULL,
+  deleteFlag TINYINT(1) DEFAULT '0' NOT NULL,
+  createdOn DATETIME NOT NULL,
+  createdBy INT UNSIGNED NOT NULL,
+  modifiedOn DATETIME NOT NULL,
+  modifiedBy INT UNSIGNED NOT NULL,
+  FOREIGN KEY (customerId) REFERENCES customer_master (customerId),
+  FOREIGN KEY (createdBy) REFERENCES user_master (userId),
+  FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
+);
+
+DESC customer_favouritelist;
+
+SELECT * FROM customer_favouritelist;
+
+
+
+
+DROP TABLE IF EXISTS favouritelist_product;
+
+CREATE TABLE favouritelist_product(
+  id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  listId BIGINT UNSIGNED NOT NULL,
+  productId BIGINT UNSIGNED NOT NULL,
+  deleteFlag TINYINT(1) DEFAULT '0' NOT NULL,
+  createdOn DATETIME NOT NULL,
+  createdBy INT UNSIGNED NOT NULL,
+  modifiedOn DATETIME NOT NULL,
+  modifiedBy INT UNSIGNED NOT NULL,
+  FOREIGN KEY (listId) REFERENCES customer_favouritelist(listId),
+  FOREIGN KEY (productId) REFERENCES products_master (id),
+  FOREIGN KEY (createdBy) REFERENCES user_master (userId),
+  FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
+);
+
+DESC favouritelist_product;
+
+SELECT * FROM favouritelist_product;
+
+
+
