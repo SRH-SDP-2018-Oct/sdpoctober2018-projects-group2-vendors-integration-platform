@@ -33,11 +33,30 @@ public final class ProductsMasterQuery {
 			+ " WHERE deleteFlag=0 AND hasAnOffer=1";
 
 
-	public static final String GET_FREQUENT_PRODUCDTS_P1 = "customerId";
+	public static final String GET_FREQUENT_PRODUCDTS_$_CUSTOMER = "customerId";
+	public static final String GET_FREQUENT_PRODUCDTS_$_ADD_ENTITY = "cp";
 	public static final String GET_FREQUENT_PRODUCDTS_Q = StringUtil.append("SELECT ",
 			" cp.productId, COUNT(*), cp.*  " ,
 			" FROM cart_product cp ",
 			" INNER JOIN customer_cart cc ON cc.cartId = cp.cartId " + 
-			" WHERE cc.customerId = :", GET_FREQUENT_PRODUCDTS_P1,
+			" WHERE cc.customerId = :", GET_FREQUENT_PRODUCDTS_$_CUSTOMER,
 			" GROUP BY cp.productId ");
+
+
+	public static final String GET_PRODUCDTS_BY_LOCATION_$_PRODUCTNAME = "productName";
+	public static final String GET_PRODUCDTS_BY_LOCATION_$_LATITUDE = "userLatitude";
+	public static final String GET_PRODUCDTS_BY_LOCATION_$_LONGITUDE = "userLongitude";
+	public static final String GET_PRODUCDTS_BY_LOCATION_$_ADD_ENTITY = "pm";
+	public static final String GET_PRODUCDTS_BY_LOCATION_Q = StringUtil.append("SELECT " ,
+			"   ( 6371 * ACOS ( COS ( RADIANS(:",GET_PRODUCDTS_BY_LOCATION_$_LATITUDE,") ) " ,
+			"    * COS ( RADIANS( vm.locationLat ) ) " ,
+			"    * COS ( RADIANS( vm.locationLon ) - RADIANS(:",GET_PRODUCDTS_BY_LOCATION_$_LONGITUDE,") ) " ,
+			"    + SIN ( RADIANS(:",GET_PRODUCDTS_BY_LOCATION_$_LATITUDE,") ) " ,
+			"    * SIN ( RADIANS( vm.locationLat ) )",
+			"   ))  AS distance,",
+			"   pm.* ",
+			" FROM products_master pm ",
+			" INNER JOIN vendor_branches vm ON vm.id = pm.branchId ",
+			" WHERE pm.productName LIKE :", GET_PRODUCDTS_BY_LOCATION_$_PRODUCTNAME,
+			" ORDER BY distance ");
 }

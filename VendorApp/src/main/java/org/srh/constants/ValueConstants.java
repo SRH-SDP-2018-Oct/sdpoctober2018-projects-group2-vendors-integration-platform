@@ -10,4 +10,7 @@ public final class ValueConstants {
 	public static final String USER_ROOT = UserMasterDao.ROOT_USER;;
 	public static final String USER_SYSTEM = UserMasterDao.SYSTEM_USER;
 
+	public static final String PRODUCT_FILTER_LOCATION = "location";
+	public static final String PRODUCT_FILTER_PRICE = "price";
+
 }

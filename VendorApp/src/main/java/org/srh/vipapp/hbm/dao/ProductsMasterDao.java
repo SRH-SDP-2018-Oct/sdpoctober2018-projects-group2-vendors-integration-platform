@@ -1,5 +1,6 @@
 package org.srh.vipapp.hbm.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -63,7 +64,20 @@ public interface ProductsMasterDao {
 	 */
 	List<ProductsMaster> frequentlyBoughtByCustomer(CustomerMaster customerMaster);
 
+	/**
+	 * Search the product {@link ProductsMaster} based on the nearest location.
+	 * @param productName {@link String}
+	 * @param latitude {@link BigDecimal}
+	 * @param longitude {@link BigDecimal}
+	 * @return productsMasterList {@link List<ProductsMaster>}
+	 */
+	List<ProductsMaster> searchNearestProduct(String productName, BigDecimal latitude, BigDecimal longitude);
 
-	
+	/**
+	 * Search the product {@link ProductsMaster} based on the price, from low to high.
+	 * @param productName {@link String}
+	 * @return productsMasterList {@link List<ProductsMaster>}
+	 */
+	List<ProductsMaster> searchLowCostProduct(String productName);
 
 }

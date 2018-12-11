@@ -1,6 +1,7 @@
 package org.srh.vipapp.controller;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.srh.bean.ServiceResp;
 import org.srh.bean.ServiceRespArray;
+import org.srh.util.Common;
 import org.srh.util.HttpUtil;
 import org.srh.vipapp.service.ProductsService;
 
@@ -56,9 +58,11 @@ public class ProductController {
 		return HttpUtil.buildResponseArray(resp, serviceResp).toString();
 	}
 
-	@RequestMapping(path="/search/{productName}", method=RequestMethod.POST)
-	public String getProductsByName(@PathVariable String productName, @RequestParam String filter, HttpServletResponse resp) {
-		ServiceRespArray serviceRespArray = productsService.getProductsbyName(productName);
+	@RequestMapping(path="/search", method=RequestMethod.POST)
+	public String getProductsByName(@RequestParam String productName, @RequestParam String filter, HttpServletResponse resp,
+			HttpSession httpSession) {
+		String customerId = Common.getCustomerId(httpSession).toString();
+		ServiceRespArray serviceRespArray = productsService.getSearchProducts(customerId, productName, filter);
 		return HttpUtil.buildResponseArray(resp, serviceRespArray).toString();
 	}
 

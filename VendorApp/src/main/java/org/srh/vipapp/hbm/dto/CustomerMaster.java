@@ -1,5 +1,6 @@
 package org.srh.vipapp.hbm.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -54,8 +55,8 @@ public class CustomerMaster {
 	private String country = "Germany";
 
 	private String defaultLocation = "Wieblingen";
-	private String defaultLocationLat = "49.428550";
-	private String defaultLocationLon = "8.645980";
+	private BigDecimal defaultLocationLat = new BigDecimal("49.4140614");
+	private BigDecimal defaultLocationLon = new BigDecimal("8.6536843");
 
 	private boolean deleteFlag = false;
 	private Date createdOn = new Date();
@@ -138,16 +139,16 @@ public class CustomerMaster {
 	public void setDefaultLocation(String defaultLocation) {
 		this.defaultLocation = defaultLocation;
 	}
-	public String getDefaultLocationLat() {
+	public BigDecimal getDefaultLocationLat() {
 		return defaultLocationLat;
 	}
-	public void setDefaultLocationLat(String defaultLocationLat) {
+	public void setDefaultLocationLat(BigDecimal defaultLocationLat) {
 		this.defaultLocationLat = defaultLocationLat;
 	}
-	public String getDefaultLocationLon() {
+	public BigDecimal getDefaultLocationLon() {
 		return defaultLocationLon;
 	}
-	public void setDefaultLocationLon(String defaultLocationLon) {
+	public void setDefaultLocationLon(BigDecimal defaultLocationLon) {
 		this.defaultLocationLon = defaultLocationLon;
 	}
 	public boolean isDeleteFlag() {

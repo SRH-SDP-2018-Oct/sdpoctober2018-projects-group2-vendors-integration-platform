@@ -1,5 +1,6 @@
 package org.srh.vipapp.hbm.dao.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -69,6 +70,7 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 
 	}
 
+
 	@Override
 	public List<ProductsMaster> findbyProductName(String productName) {
 		Session session = RootHB.getSessionFactory().openSession();
@@ -85,8 +87,8 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 		finally {
 			RootHB.closeSession(session);
 		}
-
 	}
+
 
 	@Override
 	public List<ProductsMaster> getProductsByProductType(String productTypeName) {
@@ -137,8 +139,8 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 		try {
 			@SuppressWarnings("unchecked")
 			NativeQuery<CartProduct> nativeQuery = session.createSQLQuery(ProductsMasterQuery.GET_FREQUENT_PRODUCDTS_Q);
-			Query<CartProduct> query = nativeQuery.addEntity("cp", CartProduct.class);
-			query.setParameter(ProductsMasterQuery.GET_FREQUENT_PRODUCDTS_P1, customerMaster);
+			Query<CartProduct> query = nativeQuery.addEntity(ProductsMasterQuery.GET_FREQUENT_PRODUCDTS_$_ADD_ENTITY, CartProduct.class);
+			query.setParameter(ProductsMasterQuery.GET_FREQUENT_PRODUCDTS_$_CUSTOMER, customerMaster);
 			List<CartProduct> listCartProduct = query.getResultList();
 			if(listCartProduct.isEmpty())
 				return listProduct;
@@ -156,6 +158,32 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 		}
 		return listProduct;
 	}
-	
+
+
+	@Override
+	public List<ProductsMaster> searchNearestProduct(String productName, BigDecimal latitude, BigDecimal longitude) {
+		Session session = RootHB.getSessionFactory().openSession();
+		try {
+			@SuppressWarnings("unchecked")
+			NativeQuery<ProductsMaster> nativeQuery = session.createSQLQuery(ProductsMasterQuery.GET_PRODUCDTS_BY_LOCATION_Q);
+			Query<ProductsMaster> query = nativeQuery.addEntity(ProductsMasterQuery.GET_PRODUCDTS_BY_LOCATION_$_ADD_ENTITY, ProductsMaster.class);
+			query.setParameter(ProductsMasterQuery.GET_PRODUCDTS_BY_LOCATION_$_PRODUCTNAME, StringUtil.append("%", productName, "%"));
+			query.setParameter(ProductsMasterQuery.GET_PRODUCDTS_BY_LOCATION_$_LATITUDE, latitude);
+			query.setParameter(ProductsMasterQuery.GET_PRODUCDTS_BY_LOCATION_$_LONGITUDE, longitude);
+			return query.getResultList();
+		}
+		catch(NoResultException ex){
+			AppLog.log(this.getClass(), StringUtil.append("There are no products on Offers!",ex.getMessage()) );
+		}
+		finally {
+			RootHB.closeSession(session);
+		}
+		return new ArrayList<>();
+	}
+
+
+	public List<ProductsMaster> searchLowCostProduct(String productName) {
+		return new ArrayList<>();
+	}
 
 }

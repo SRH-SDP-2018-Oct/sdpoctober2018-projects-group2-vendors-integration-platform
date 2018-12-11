@@ -45,11 +45,12 @@ public interface ProductsService {
 
 	/**
 	 * Returns product with the given product name.
+	 * @param customerId {@link String}
 	 * @param productName {@link String}
 	 * @param filter {@link String}
 	 * @return serviceRespArray {@link ServiceRespArray}
 	 */
-	ServiceRespArray getSearchProducts(String productName, String filter);
+	ServiceRespArray getSearchProducts(String customerId, String productName, String filter);
 }
 
 

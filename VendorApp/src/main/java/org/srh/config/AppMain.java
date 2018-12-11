@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,6 +23,7 @@ import org.srh.vipapp.activity.ProductActivity;
 import org.srh.vipapp.hbm.RootHB;
 import org.srh.vipapp.hbm.dao.impl.ApiStructureDaoImpl;
 import org.srh.vipapp.hbm.dao.impl.CustomerCartDaoImpl;
+import org.srh.vipapp.hbm.dao.impl.CustomerMasterDaoImpl;
 import org.srh.vipapp.hbm.dao.impl.ProductTypeDaoImpl;
 import org.srh.vipapp.hbm.dao.impl.UserMasterDaoImpl;
 import org.srh.vipapp.hbm.dao.impl.VendorBranchDaoImpl;
@@ -39,9 +41,9 @@ public class AppMain {
 
 	public static void main(String[] args) {
 		try {
-			AppLog.print(new JSONObject(new CustomerCartServiceImpl().getFrquentlyBoughtProducts("1")));
-			// vendorDataETL();
-			frequentlyBought();
+			CustomerMaster customerMaster = new CustomerMasterDaoImpl().findById(1);
+			// sortedLocation( "milk", "49.4140614", "8.6536843");
+			sortedLocation( "milk", customerMaster.getDefaultLocationLat(), customerMaster.getDefaultLocationLon());
 		}
 		catch(Exception ex) {
 			AppLog.log(AppMain.class, ex);
@@ -52,22 +54,8 @@ public class AppMain {
 	}
 
 
-	private static void frequentlyBought() {
-		String queryString = StringUtil.append("SELECT cp.productId, COUNT(*), cp.*  " ,
-				" FROM cart_product cp ",
-				" INNER JOIN customer_cart cc ON cc.cartId = cp.cartId\r\n" + 
-				" WHERE cc.customerId = :customerId ",
-				" GROUP BY cp.productId ");
-		Session session = RootHB.getSessionFactory().openSession();
-		@SuppressWarnings("unchecked")
-		Query<CartProduct> query = session.createSQLQuery(queryString).addEntity("cp", CartProduct.class);
-		query.setParameter("customerId", 1);
-		List<CartProduct> list = query.getResultList();
-		AppLog.print(new JSONArray(list));
-	}
-
-
-	private static void sortedLocation() {
+	// 
+	private static void sortedLocation(String productName, BigDecimal latitude, BigDecimal longitude) {
 		String queryString = StringUtil.append("SELECT " ,
 				"   ( 6371 * ACOS ( COS ( RADIANS(:userLatitude) ) " ,
 				"    * COS ( RADIANS( vm.locationLat ) ) " ,
@@ -78,16 +66,18 @@ public class AppMain {
 				"   pm.* ",
 				" FROM products_master pm ",
 				" INNER JOIN vendor_branches vm ON vm.id = pm.branchId ",
+				" WHERE pm.productName LIKE :productName ",
 				" ORDER BY distance ");
 		Session session = RootHB.getSessionFactory().openSession();
-		Query query = session.createSQLQuery(queryString).addEntity("pm", ProductsMaster.class);
-		query.setParameter("userLatitude", "49.4140614");
-		query.setParameter("userLongitude", "8.6536843");
-		// query.setParameter(0, "");
-		// '49.4140614'
-		//
-		List list = query.getResultList();
+		@SuppressWarnings("unchecked")
+		NativeQuery<ProductsMaster> nativeQuery = session.createSQLQuery(queryString);
+		Query<ProductsMaster> query = nativeQuery.addEntity("pm", ProductsMaster.class);
+		query.setParameter("productName", StringUtil.append("%", productName, "%"));
+		query.setParameter("userLatitude", latitude);
+		query.setParameter("userLongitude", longitude);
+		List<ProductsMaster> list = query.getResultList();
 		AppLog.print(new JSONArray(list));
+		session.close();
 	}
 
 

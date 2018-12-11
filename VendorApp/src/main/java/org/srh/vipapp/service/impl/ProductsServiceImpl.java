@@ -1,17 +1,22 @@
 package org.srh.vipapp.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.srh.bean.ServiceResp;
 import org.srh.bean.ServiceRespArray;
 import org.srh.constants.ErrorCode;
+import org.srh.constants.ValueConstants;
 import org.srh.util.AppLog;
 import org.srh.util.Common;
 import org.srh.util.NumberUtil;
 import org.srh.util.StringUtil;
+import org.srh.vipapp.hbm.dao.CustomerMasterDao;
 import org.srh.vipapp.hbm.dao.ProductsMasterDao;
+import org.srh.vipapp.hbm.dao.impl.CustomerMasterDaoImpl;
 import org.srh.vipapp.hbm.dao.impl.ProductsMasterDaoImpl;
+import org.srh.vipapp.hbm.dto.CustomerMaster;
 import org.srh.vipapp.hbm.dto.ProductsMaster;
 import org.srh.vipapp.service.ProductsService;
 
@@ -24,6 +29,7 @@ import org.srh.vipapp.service.ProductsService;
 public class ProductsServiceImpl implements ProductsService{
 
 	private ProductsMasterDao productsMasterDao = new ProductsMasterDaoImpl();
+	private CustomerMasterDao customerMasterDao = new CustomerMasterDaoImpl();
 
 	@Override
 	public ServiceRespArray getAllProducts() {
@@ -114,14 +120,51 @@ public class ProductsServiceImpl implements ProductsService{
 
 
 	@Override
-	public ServiceRespArray getSearchProducts(String productName, String filter) {
+	public ServiceRespArray getSearchProducts(String customerId, String productName, String filter) {
 		// Input Validation
 		if(Common.nullOrEmptyTrim(productName)) {
 			String description = "Product name not found.";
 			return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
 		}
+		// Input Validation
+		if(Common.nullOrEmptyTrim(filter)) {
+			String description = "Product filter not found.";
+			return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
+		}
 
-		List<ProductsMaster> productsByNameList = productsMasterDao.findbyProductName(productName);
+		//
+		boolean filterByLocation = ValueConstants.PRODUCT_FILTER_LOCATION.equals(filter);
+		boolean filterByPrice = ValueConstants.PRODUCT_FILTER_PRICE.equals(filter);
+
+		List<ProductsMaster> productsByNameList = null;
+
+		// FILTER BY CUSTOMER'S DEFAULT LOCATION
+		if(filterByLocation) {
+			Long cId = NumberUtil.getLong(customerId);
+			if (cId == null) {
+				String description = StringUtil.append("The customer id [", cId, "] is invalid integer.");
+				return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
+			}
+			CustomerMaster customerMaster = customerMasterDao.findById(cId);
+			// Validate Data Existence
+			if (customerMaster == null) {
+				String description = StringUtil.append("No car found with id [", cId, "].");
+				return Common.buildServiceRespArrayError(ErrorCode.NOT_FOUND, description);
+			}
+
+			BigDecimal latitude = customerMaster.getDefaultLocationLat();
+			BigDecimal longitude = customerMaster.getDefaultLocationLon();
+			productsByNameList = productsMasterDao.searchNearestProduct(productName, latitude, longitude);
+		}
+
+		// FILTER BY PRICE OF PRODUCT
+		else if(filterByPrice)
+			productsByNameList = productsMasterDao.searchLowCostProduct(productName);
+
+		else {
+			String description = "Product filter is invalid.";
+			return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
+		}
 
 		// Validate Data Existence
 		if(productsByNameList==null) {
