@@ -1,12 +1,14 @@
 package org.srh.config;
 import org.srh.vipapp.hbm.dto.*;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,10 +36,38 @@ public class AppMain {
 
 
 	public static void main(String[] args) {
+		try {
+			String queryString = StringUtil.append("SELECT " ,
+					"  ( 6371 * ACOS ( COS ( RADIANS(:userLatitude) ) " ,
+					"   * COS ( RADIANS( vm.locationLat ) ) " ,
+					"   * COS ( RADIANS( vm.locationLon ) - RADIANS(:userLongitude) ) " ,
+					"   + SIN ( RADIANS(:userLatitude) ) " ,
+					"   * SIN ( RADIANS( vm.locationLat ) )",
+					" ))  AS distance, pm.*  FROM products_master pm ",
+					" INNER JOIN vendor_branches vm ON vm.id = pm.branchId ",
+					" ORDER BY distance ");
+			Session session = RootHB.getSessionFactory().openSession();
+			Query query = session.createSQLQuery(queryString).addEntity("pm", ProductsMaster.class);//.addJoin("vm","pm.branchId");
+			query.setParameter("userLatitude", "49.4140614");
+			query.setParameter("userLongitude", "8.6536843");
+			// query.setParameter(0, "");
+			// '49.4140614'
+			//
+			List list = query.getResultList();
+			AppLog.print(new JSONArray(list));
+		}
+		catch(Exception ex) {
+			AppLog.log(AppMain.class, ex);
+		}
+		finally {
+			System.exit(0);
+		}
+	}
+
+	private static void vendorDataETL() {
 		ProductActivity productActivity = new ProductActivity();
 		productActivity.registerProducts("Netti");
 	}
-
 
 	public static void testHbmDaos() {
 		List<?> list = new ApiStructureDaoImpl().getApiStructureOfVendor(1);

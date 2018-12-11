@@ -43,9 +43,11 @@ public class LocationUtil {
 		double lat3 = 49.428550;
 		double lon3 = 8.645980;
 
-		double distance = CalculateDistance(lat1, lat2, lon1, lon2, 10, 10);
+		double distanceNetti = CalculateDistance(lat1, lat2, lon1, lon2, 0, 0);
+		double distanceAldo = CalculateDistance(lat1, lat3, lon1, lon3, 0, 0);
 
-		System.out.println(distance);
+		System.out.println(distanceNetti);
+		System.out.println(distanceAldo);
 	}
 	
 }

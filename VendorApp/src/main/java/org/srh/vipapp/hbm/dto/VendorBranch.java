@@ -25,7 +25,9 @@ import org.srh.vipapp.hbm.hql.VendorBranchQuery;
 public class VendorBranch {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE) // Auto generate (increment id)
+	@GeneratedValue(strategy=GenerationType.TABLE)
+	private int id ;
+
 	private int branchId ;
 
 	@ManyToOne
@@ -46,6 +48,13 @@ public class VendorBranch {
 	private Boolean deleteFlag = false;
 	private Date createdOn = new Date();
 	private Date modifiedOn = new Date();
+
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getBranchId() {
 		return branchId;
@@ -74,12 +83,14 @@ public class VendorBranch {
 	public void setLocationLat(String locationLat) {
 		this.locationLat = locationLat;
 	}
+
 	public String getLocationLon() {
 		return locationLon;
 	}
 	public void setLocationLon(String locationLon) {
 		this.locationLon = locationLon;
 	}
+
 	public String getCity() {
 		return city;
 	}

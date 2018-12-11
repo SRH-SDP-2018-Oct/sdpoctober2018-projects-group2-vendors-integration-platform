@@ -90,8 +90,8 @@ CREATE TABLE customer_master (
   pin VARCHAR(10) DEFAULT '69123',
   country VARCHAR(30) DEFAULT 'Germany',
   defaultLocation VARCHAR(100) DEFAULT 'Wieblingen',
-  defaultLocationLat VARCHAR(20) DEFAULT '49.428550',
-  defaultLocationLon VARCHAR(20) DEFAULT '8.645980',
+  defaultLocationLat LONG,
+  defaultLocationLon LONG,
   deleteFlag TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'flag to mark the entry as deleted -> 0-Active, 1-Deleted' ,
   createdBy INT UNSIGNED NOT NULL COMMENT 'user who registered the given user',
   createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'user created on',
@@ -105,15 +105,19 @@ DESC customer_master;
 
 
 -- Entry -> Customer
-INSERT INTO customer_master (createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn, pwd)
+INSERT INTO customer_master (createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn,
+	defaultLocationLat, defaultLocationLon, pwd)
 SELECT um.userId, um.userId, 'john', 'John', 'Doe', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
+  '49.4140614', '8.6536843',
   '9dae67e870c8b41b24e78f44c6a8f74ea931f2cef5b125fbbb2db87566083860' -- Hello@135
 FROM user_type, user_master um
 WHERE user_type.typeName = 'system' AND um.userName='system';
 
 -- Entry -> Customer
-INSERT INTO customer_master (createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn, pwd)
+INSERT INTO customer_master (createdBy, modifiedBy, username, firstName, lastName, createdOn, modifiedOn,
+	defaultLocationLat, defaultLocationLon, pwd)
 SELECT um.userId, um.userId, 'james', 'James', 'Anderson', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
+  '49.4140614', '8.6536843',
   '9dae67e870c8b41b24e78f44c6a8f74ea931f2cef5b125fbbb2db87566083860' -- Hello@135
 FROM user_type, user_master um
 WHERE user_type.typeName = 'system' AND um.userName='system';
@@ -169,19 +173,20 @@ DROP TABLE IF EXISTS vendor_branches;
 
 
 CREATE TABLE vendor_branches (
-  branchId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  branchId INT UNSIGNED,
   vendorId INT UNSIGNED NOT NULL, 
   location VARCHAR(100) DEFAULT NULL,
-  locationLat VARCHAR(20) DEFAULT NULL,
-  locationLon VARCHAR(20) DEFAULT NULL,
+  locationLat LONG,
+  locationLon LONG,
   city VARCHAR(30) NOT NULL,
   deleteFlag TINYINT(1) NOT NULL DEFAULT '0',
   createdBy INT UNSIGNED NOT NULL COMMENT 'user who registered the given user',
   createdOn DATETIME NOT NULL COMMENT 'user created on',
   modifiedBy INT UNSIGNED NOT NULL COMMENT 'user who modified the given user',
   modifiedOn DATETIME NOT NULL COMMENT 'user modified on',
-  PRIMARY KEY (branchId),
-  UNIQUE KEY (vendorId, location),
+  PRIMARY KEY (id),
+  UNIQUE KEY (vendorId, branchId),
   FOREIGN KEY (vendorId) REFERENCES vendor_master(vendorId) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (createdBy) REFERENCES user_master(userId) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (modifiedBy) REFERENCES user_master(userId) ON UPDATE CASCADE ON DELETE CASCADE
@@ -190,18 +195,18 @@ CREATE TABLE vendor_branches (
 DESC vendor_branches;
 
 
-INSERT INTO vendor_branches (vendorId, createdBy, modifiedBy, location, locationLat, locationLon, city, createdOn, modifiedOn)
+INSERT INTO vendor_branches (vendorId, createdBy, modifiedBy, branchId, location, locationLat, locationLon, city, createdOn, modifiedOn)
 SELECT vm.vendorId, um.userId, um.userId,
-  'Mannheimer Str. 177, 69123 Heidelberg', '49.419090' , '8.651890', 'Heidelberg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
-FROM vendor_master vm, user_master um
-WHERE vm.vendorName = 'Netti' AND um.username='system';
-
-
-INSERT INTO vendor_branches (vendorId, createdBy, modifiedBy, location, locationLat, locationLon, city, createdOn, modifiedOn)
-SELECT vm.vendorId, um.userId, um.userId,
-  'Czernyring 14, 69115 Heidelberg', '49.404011' , '8.670450', 'Heidelberg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+  1, 'Czernyring 14, 69115 Heidelberg', '49.428550' , '8.645980', 'Heidelberg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM vendor_master vm, user_master um
 WHERE vm.vendorName = 'Aldo' AND um.username='system';
+
+
+INSERT INTO vendor_branches (vendorId, createdBy, modifiedBy, branchId, location, locationLat, locationLon, city, createdOn, modifiedOn)
+SELECT vm.vendorId, um.userId, um.userId,
+  1, 'Mannheimer Str. 177, 69123 Heidelberg', '49.419090' , '8.651890', 'Heidelberg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+FROM vendor_master vm, user_master um
+WHERE vm.vendorName = 'Netti' AND um.username='system';
 
 
 
@@ -223,7 +228,7 @@ CREATE TABLE branch_timings (
   modifiedOn DATETIME NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY (branchId, dayInWeek),
-  FOREIGN KEY (branchId) REFERENCES vendor_branches(branchId) ON UPDATE CASCADE ON DELETE CASCADE
+  FOREIGN KEY (branchId) REFERENCES vendor_branches(id) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=latin1 ;
 
 DESC branch_timings;
@@ -232,7 +237,7 @@ DESC branch_timings;
 -- Sunday
 
 INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
-SELECT bm.branchId, 1, 0, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+SELECT bm.id, 1, 0, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM vendor_branches bm
 WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
 
@@ -240,7 +245,7 @@ WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
 -- Monday
 
 INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
-SELECT bm.branchId, 2, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+SELECT bm.id, 2, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM vendor_branches bm
 WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
 
@@ -249,7 +254,7 @@ WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
 -- Tuesday
 
 INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
-SELECT bm.branchId, 3, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+SELECT bm.id, 3, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM vendor_branches bm
 WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
 
@@ -258,7 +263,7 @@ WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
 -- Wednesday
 
 INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
-SELECT bm.branchId, 4, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+SELECT bm.id, 4, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM vendor_branches bm
 WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
 
@@ -267,7 +272,7 @@ WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
 -- Thursday
 
 INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
-SELECT bm.branchId, 5, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+SELECT bm.id, 5, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM vendor_branches bm
 WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
 
@@ -276,7 +281,7 @@ WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
 -- Friday
 
 INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
-SELECT bm.branchId, 6, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+SELECT bm.id, 6, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM vendor_branches bm
 WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
 
@@ -285,7 +290,7 @@ WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
 -- Saturday
 
 INSERT INTO branch_timings (branchId, dayInWeek, isOpen, openingTime, closingTime, createdOn, modifiedOn)
-SELECT bm.branchId, 7, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+SELECT bm.id, 7, 1, '07:00:00', '22:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM vendor_branches bm
 WHERE bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
 
@@ -450,6 +455,7 @@ FROM user_master um, api_structure_constants apisc, vendor_master vm
 WHERE um.username = 'system'  AND  apisc.constantName='product_branch' AND vm.vendorName = 'Netti' ;
 
 
+SELECT * FROM api_structure;
 
 
 
@@ -506,7 +512,7 @@ CREATE TABLE products_master(
   modifiedBy INT UNSIGNED NOT NULL,
   FOREIGN KEY (productTypeId) REFERENCES product_type (productTypeId),
   FOREIGN KEY (vendorId) REFERENCES vendor_master (vendorId),
-  FOREIGN KEY (branchId) REFERENCES vendor_branches (branchId),
+  FOREIGN KEY (branchId) REFERENCES vendor_branches (id),
   FOREIGN KEY (createdBy) REFERENCES user_master (userId),
   FOREIGN KEY (modifiedBy) REFERENCES user_master (userId)
 );
