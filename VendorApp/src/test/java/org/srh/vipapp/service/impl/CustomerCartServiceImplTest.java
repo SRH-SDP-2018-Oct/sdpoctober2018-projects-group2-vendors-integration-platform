@@ -16,6 +16,10 @@ import org.srh.vipapp.hbm.dto.CustomerMaster;
 import org.srh.vipapp.hbm.dto.ProductsMaster;
 import org.srh.vipapp.service.CustomerCartService;
 
+/**
+ * @author Shraddha
+ *
+ */
 public class CustomerCartServiceImplTest {
 
 	private CustomerCartService customerCartService;
@@ -68,7 +72,7 @@ public class CustomerCartServiceImplTest {
 	}
 
 	@Test
-	public void testGetCartsByCartId() {
+	public void testGetCartsByValidCartId() {
 		String cartId = "1";
 		ServiceResp serviceResp = customerCartService.getCartsByCartId(cartId);
 		if (serviceResp != null) {
@@ -105,9 +109,157 @@ public class CustomerCartServiceImplTest {
 		}
 	}
 
+	public void testGetCartsByInvalidCartId() {
+		String cartId = "9";
+		ServiceResp serviceResp = customerCartService.getCartsByCartId(cartId);
+		if (serviceResp != null) {
+			Object data = serviceResp.getSuccessData();
+			ErrorCode errorCode = serviceResp.getErrorCode();
+			String errorDescription = serviceResp.getErrorDescription();
+			//
+			if (data == null) {
+				if (errorCode != null && !Common.nullOrEmptyTrim(errorDescription)) {
+					AppLog.print(errorDescription);
+					assertTrue(errorDescription, true);
+				} else {
+					assertTrue("Error Code and Description not defined", false);
+				}
+			} else {
+				if (data instanceof CustomerCart && data != null) {
+					CustomerCart customerCart = (CustomerCart) data;
+					long outputProductId = customerCart.getCartId();
+					String strValue = "";
+					if (strValue == String.valueOf(outputProductId)) {
+						String message = "Matching Input and Output";
+						AppLog.print(message);
+						assertTrue(message, true);
+					} else {
+						assertTrue("Non Matching Input and Output", false);
+					}
+				} else {
+					assertTrue("Data is not instance of 'CustomerCart'", false);
+				}
+
+			}
+		} else {
+			assertTrue("Invalid Service Response", false);
+		}
+	}
+
+	public void testGetCartsByNullCartId() {
+		String cartId = null;
+		ServiceResp serviceResp = customerCartService.getCartsByCartId(cartId);
+		if (serviceResp != null) {
+			Object data = serviceResp.getSuccessData();
+			ErrorCode errorCode = serviceResp.getErrorCode();
+			String errorDescription = serviceResp.getErrorDescription();
+			//
+			if (data == null) {
+				if (errorCode != null && !Common.nullOrEmptyTrim(errorDescription)) {
+					AppLog.print(errorDescription);
+					assertTrue(errorDescription, true);
+				} else {
+					assertTrue("Error Code and Description not defined", false);
+				}
+			} else {
+				if (data instanceof CustomerCart && data != null) {
+					CustomerCart customerCart = (CustomerCart) data;
+					long outputProductId = customerCart.getCartId();
+					String strValue = "";
+					if (strValue == String.valueOf(outputProductId)) {
+						String message = "Matching Input and Output";
+						AppLog.print(message);
+						assertTrue(message, true);
+					} else {
+						assertTrue("Non Matching Input and Output", false);
+					}
+				} else {
+					assertTrue("Data is not instance of 'CustomerCart'", false);
+				}
+
+			}
+		} else {
+			assertTrue("Invalid Service Response", false);
+		}
+	}
+
 	@Test
-	public void testGetCartsByUserId() {
+	public void testGetCartsByValidUserId() {
 		String customerId = "1";
+		ServiceRespArray serviceResp = customerCartService.getCartsByUserId(customerId);
+		if (serviceResp != null) {
+			Object data = serviceResp.getSuccessData();
+			ErrorCode errorCode = serviceResp.getErrorCode();
+			String errorDescription = serviceResp.getErrorDescription();
+			//
+			if (data == null) {
+				if (errorCode != null && !Common.nullOrEmptyTrim(errorDescription)) {
+					AppLog.print(errorDescription);
+					assertTrue(errorDescription, true);
+				} else {
+					assertTrue("Error Code and Description not defined", false);
+				}
+			} else {
+				if (data instanceof CustomerMaster && data != null) {
+					CustomerMaster customerId1 = (CustomerMaster) data;
+					long outputCustomerId = customerId1.getCustomerId();
+					String strValue = "";
+					if (strValue == String.valueOf(outputCustomerId)) {
+						String message = "Matching Input and Output";
+						AppLog.print(message);
+						assertTrue(message, true);
+					} else {
+						assertTrue("Non Matching Input and Output", false);
+					}
+				} else {
+					assertTrue("Data is not instance of 'CustomerCart'", false);
+				}
+
+			}
+		} else {
+			assertTrue("Invalid Service Response", false);
+		}
+	}
+
+	public void testGetCartsByInvalidUserId() {
+		String customerId = "9";
+		ServiceRespArray serviceResp = customerCartService.getCartsByUserId(customerId);
+		if (serviceResp != null) {
+			Object data = serviceResp.getSuccessData();
+			ErrorCode errorCode = serviceResp.getErrorCode();
+			String errorDescription = serviceResp.getErrorDescription();
+			//
+			if (data == null) {
+				if (errorCode != null && !Common.nullOrEmptyTrim(errorDescription)) {
+					AppLog.print(errorDescription);
+					assertTrue(errorDescription, true);
+				} else {
+					assertTrue("Error Code and Description not defined", false);
+				}
+			} else {
+				if (data instanceof CustomerMaster && data != null) {
+					CustomerMaster customerId1 = (CustomerMaster) data;
+					long outputCustomerId = customerId1.getCustomerId();
+					String strValue = "";
+					if (strValue == String.valueOf(outputCustomerId)) {
+						String message = "Matching Input and Output";
+						AppLog.print(message);
+						assertTrue(message, true);
+					} else {
+						assertTrue("Non Matching Input and Output", false);
+					}
+				} else {
+					assertTrue("Data is not instance of 'CustomerCart'", false);
+				}
+
+			}
+		} else {
+			assertTrue("Invalid Service Response", false);
+		}
+	}
+
+	public void testGetCartsByNullUserId() {
+		String customerId = null;
 		ServiceRespArray serviceResp = customerCartService.getCartsByUserId(customerId);
 		if (serviceResp != null) {
 			Object data = serviceResp.getSuccessData();
@@ -146,7 +298,7 @@ public class CustomerCartServiceImplTest {
 	@Test
 	public void testAddProduct() {
 		String data1 = "";
-		String customerId = "";
+		String customerId = "1";
 		ServiceResp serviceResp = customerCartService.addProduct(data1, customerId);
 		if (serviceResp != null) {
 			Object data = serviceResp.getSuccessData();
@@ -185,7 +337,7 @@ public class CustomerCartServiceImplTest {
 	@Test
 	public void testAddAllProduct() {
 		String data1 = "";
-		String customerId = "";
+		String customerId = "1";
 		ServiceResp serviceResp = customerCartService.addAllProduct(data1, customerId);
 		if (serviceResp != null) {
 			Object data = serviceResp.getSuccessData();

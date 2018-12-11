@@ -19,109 +19,214 @@ public class CustomerServiceImplTest {
 
 	private CustomerService customerService;
 
-
 	@Before
 	public void createServiceObject() {
 		customerService = new CustomerServiceImpl();
 	}
 
-
 	@Test
-	public void testGetCustomerById() {
+	public void testGetCustomerByValidId() {
 		String customerId = "1";
 		ServiceResp serviceResp = customerService.getCustomerById(customerId);
-		if(serviceResp != null) {
+		if (serviceResp != null) {
 			Object data = serviceResp.getSuccessData();
 			ErrorCode errorCode = serviceResp.getErrorCode();
 			String errorDescription = serviceResp.getErrorDescription();
-			// 
-			if(data==null) {
-				if(errorCode!=null && !Common.nullOrEmptyTrim(errorDescription)) {
+			//
+			if (data == null) {
+				if (errorCode != null && !Common.nullOrEmptyTrim(errorDescription)) {
 					AppLog.print(errorDescription);
 					assertTrue(errorDescription, true);
-				}
-				else {
+				} else {
 					assertTrue("Error Code and Description not defined", false);
 				}
-			}
-			else {
-				if(data instanceof CustomerMaster && data!=null) {
+			} else {
+				if (data instanceof CustomerMaster && data != null) {
 					CustomerMaster customerMaster = (CustomerMaster) data;
 					Long outputCustomerId = customerMaster.getCustomerId();
-					if(customerId.equals(outputCustomerId.toString())) {
+					if (customerId.equals(outputCustomerId.toString())) {
 						String message = "Matching Input and Output";
 						AppLog.print(message);
 						assertTrue(message, true);
-					}
-					else {
+					} else {
 						assertTrue("Non Matching Input and Output", false);
 					}
-				}
-				else {
+				} else {
 					assertTrue("Data is not instance of 'CustomerMaster'", false);
 				}
-					
+
 			}
-		}
-		else {
+		} else {
 			assertTrue("Invalid Service Response", false);
 		}
 	}
 
+	public void testGetCustomerByInvalidId() {
+		String customerId = "9";
+		ServiceResp serviceResp = customerService.getCustomerById(customerId);
+		if (serviceResp != null) {
+			Object data = serviceResp.getSuccessData();
+			ErrorCode errorCode = serviceResp.getErrorCode();
+			String errorDescription = serviceResp.getErrorDescription();
+			//
+			if (data == null) {
+				if (errorCode != null && !Common.nullOrEmptyTrim(errorDescription)) {
+					AppLog.print(errorDescription);
+					assertTrue(errorDescription, true);
+				} else {
+					assertTrue("Error Code and Description not defined", false);
+				}
+			} else {
+				if (data instanceof CustomerMaster && data != null) {
+					CustomerMaster customerMaster = (CustomerMaster) data;
+					Long outputCustomerId = customerMaster.getCustomerId();
+					if (customerId.equals(outputCustomerId.toString())) {
+						String message = "Matching Input and Output";
+						AppLog.print(message);
+						assertTrue(message, true);
+					} else {
+						assertTrue("Non Matching Input and Output", false);
+					}
+				} else {
+					assertTrue("Data is not instance of 'CustomerMaster'", false);
+				}
+
+			}
+		} else {
+			assertTrue("Invalid Service Response", false);
+		}
+	}
 
 	@Test
 	public void testGetCustomersByUsername() {
 		assertTrue(true);
 	}
 
-
 	@Test
-	public void testGetCustomersByName() {
+	public void testGetCustomersByValidName() {
 		String customerName = "j";
 		ServiceRespArray serviceRespArray = customerService.getCustomersByName(customerName);
-		if(serviceRespArray != null) {
+		if (serviceRespArray != null) {
 			Object data = serviceRespArray.getSuccessData();
 			ErrorCode errorCode = serviceRespArray.getErrorCode();
 			String errorDescription = serviceRespArray.getErrorDescription();
-			// 
-			if(data==null) {
-				if(errorCode!=null && !Common.nullOrEmptyTrim(errorDescription)) {
+			//
+			if (data == null) {
+				if (errorCode != null && !Common.nullOrEmptyTrim(errorDescription)) {
 					AppLog.print(errorDescription);
 					assertTrue(errorDescription, true);
-				}
-				else {
+				} else {
 					assertTrue("Error Code and Description not defined", false);
 				}
-			}
-			else {
-				if(data instanceof List && data!=null) {
+			} else {
+				if (data instanceof List && data != null) {
 					@SuppressWarnings("rawtypes")
 					List list = (List) data;
-					if(list.isEmpty()) {
+					if (list.isEmpty()) {
 						String message = "Entry not present in the database with the given input";
 						AppLog.print(message);
 						assertTrue(message, true);
 					}
 					CustomerMaster customerMaster = (CustomerMaster) list.get(0);
-					if(customerMaster!=null) {
+					if (customerMaster != null) {
 						String message = "List returns the output";
 						AppLog.print(message);
 						assertTrue(message, true);
-					}
-					else {
+					} else {
 						assertTrue("Non Matching Input and Output", false);
 					}
-				}
-				else {
+				} else {
 					assertTrue("Data is not instance of 'CustomerMaster'", false);
 				}
-					
+
 			}
-		}
-		else {
+		} else {
 			assertTrue("Invalid Service Response", false);
 		}
 	}
-		
+
+	public void testGetCustomersByInvalidName() {
+		String customerName = "#";
+		ServiceRespArray serviceRespArray = customerService.getCustomersByName(customerName);
+		if (serviceRespArray != null) {
+			Object data = serviceRespArray.getSuccessData();
+			ErrorCode errorCode = serviceRespArray.getErrorCode();
+			String errorDescription = serviceRespArray.getErrorDescription();
+			//
+			if (data == null) {
+				if (errorCode != null && !Common.nullOrEmptyTrim(errorDescription)) {
+					AppLog.print(errorDescription);
+					assertTrue(errorDescription, true);
+				} else {
+					assertTrue("Error Code and Description not defined", false);
+				}
+			} else {
+				if (data instanceof List && data != null) {
+					@SuppressWarnings("rawtypes")
+					List list = (List) data;
+					if (list.isEmpty()) {
+						String message = "Entry not present in the database with the given input";
+						AppLog.print(message);
+						assertTrue(message, true);
+					}
+					CustomerMaster customerMaster = (CustomerMaster) list.get(0);
+					if (customerMaster != null) {
+						String message = "List returns the output";
+						AppLog.print(message);
+						assertTrue(message, true);
+					} else {
+						assertTrue("Non Matching Input and Output", false);
+					}
+				} else {
+					assertTrue("Data is not instance of 'CustomerMaster'", false);
+				}
+
+			}
+		} else {
+			assertTrue("Invalid Service Response", false);
+		}
+	}
+
+	public void testGetCustomersByNullName() {
+		String customerName = null;
+		ServiceRespArray serviceRespArray = customerService.getCustomersByName(customerName);
+		if (serviceRespArray != null) {
+			Object data = serviceRespArray.getSuccessData();
+			ErrorCode errorCode = serviceRespArray.getErrorCode();
+			String errorDescription = serviceRespArray.getErrorDescription();
+			//
+			if (data == null) {
+				if (errorCode != null && !Common.nullOrEmptyTrim(errorDescription)) {
+					AppLog.print(errorDescription);
+					assertTrue(errorDescription, true);
+				} else {
+					assertTrue("Error Code and Description not defined", false);
+				}
+			} else {
+				if (data instanceof List && data != null) {
+					@SuppressWarnings("rawtypes")
+					List list = (List) data;
+					if (list.isEmpty()) {
+						String message = "Entry not present in the database with the given input";
+						AppLog.print(message);
+						assertTrue(message, true);
+					}
+					CustomerMaster customerMaster = (CustomerMaster) list.get(0);
+					if (customerMaster != null) {
+						String message = "List returns the output";
+						AppLog.print(message);
+						assertTrue(message, true);
+					} else {
+						assertTrue("Non Matching Input and Output", false);
+					}
+				} else {
+					assertTrue("Data is not instance of 'CustomerMaster'", false);
+				}
+
+			}
+		} else {
+			assertTrue("Invalid Service Response", false);
+		}
+	}
 
 }

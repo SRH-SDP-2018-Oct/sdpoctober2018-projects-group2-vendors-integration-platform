@@ -16,9 +16,11 @@ import org.srh.vipapp.hbm.dto.ProductType;
 import org.srh.vipapp.hbm.dto.ProductsMaster;
 import org.srh.vipapp.service.ProductsService;
 
-
+/**
+ * @author Shraddha
+ *
+ */
 public class ProductsServiceImplTest {
-
 	private ProductsService productsService;
 
 	@Before
@@ -70,8 +72,82 @@ public class ProductsServiceImplTest {
 	}
 
 	@Test
-	public void testGetProductByProductId() {
+	public void testGetProductByValidProductId() {
 		String productId = "1";
+		ServiceResp serviceResp = productsService.getProductByProductId(productId);
+		if (serviceResp != null) {
+			Object data = serviceResp.getSuccessData();
+			ErrorCode errorCode = serviceResp.getErrorCode();
+			String errorDescription = serviceResp.getErrorDescription();
+			//
+			if (data == null) {
+				if (errorCode != null && !Common.nullOrEmptyTrim(errorDescription)) {
+					AppLog.print(errorDescription);
+					assertTrue(errorDescription, true);
+				} else {
+					assertTrue("Error Code and Description not defined", false);
+				}
+			} else {
+				if (data instanceof ProductsMaster && data != null) {
+					ProductsMaster productsMaster = (ProductsMaster) data;
+					int outputProductId = productsMaster.getProductId();
+					String strValue = "";
+					if (strValue == String.valueOf(outputProductId)) {
+						String message = "Matching Input and Output";
+						AppLog.print(message);
+						assertTrue(message, true);
+					} else {
+						assertTrue("Non Matching Input and Output", false);
+					}
+				} else {
+					assertTrue("Data is not instance of 'ProductsMaster'", false);
+				}
+
+			}
+		} else {
+			assertTrue("Invalid Service Response", false);
+		}
+	}
+
+	public void testGetProductByInvalidProductId() {
+		String productId = "9";
+		ServiceResp serviceResp = productsService.getProductByProductId(productId);
+		if (serviceResp != null) {
+			Object data = serviceResp.getSuccessData();
+			ErrorCode errorCode = serviceResp.getErrorCode();
+			String errorDescription = serviceResp.getErrorDescription();
+			//
+			if (data == null) {
+				if (errorCode != null && !Common.nullOrEmptyTrim(errorDescription)) {
+					AppLog.print(errorDescription);
+					assertTrue(errorDescription, true);
+				} else {
+					assertTrue("Error Code and Description not defined", false);
+				}
+			} else {
+				if (data instanceof ProductsMaster && data != null) {
+					ProductsMaster productsMaster = (ProductsMaster) data;
+					int outputProductId = productsMaster.getProductId();
+					String strValue = "";
+					if (strValue == String.valueOf(outputProductId)) {
+						String message = "Matching Input and Output";
+						AppLog.print(message);
+						assertTrue(message, true);
+					} else {
+						assertTrue("Non Matching Input and Output", false);
+					}
+				} else {
+					assertTrue("Data is not instance of 'ProductsMaster'", false);
+				}
+
+			}
+		} else {
+			assertTrue("Invalid Service Response", false);
+		}
+	}
+
+	public void testGetProductByNullProductId() {
+		String productId = null;
 		ServiceResp serviceResp = productsService.getProductByProductId(productId);
 		if (serviceResp != null) {
 			Object data = serviceResp.getSuccessData();
@@ -154,6 +230,117 @@ public class ProductsServiceImplTest {
 	@Test
 	public void testGetProductsByProductType() {
 		String productId = "1";
+		ServiceResp serviceResp = productsService.getProductByProductId(productId);
+		if (serviceResp != null) {
+			Object data = serviceResp.getSuccessData();
+			ErrorCode errorCode = serviceResp.getErrorCode();
+			String errorDescription = serviceResp.getErrorDescription();
+			//
+			if (data == null) {
+				if (errorCode != null && !Common.nullOrEmptyTrim(errorDescription)) {
+					AppLog.print(errorDescription);
+					assertTrue(errorDescription, true);
+				} else {
+					assertTrue("Error Code and Description not defined", false);
+				}
+			} else {
+				if (data instanceof ProductsMaster && data != null) {
+					ProductsMaster productsMaster = (ProductsMaster) data;
+					ProductType outputProductTypeId = productsMaster.getProductTypeId();
+					String strValue = "";
+					if (strValue == String.valueOf(outputProductTypeId)) {
+						String message = "Matching Input and Output";
+						AppLog.print(message);
+						assertTrue(message, true);
+					} else {
+						assertTrue("Non Matching Input and Output", false);
+					}
+				} else {
+					assertTrue("Data is not instance of 'ProductsMaster'", false);
+				}
+
+			}
+		} else {
+			assertTrue("Invalid Service Response", false);
+		}
+	}
+
+	public void testGetProductsByValidProductType() {
+		String productId = "1";
+		ServiceResp serviceResp = productsService.getProductByProductId(productId);
+		if (serviceResp != null) {
+			Object data = serviceResp.getSuccessData();
+			ErrorCode errorCode = serviceResp.getErrorCode();
+			String errorDescription = serviceResp.getErrorDescription();
+			//
+			if (data == null) {
+				if (errorCode != null && !Common.nullOrEmptyTrim(errorDescription)) {
+					AppLog.print(errorDescription);
+					assertTrue(errorDescription, true);
+				} else {
+					assertTrue("Error Code and Description not defined", false);
+				}
+			} else {
+				if (data instanceof ProductsMaster && data != null) {
+					ProductsMaster productsMaster = (ProductsMaster) data;
+					ProductType outputProductTypeId = productsMaster.getProductTypeId();
+					String strValue = "";
+					if (strValue == String.valueOf(outputProductTypeId)) {
+						String message = "Matching Input and Output";
+						AppLog.print(message);
+						assertTrue(message, true);
+					} else {
+						assertTrue("Non Matching Input and Output", false);
+					}
+				} else {
+					assertTrue("Data is not instance of 'ProductsMaster'", false);
+				}
+
+			}
+		} else {
+			assertTrue("Invalid Service Response", false);
+		}
+	}
+
+	public void testGetProductsByInvalidProductType() {
+		String productId = "9";
+		ServiceResp serviceResp = productsService.getProductByProductId(productId);
+		if (serviceResp != null) {
+			Object data = serviceResp.getSuccessData();
+			ErrorCode errorCode = serviceResp.getErrorCode();
+			String errorDescription = serviceResp.getErrorDescription();
+			//
+			if (data == null) {
+				if (errorCode != null && !Common.nullOrEmptyTrim(errorDescription)) {
+					AppLog.print(errorDescription);
+					assertTrue(errorDescription, true);
+				} else {
+					assertTrue("Error Code and Description not defined", false);
+				}
+			} else {
+				if (data instanceof ProductsMaster && data != null) {
+					ProductsMaster productsMaster = (ProductsMaster) data;
+					ProductType outputProductTypeId = productsMaster.getProductTypeId();
+					String strValue = "";
+					if (strValue == String.valueOf(outputProductTypeId)) {
+						String message = "Matching Input and Output";
+						AppLog.print(message);
+						assertTrue(message, true);
+					} else {
+						assertTrue("Non Matching Input and Output", false);
+					}
+				} else {
+					assertTrue("Data is not instance of 'ProductsMaster'", false);
+				}
+
+			}
+		} else {
+			assertTrue("Invalid Service Response", false);
+		}
+	}
+
+	public void testGetProductsByNullProductType() {
+		String productId = null;
 		ServiceResp serviceResp = productsService.getProductByProductId(productId);
 		if (serviceResp != null) {
 			Object data = serviceResp.getSuccessData();
