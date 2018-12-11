@@ -63,5 +63,12 @@ public class CustomerCartController {
 		ServiceResp customerCartServiceResp = customerCartService.addAllProduct(data, customerId);
 		return HttpUtil.buildResponse(resp, customerCartServiceResp).toString();
 	}
+	
+	@RequestMapping(path="/frequentlyBought/{customerId}", method=RequestMethod.GET)
+	public String getFrequentlyBoughtProducts(@PathVariable String customerId, HttpServletResponse resp) {
+		ServiceRespArray customerCartServiceResp = customerCartService.getFrquentlyBoughtProducts(customerId);
+		return HttpUtil.buildResponseArray(resp, customerCartServiceResp).toString();
+	
+	}
 
 }

@@ -48,6 +48,11 @@ public interface CustomerCartService {
 	 */
 	ServiceResp addAllProduct(String data, String customerId);
 
-	
+	/**
+	 * Returns frequently bought items for the given customerId.
+	 * @param customerId {@link String}
+	 * @return serviceRespArray {@link ServiceRespArray}
+	 */
+	ServiceRespArray getFrquentlyBoughtProducts(String customerId);
 	
 }

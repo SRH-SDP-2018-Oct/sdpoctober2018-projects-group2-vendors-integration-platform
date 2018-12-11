@@ -173,6 +173,26 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 		return cartActivity.saveCart(cId, displayName, productIdList, productCountList);
 	}
 
+	@Override
+	public ServiceRespArray getFrquentlyBoughtProducts(String customerId) {
+		// Input Validation
+				Long cId = NumberUtil.getLong(customerId);
+				if(cId==null){
+					String description = StringUtil.append("The customer id [", cId, "] is invalid integer.");
+					return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
+				}
+
+				List<CustomerCart> customerCart = customerCartDao.getFrequentlyBoughtProducts(cId.longValue());
+
+				// Validate Data Existence
+				if(customerCart==null) {
+					String description =  StringUtil.append("No car found with id [", cId, "].");
+					return Common.buildServiceRespArrayError(ErrorCode.NOT_FOUND, description);
+				}
+				// Data Exist, Return Success
+				return Common.buildServiceRespArray(customerCart);
+	}
+
 }
 
 
