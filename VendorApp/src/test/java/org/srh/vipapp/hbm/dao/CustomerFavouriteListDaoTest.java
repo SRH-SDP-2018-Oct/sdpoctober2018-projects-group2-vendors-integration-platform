@@ -1,4 +1,4 @@
-package org.srh.util;
+package org.srh.vipapp.hbm.dao;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -12,7 +12,7 @@ public class CustomerFavouriteListDaoTest {
 		long id = 5;
 		CustomerFavouriteList customerFavouriteList = new CustomerFavouriteListDaoImpl().findById(id);
 		if (customerFavouriteList != null) {
-			assertEquals(id, customerFavouriteList.getId());
+			assertEquals(id, customerFavouriteList.getListId());
 		} else {
 			assertTrue(false);
 		}

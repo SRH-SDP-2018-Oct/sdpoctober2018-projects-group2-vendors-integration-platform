@@ -1,4 +1,4 @@
-package org.srh.util;
+package org.srh.vipapp.hbm.dao;
 
 import static org.junit.Assert.*;
 import java.util.List;

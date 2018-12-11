@@ -1,4 +1,4 @@
-package org.srh.util;
+package org.srh.vipapp.hbm.dao;
 
 import static org.junit.Assert.*;
 import java.util.List;
@@ -16,12 +16,24 @@ public class ProductTypeDaoImplTest {
 
 	@Test
 	public void testGetProductTypeIntString() {
-		fail("Not yet implemented");
+		int vendorId = 3;
+		List<ProductType> productType = new ProductTypeDaoImpl().getAllProductType(vendorId);
+		if(productType == null)
+		{
+			assertTrue(true);
+
+		}
 	}
 
 	@Test
 	public void testGetProductTypeStringString() {
-		fail("Not yet implemented");
+		String vendorName = "Aldo";
+		List<ProductType> productType = new ProductTypeDaoImpl().getAllProductType(vendorName);
+		if(productType == null)
+		{
+			assertTrue(true);
+
+		}
 	}
 
 	@Test
@@ -31,7 +43,7 @@ public class ProductTypeDaoImplTest {
 		if(productType != null)
 		{
 			boolean check = productType.iterator().hasNext();
-			assertTrue(true);
+			assertTrue(check);
 
 		}
 
