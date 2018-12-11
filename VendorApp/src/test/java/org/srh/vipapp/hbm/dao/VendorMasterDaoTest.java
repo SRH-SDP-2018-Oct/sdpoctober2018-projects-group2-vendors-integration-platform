@@ -39,6 +39,16 @@ public class VendorMasterDaoTest {
 			assertEquals(null,vendorMaster);
 		}
 	}
+	
+	@Test
+	public void testFindByNullIdInt() {
+		int vendorId = 0;
+		VendorMaster vendorMaster = new VendorMasterDaoImpl().findById(vendorId);
+		if(vendorMaster == null)
+		{
+			assertEquals(null,vendorMaster);
+		}
+	}
 
 	/**
 	 * Test method for {@link org.srh.vipapp.hbm.dao.VendorMasterDao#getAllVendors()}.
@@ -60,8 +70,36 @@ public class VendorMasterDaoTest {
 	 * Test method for {@link org.srh.vipapp.hbm.dao.VendorMasterDao#findByVendorName(java.lang.String)}.
 	 */
 	@Test
-	public void testFindByVendorNameString() {
-		String vendorname = "";
+	public void testFindByValidVendorNameString() {
+		String vendorname = "Netti";
+		VendorMaster vendorMaster = new VendorMasterDaoImpl().findByVendorName(vendorname);
+		if(vendorMaster != null)
+		{
+			assertTrue(true);
+		}
+		else
+		{
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void testFindByInvalidVendorNameString() {
+		String vendorname = "Netto";
+		VendorMaster vendorMaster = new VendorMasterDaoImpl().findByVendorName(vendorname);
+		if(vendorMaster != null)
+		{
+			assertTrue(true);
+		}
+		else
+		{
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void testFindByNullVendorNameString() {
+		String vendorname = null;
 		VendorMaster vendorMaster = new VendorMasterDaoImpl().findByVendorName(vendorname);
 		if(vendorMaster != null)
 		{

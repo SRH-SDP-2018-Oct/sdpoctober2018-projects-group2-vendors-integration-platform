@@ -9,8 +9,32 @@ import org.srh.vipapp.hbm.dto.CustomerCart;
 public class CustomerCartDaoTest {
 
 	@Test
-	public void testFindByCartId() {
+	public void testFindByValidCartId() {
 		long cartId = 1;
+		CustomerCart customerCart = new CustomerCartDaoImpl().findByCartId(cartId);
+		if (customerCart != null) {
+			assertEquals(cartId, customerCart.getCartId());
+		} else {
+			// Cart Id does not exist in database
+			assertTrue(true);
+		}
+	}
+	
+	@Test
+	public void testFindByInvalidCartId() {
+		long cartId = 6;
+		CustomerCart customerCart = new CustomerCartDaoImpl().findByCartId(cartId);
+		if (customerCart != null) {
+			assertEquals(cartId, customerCart.getCartId());
+		} else {
+			// Cart Id does not exist in database
+			assertTrue(true);
+		}
+	}
+	
+	@Test
+	public void testFindByNullCartId() {
+		long cartId = 0;
 		CustomerCart customerCart = new CustomerCartDaoImpl().findByCartId(cartId);
 		if (customerCart != null) {
 			assertEquals(cartId, customerCart.getCartId());

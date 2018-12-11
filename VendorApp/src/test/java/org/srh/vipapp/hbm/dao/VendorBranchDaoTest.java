@@ -29,10 +29,20 @@ public class VendorBranchDaoTest {
 			assertEquals(null,vendorBranch);
 		}
 	}
-	
+
 	@Test
 	public void testGetAllInvalidBranchesInt() {
 		int vendorId = 5;
+		List<VendorBranch> vendorBranch = new VendorBranchDaoImpl().getAllBranches(vendorId);
+		if(vendorBranch == null)
+		{
+			assertEquals(null,vendorBranch);
+		}
+	}
+	
+	@Test
+	public void testGetAllNullBranchesInt() {
+		int vendorId = 0;
 		List<VendorBranch> vendorBranch = new VendorBranchDaoImpl().getAllBranches(vendorId);
 		if(vendorBranch == null)
 		{
@@ -44,9 +54,9 @@ public class VendorBranchDaoTest {
 	 * Test method for {@link org.srh.vipapp.hbm.dao.VendorBranchDao#getAllBranches(java.lang.String)}.
 	 */
 	@Test
-	public void testGetAllBranchesString() {
-		String vendorName = "";
-		List<VendorBranch> vendorBranch = new VendorBranchDaoImpl().getAllBranches(vendorName);
+	public void testGetAllValidBranchesString() {
+		String vendorId = "1";
+		List<VendorBranch> vendorBranch = new VendorBranchDaoImpl().getAllBranches(vendorId);
 		if(vendorBranch != null)
 		{
 			assertTrue(true);
@@ -56,5 +66,32 @@ public class VendorBranchDaoTest {
 			assertTrue(false);
 		}
 	}
-
+	
+	@Test
+	public void testGetAllInvalidBranchesString() {
+		String vendorId = "9";
+		List<VendorBranch> vendorBranch = new VendorBranchDaoImpl().getAllBranches(vendorId);
+		if(vendorBranch != null)
+		{
+			assertTrue(true);
+		}
+		else
+		{
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void testGetAllNullBranchesString() {
+		String vendorId = null;
+		List<VendorBranch> vendorBranch = new VendorBranchDaoImpl().getAllBranches(vendorId);
+		if(vendorBranch != null)
+		{
+			assertTrue(true);
+		}
+		else
+		{
+			assertTrue(false);
+		}
+	}
 }

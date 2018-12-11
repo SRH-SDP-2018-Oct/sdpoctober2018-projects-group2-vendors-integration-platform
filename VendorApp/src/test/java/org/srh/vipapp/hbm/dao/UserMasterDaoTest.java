@@ -12,7 +12,7 @@ public class UserMasterDaoTest {
 
 	@Test
 	public void testFindByValidId() {
-		int userId = 5;
+		int userId = 1;
 		UserMaster userMaster = new UserMasterDaoImpl().findById(userId);
 		if (userMaster != null) {
 			assertEquals(userId, userMaster.getId());
@@ -21,7 +21,16 @@ public class UserMasterDaoTest {
 
 	@Test
 	public void testFindByInvalidId() {
-		int userId = 5;
+		int userId = 9;
+		UserMaster userMaster = new UserMasterDaoImpl().findById(userId);
+		if (userMaster == null) {
+			assertEquals(null, userMaster);
+		}
+	}
+	
+	@Test
+	public void testFindByNullId() {
+		int userId = 0;
 		UserMaster userMaster = new UserMasterDaoImpl().findById(userId);
 		if (userMaster == null) {
 			assertEquals(null, userMaster);
@@ -39,8 +48,30 @@ public class UserMasterDaoTest {
 	}
 
 	@Test
-	public void testFindByUsername() {
+	public void testFindByValidUsername() {
 		String username = "System";
+		UserMaster userMaster = new UserMasterDaoImpl().findByUsername(username);
+		if (userMaster != null) {
+			assertTrue(true);
+		} else {
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void testFindByInvalidUsername() {
+		String username = "New";
+		UserMaster userMaster = new UserMasterDaoImpl().findByUsername(username);
+		if (userMaster != null) {
+			assertTrue(true);
+		} else {
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void testFindByNullUsername() {
+		String username = null;
 		UserMaster userMaster = new UserMasterDaoImpl().findByUsername(username);
 		if (userMaster != null) {
 			assertTrue(true);

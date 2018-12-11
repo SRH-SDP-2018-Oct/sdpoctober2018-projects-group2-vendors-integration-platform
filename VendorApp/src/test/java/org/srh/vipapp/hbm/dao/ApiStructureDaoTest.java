@@ -39,15 +39,51 @@ public class ApiStructureDaoTest {
 			assertEquals(null,apiStructure);
 		}
 	}
+	
+	@Test
+	public void testGetApiStructureOfNullVendorInt() {
+		int vendorId = 0;
+		List<ApiStructure> apiStructure = new ApiStructureDaoImpl().getApiStructureOfVendor(vendorId);
+		if(apiStructure != null)
+		{
+			assertEquals(vendorId,apiStructure.get(2));
+		}
+	}
 
 	/**
 	 * Test method for {@link org.srh.vipapp.hbm.dao.ApiStructureDao#getApiStructureOfVendor(java.lang.String)}.
 	 */
 	@Test
-	public void testGetApiStructureOfVendorString() {
-		String vendorName = "";
+	public void testGetValidApiStructureOfVendorString() {
+		String vendorName = "Netti";
 		List<ApiStructure> apiStructure = new ApiStructureDaoImpl().getApiStructureOfVendor(vendorName);
 		if(apiStructure != null)
+		{
+			assertTrue(true);
+		}
+		else
+		{
+			assertTrue(false);
+		}
+	}
+	
+	public void testGetInvalidApiStructureOfVendorString() {
+		String vendorName = "Netto";
+		List<ApiStructure> apiStructure = new ApiStructureDaoImpl().getApiStructureOfVendor(vendorName);
+		if(apiStructure == null)
+		{
+			assertTrue(true);
+		}
+		else
+		{
+			assertTrue(false);
+		}
+	}
+	
+	public void testGetNullApiStructureOfVendorString() {
+		String vendorName = null;
+		List<ApiStructure> apiStructure = new ApiStructureDaoImpl().getApiStructureOfVendor(vendorName);
+		if(apiStructure == null)
 		{
 			assertTrue(true);
 		}
