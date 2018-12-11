@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.srh.bean.ServiceResp;
+import org.srh.bean.ServiceRespArray;
 import org.srh.constants.ErrorCode;
 import org.srh.util.AppLog;
 import org.srh.util.Common;
@@ -133,7 +134,48 @@ public class VendorServiceTest {
 	 */
 	@Test
 	public void testGetAllVendors() {
-		assertTrue(true);
+		ServiceRespArray serviceRespArray = vendorService.getAllVendors();
+		if(serviceRespArray != null) {
+			Object data = serviceRespArray.getSuccessData();
+			ErrorCode errorCode = serviceRespArray.getErrorCode();
+			String errorDescription = serviceRespArray.getErrorDescription();
+			// 
+			if(data==null) {
+				if(errorCode!=null && !Common.nullOrEmptyTrim(errorDescription)) {
+					AppLog.print(errorDescription);
+					assertTrue(errorDescription, true);
+				}
+				else {
+					assertTrue("Error Code and Description not defined", false);
+				}
+			}
+			else {
+				if(data instanceof List && data!=null) {
+					@SuppressWarnings("rawtypes")
+					List list = (List) data;
+					if(list.isEmpty()) {
+						String message = "Entry not present in the database with the given input";
+						AppLog.print(message);
+						assertTrue(message, true);
+					}
+					VendorMaster vendorMaster = (VendorMaster) list.get(0);
+					if(vendorMaster!=null) {
+						String message = "List returns the output";
+						AppLog.print(message);
+						assertTrue(message, true);
+					}
+					else {
+						assertTrue("Non Matching Input and Output", false);
+					}
+				}
+				else {
+					assertTrue("Data is not instance of 'CustomerMaster'", false);
+				}					
+			}
+		}
+		else {
+			assertTrue("Invalid Service Response", false);
+		}
 	}
 
 }
