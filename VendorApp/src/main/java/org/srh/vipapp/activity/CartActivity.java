@@ -64,8 +64,8 @@ public class CartActivity {
 				String description = StringUtil.append("The product id [", productId, "] is invalid integer.");
 				return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 			}
-			saveCartProduct(session, customerCart, productsMaster, productCount, systemUser);
-			totalPrice = totalPrice.add(productsMaster.getProductPrice());
+			CartProduct cartProduct = saveCartProduct(session, customerCart, productsMaster, productCount, systemUser);
+			totalPrice = totalPrice.add(cartProduct.getTotalPrice());
 
 			customerCart.setTotalPrice(totalPrice);
 			session.update(customerCart);
@@ -121,8 +121,8 @@ public class CartActivity {
 					String description = StringUtil.append("The product id [", productId, "] is invalid integer.");
 					return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 				}
-				saveCartProduct(session, customerCart, productsMaster, productCount, systemUser);
-				totalPrice = totalPrice.add(productsMaster.getProductPrice());
+				CartProduct cartProduct = saveCartProduct(session, customerCart, productsMaster, productCount, systemUser);
+				totalPrice = totalPrice.add(cartProduct.getTotalPrice());
 			}
 
 			customerCart.setTotalPrice(totalPrice);
@@ -147,6 +147,7 @@ public class CartActivity {
 		cartProduct.setCartId(cart);
 		cartProduct.setProductId(productsMaster);
 		cartProduct.setProductCount(productCount);
+		cartProduct.setTotalPrice( new BigDecimal(productCount).multiply(productsMaster.getProductPrice()) );
 		cartProduct.setCreatedBy(systemUser);
 		cartProduct.setModifiedBy(systemUser);
 		session.save(cartProduct);

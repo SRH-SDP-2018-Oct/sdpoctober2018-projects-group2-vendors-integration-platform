@@ -83,8 +83,7 @@ public class ProductsServiceImpl implements ProductsService{
 	@Override
 	public ServiceRespArray getProductsByProductType(String productTypeName) {
 		// Input Validation
-		if(Common.nullOrEmptyTrim(productTypeName))
-		if(productTypeName==null) {
+		if(Common.nullOrEmptyTrim(productTypeName)) {
 			String description = StringUtil.append("The product type [", productTypeName, "] is an invalid.");
 			return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
 		}
@@ -113,4 +112,25 @@ public class ProductsServiceImpl implements ProductsService{
 		return Common.buildServiceRespArray(productsOnOffersList);
 	}
 
+
+	@Override
+	public ServiceRespArray getSearchProducts(String productName, String filter) {
+		// Input Validation
+		if(Common.nullOrEmptyTrim(productName)) {
+			String description = "Product name not found.";
+			return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
+		}
+
+		List<ProductsMaster> productsByNameList = productsMasterDao.findbyProductName(productName);
+
+		// Validate Data Existence
+		if(productsByNameList==null) {
+			String err = StringUtil.append("Invalid product name [", productName, "].");
+			AppLog.log(ProductsServiceImpl.class, err);
+			return Common.buildServiceRespArrayError(ErrorCode.NOT_FOUND, err);
+		}
+
+		// Data Exist, Return Success
+		return Common.buildServiceRespArray(productsByNameList);
+	}
 }

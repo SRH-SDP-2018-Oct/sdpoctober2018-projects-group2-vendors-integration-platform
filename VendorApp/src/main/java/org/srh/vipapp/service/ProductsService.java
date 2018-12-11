@@ -42,6 +42,14 @@ public interface ProductsService {
 	 * @return serviceRespArray {@link ServiceRespArray}
 	 */
 	ServiceRespArray getProductsByProductType(String productTypeName);
+
+	/**
+	 * Returns product with the given product name.
+	 * @param productName {@link String}
+	 * @param filter {@link String}
+	 * @return serviceRespArray {@link ServiceRespArray}
+	 */
+	ServiceRespArray getSearchProducts(String productName, String filter);
 }
 
 

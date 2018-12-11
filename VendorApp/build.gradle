@@ -71,5 +71,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/log4j/apache-log4j-extras
 	compile group: 'log4j', name: 'apache-log4j-extras', version: '1.0'
 	
+	// https://mvnrepository.com/artifact/net.sourceforge.dynamicreports/dynamicreports-core
+	compile group: 'net.sourceforge.dynamicreports', name: 'dynamicreports-core', version: '4.0.0'
 
 }

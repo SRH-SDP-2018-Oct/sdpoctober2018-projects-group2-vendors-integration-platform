@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.srh.bean.ServiceResp;
 import org.srh.bean.ServiceRespArray;
@@ -30,7 +31,7 @@ public class ProductController {
 		ServiceResp serviceResp = productsService.getProductByProductId(productId);
 		return HttpUtil.buildResponse(resp, serviceResp).toString();
 	}
-	
+
 	@RequestMapping(path="/name/{productName}", method=RequestMethod.GET)
 	public String getProductsByName(@PathVariable String productName, HttpServletResponse resp) {
 		ServiceRespArray serviceRespArray = productsService.getProductsbyName(productName);
@@ -54,5 +55,12 @@ public class ProductController {
 		ServiceRespArray serviceResp = productsService.getProductsByProductType(productTypeName);
 		return HttpUtil.buildResponseArray(resp, serviceResp).toString();
 	}
+
+	@RequestMapping(path="/search/{productName}", method=RequestMethod.POST)
+	public String getProductsByName(@PathVariable String productName, @RequestParam String filter, HttpServletResponse resp) {
+		ServiceRespArray serviceRespArray = productsService.getProductsbyName(productName);
+		return HttpUtil.buildResponseArray(resp, serviceRespArray).toString();
+	}
+
 	
 }

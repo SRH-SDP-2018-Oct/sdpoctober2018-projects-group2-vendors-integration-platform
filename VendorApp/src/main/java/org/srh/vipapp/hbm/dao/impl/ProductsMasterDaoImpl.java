@@ -75,7 +75,7 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 		try {
 			@SuppressWarnings("unchecked")
 			Query<ProductsMaster> query = session.createNamedQuery(ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$N);
-			query.setParameter(ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$P1, StringUtil.append(productName,"%"));
+			query.setParameter(ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$P1, StringUtil.append("%", productName,"%"));
 			return query.getResultList();
 		}
 		catch(NoResultException ex) {

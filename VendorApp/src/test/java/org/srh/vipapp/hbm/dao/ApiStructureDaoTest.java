@@ -28,6 +28,10 @@ public class ApiStructureDaoTest {
 		{
 			assertEquals(vendorId,apiStructure.get(2));
 		}
+		else
+		{
+			assertTrue(false);
+		}
 	}
 	
 	@Test
@@ -47,6 +51,10 @@ public class ApiStructureDaoTest {
 		if(apiStructure != null)
 		{
 			assertEquals(vendorId,apiStructure.get(2));
+		}
+		else
+		{
+			assertTrue(false);
 		}
 	}
 

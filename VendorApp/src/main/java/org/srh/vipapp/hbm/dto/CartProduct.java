@@ -1,5 +1,6 @@
 package org.srh.vipapp.hbm.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -49,6 +50,7 @@ public class CartProduct {
 	private UserMaster modifiedBy;
 
 	private int productCount;
+	private BigDecimal totalPrice;
 	private boolean deleteFlag = false;
 	private Date createdOn = new Date();
 	private Date modifiedOn = new Date();
@@ -95,6 +97,12 @@ public class CartProduct {
 		this.productCount = productCount;
 	}
 
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 	public boolean getDeleteFlag() {
 		return deleteFlag;
 	}
