@@ -1,0 +1,172 @@
+
+
+==============================================================================
+==============================================================================
+		API SIGNATURES OF - VENDOR INTEGRATION APPLICATION
+==============================================================================
+==============================================================================
+
+
+Login
+------------------------------
+
+Description: Customer Login
+
+
+URL:
+http://localhost:8080/vip/customer/login?username=john&pwd=Hello@135
+
+
+
+
+==============================================================================
+==============================================================================
+
+
+Get All Products
+------------------------------
+
+Description: Fetches all the product.
+
+URL
+http://localhost:8080/vip/products/all
+
+
+
+
+==============================================================================
+==============================================================================
+
+
+Get All Products on Offer
+------------------------------
+
+Description: Fetches all the product which are on offer
+
+URL
+http://localhost:8080/vip/products/productsOnOffers
+
+
+
+==============================================================================
+==============================================================================
+
+
+Add single product to cart (POST)
+------------------------------
+
+Description: Creates a cart with single product within the cart
+
+
+URL:
+http://localhost:8080/vip/cart/add
+
+
+Request Body:
+{
+	"data" :
+	{
+		"display_name" : "test_cart",
+		"product_id" : "1",
+		"product_count" : "2"
+	
+	}
+}
+
+
+
+==============================================================================
+==============================================================================
+
+
+Add products to cart (POST)
+------------------------------
+
+Description: Creates a cart with number of products provided in the input within the cart.
+
+
+URL:
+http://localhost:8080/vip/cart/addAll
+
+
+Request Body:
+{
+	"data" :
+	{
+		"display_name" : "test_cart",
+		"product_data" :
+			[
+				{
+					"product_id" : "1",
+					"product_count" : "2"
+				
+				},
+				{
+					"product_id" : "2",
+					"product_count" : "1"
+				
+				}
+			]
+	}
+}
+
+
+
+==============================================================================
+==============================================================================
+
+
+Add single product to favourite list (POST)
+------------------------------
+
+Description: Creates a favourite list with single product within the list
+
+
+URL:
+http://localhost:8080/vip/favouritelist/add
+
+
+Request Body:
+{
+	"data" :
+	{
+		"product_id" : "1",
+	
+	}
+}
+
+
+
+==============================================================================
+==============================================================================
+
+
+Add products to favourite list (POST)
+------------------------------
+
+Description: Creates a favourite list with number of products provided in the input within the list.
+
+
+URL:
+http://localhost:8080/vip/favouritelist/addAll
+
+
+Request Body:
+{
+	"data" :
+	{
+		"product_data" :
+			[
+				{
+					"product_id" : "1",
+				
+				},
+				{
+					"product_id" : "2",
+				
+				}
+			]
+	}
+}
+
+

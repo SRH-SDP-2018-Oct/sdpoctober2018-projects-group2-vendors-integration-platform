@@ -1,6 +1,7 @@
 package org.srh.vipapp.controller;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.srh.bean.ServiceResp;
 import org.srh.bean.ServiceRespArray;
+import org.srh.util.Common;
 import org.srh.util.HttpUtil;
 import org.srh.vipapp.service.CustomerCartService;
 
@@ -46,20 +48,20 @@ public class CustomerCartController {
 		return HttpUtil.buildResponseArray(resp, customerCartServiceResp).toString();
 	}
 
-	
+
 	@RequestMapping(path="/add", method=RequestMethod.POST)
-	public String add(@RequestBody String data, HttpServletResponse resp) {
-		String customerId = "1";
+	public String add(@RequestBody String data, HttpServletResponse resp, HttpSession httpSession) {
+		String customerId = Common.getCustomerId(httpSession).toString();
 		ServiceResp customerCartServiceResp = customerCartService.addProduct(data, customerId);
 		return HttpUtil.buildResponse(resp, customerCartServiceResp).toString();
 	}
 
 	
 	@RequestMapping(path="/addAll", method=RequestMethod.POST)
-	public String addAll(@RequestBody String data, HttpServletResponse resp) {
-		String customerId = "1";
-		ServiceRespArray customerCartServiceResp = customerCartService.addAllProduct(data, customerId);
-		return HttpUtil.buildResponseArray(resp, customerCartServiceResp).toString();
+	public String addAll(@RequestBody String data, HttpServletResponse resp, HttpSession httpSession) {
+		String customerId = Common.getCustomerId(httpSession).toString();
+		ServiceResp customerCartServiceResp = customerCartService.addAllProduct(data, customerId);
+		return HttpUtil.buildResponse(resp, customerCartServiceResp).toString();
 	}
 
 }

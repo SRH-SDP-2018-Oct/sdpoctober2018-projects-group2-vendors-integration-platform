@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.srh.bean.ServiceResp;
-import org.srh.bean.ServiceRespArray;
 import org.srh.util.HttpUtil;
 import org.srh.vipapp.service.CustomerFavouriteListService;
 
@@ -33,13 +32,13 @@ public class CustomerFavouriteListController {
 		return HttpUtil.buildResponse(resp, customerFavouriteListServiceResp).toString();
 	}
 
-	@RequestMapping(path="/userId/{userId}", method=RequestMethod.GET)
-	public String getProductsByName(@PathVariable String userId, HttpServletResponse resp) {
-		ServiceResp customerFavouriteListServiceResp = customerFavouriteListService.getFavouriteListByCustomerId(userId);
+	@RequestMapping(path="/customerId/{customerId}", method=RequestMethod.GET)
+	public String getProductsByName(@PathVariable String customerId, HttpServletResponse resp) {
+		ServiceResp customerFavouriteListServiceResp = customerFavouriteListService.getFavouriteListByCustomerId(customerId);
 		return HttpUtil.buildResponse(resp, customerFavouriteListServiceResp).toString();
 	}
 
-	
+
 	@RequestMapping(path="/add", method=RequestMethod.POST)
 	public String add(@RequestBody String data, HttpServletResponse resp) {
 		String customerId = "1";
@@ -47,12 +46,12 @@ public class CustomerFavouriteListController {
 		return HttpUtil.buildResponse(resp, customerFavouriteListServiceResp).toString();
 	}
 
-	
+
 	@RequestMapping(path="/addAll", method=RequestMethod.POST)
 	public String addAll(@RequestBody String data, HttpServletResponse resp) {
 		String customerId = "1";
-		ServiceRespArray customerFavouriteListServiceResp = customerFavouriteListService.addProductsToFavouriteList(data, customerId);
-		return HttpUtil.buildResponseArray(resp, customerFavouriteListServiceResp).toString();
+		ServiceResp customerFavouriteListServiceResp = customerFavouriteListService.addProductsToFavouriteList(data, customerId);
+		return HttpUtil.buildResponse(resp, customerFavouriteListServiceResp).toString();
 	}
 
 }

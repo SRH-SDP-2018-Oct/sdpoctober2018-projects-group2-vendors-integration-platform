@@ -21,5 +21,7 @@
         <mapping class="org.srh.vipapp.hbm.dto.ProductsMaster"/>
         <mapping class="org.srh.vipapp.hbm.dto.CustomerCart"/>
         <mapping class="org.srh.vipapp.hbm.dto.CartProduct"/>
+        <mapping class="org.srh.vipapp.hbm.dto.CustomerFavouriteList"/>
+        <mapping class="org.srh.vipapp.hbm.dto.FavouriteListProduct"/>
     </session-factory>  
 </hibernate-configuration> 

@@ -1,7 +1,5 @@
 package org.srh.vipapp.hbm.hql;
 
-
-
 /**
  * Contains HQL for the {@link CustomerFavouriteList} entity.
  * Date: 10 Dec 2018

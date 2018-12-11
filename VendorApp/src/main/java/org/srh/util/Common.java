@@ -5,6 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.srh.annotation.POJO;
 import org.srh.bean.ServiceResp;
@@ -192,4 +194,14 @@ public final class Common {
 		return new ServiceRespArray().setSuccessData(list).setSuccessDescription(successDescription);
 	}
 
+
+	public static void setCustomerId(HttpSession httpSession, Long customerId) {
+		httpSession.setAttribute("customerId", customerId);
+	}
+
+
+	public static Long getCustomerId(HttpSession httpSession) {
+		Object obj = httpSession.getAttribute("customerId");
+		return NumberUtil.getLong(obj);
+	}
 }
