@@ -39,6 +39,7 @@ public class CustomerCartDaoImpl implements CustomerCartDao {
 		return customerCart;
 	}
 
+
 	@Override
 	public List<CustomerCart> getAllCarts() {
 		List<CustomerCart> cartsList = null;
@@ -55,6 +56,7 @@ public class CustomerCartDaoImpl implements CustomerCartDao {
 			return cartsList;
 		}
 	}
+
 
 	@Override
 	public List<CustomerCart> getCartByCustomerId(long customerId) {
@@ -73,4 +75,43 @@ public class CustomerCartDaoImpl implements CustomerCartDao {
 		}
 	}
 
+
+	@Override
+	public CustomerCart getLatestCartByCustomerId(long customerId) {
+		CustomerCart customerCart = null;
+		try ( Session session = RootHB.getSessionFactory().openSession(); ){
+			CustomerMaster customerMaster = customerMasterDao.findById(customerId);
+			@SuppressWarnings("unchecked")
+			Query<CustomerCart> query = session.createNamedQuery(CustomerCartQuery.GET_LATEST_CUSTOMER_CARTS_BY_CUSTOMERID_$N);
+			query.setMaxResults(1);
+			query.setParameter(CustomerCartQuery.GET_LATEST_CUSTOMER_CARTS_BY_CUSTOMERID_$P1, customerMaster);
+			customerCart = query.getSingleResult();
+		}
+		catch(NoResultException ex){
+			AppLog.log(this.getClass(), StringUtil.append("There are no carts for this User!",ex.getMessage()) );
+			return customerCart;
+		}
+		return customerCart;
+	}
+
+
+	@Override
+	public CustomerCart getLatestCartByCustomerId(long customerId, Session session) {
+		CustomerCart customerCart = null;
+		try {
+			CustomerMaster customerMaster = customerMasterDao.findById(customerId);
+			@SuppressWarnings("unchecked")
+			Query<CustomerCart> query = session.createNamedQuery(CustomerCartQuery.GET_LATEST_CUSTOMER_CARTS_BY_CUSTOMERID_$N);
+			query.setMaxResults(1);
+			query.setParameter(CustomerCartQuery.GET_LATEST_CUSTOMER_CARTS_BY_CUSTOMERID_$P1, customerMaster);
+			customerCart = query.getSingleResult();
+		}
+		catch(NoResultException ex){
+			AppLog.log(this.getClass(), StringUtil.append("There are no carts for this User!",ex.getMessage()) );
+			return customerCart;
+		}
+		return customerCart;
+	}
+
+	
 }

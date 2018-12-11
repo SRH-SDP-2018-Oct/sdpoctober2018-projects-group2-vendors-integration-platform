@@ -1,6 +1,8 @@
 package org.srh.vipapp.hbm.dao;
 
 import java.util.List;
+
+import org.hibernate.Session;
 import org.srh.vipapp.hbm.dto.CustomerCart;
 
 /**
@@ -30,5 +32,20 @@ public interface CustomerCartDao {
 	 * @return customerCartList {@link CustomerCart}
 	 */
 	public List<CustomerCart> getCartByCustomerId(long customerId);
+	
+	/**
+	 * Returns the latest {@link CustomerCart} entity with the given 'userId'.
+	 * @param customerId {@link Long}
+	 * @return customerCart {@link CustomerCart}
+	 */
+	public CustomerCart getLatestCartByCustomerId(long customerId);
+	
+	/**
+	 * Returns the latest {@link CustomerCart} entity with the given 'userId'.
+	 * @param customerId {@link Long}
+	 * @param session {@link Session}
+	 * @return customerCart {@link CustomerCart}
+	 */
+	public CustomerCart getLatestCartByCustomerId(long customerId, Session session);
 
 }

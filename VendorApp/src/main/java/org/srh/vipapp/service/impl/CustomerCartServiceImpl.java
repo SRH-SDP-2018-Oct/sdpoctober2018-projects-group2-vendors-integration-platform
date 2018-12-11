@@ -1,6 +1,7 @@
 package org.srh.vipapp.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -21,10 +22,10 @@ import org.srh.vipapp.hbm.dao.impl.CustomerCartDaoImpl;
 import org.srh.vipapp.hbm.dto.CustomerCart;
 import org.srh.vipapp.service.CustomerCartService;
 
-
 /**
- * Service Implementation of {@link CustomerCartService}.  <br/>
+ * Service Implementation of {@link CustomerCartService}. <br/>
  * Date: 09 Dec 2018
+ * 
  * @author Anglita
  */
 @Service
@@ -33,14 +34,13 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 	private CustomerCartDao customerCartDao = new CustomerCartDaoImpl();
 	private CartActivity cartActivity = new CartActivity();
 
-
 	@Override
 	public ServiceRespArray getAllCarts() {
 		List<CustomerCart> allCartsList = customerCartDao.getAllCarts();
 
 		// Validate Data Existence
-		if(allCartsList==null || allCartsList.isEmpty()) {
-			String description =  "No Products found.";
+		if (allCartsList == null || allCartsList.isEmpty()) {
+			String description = "No Products found.";
 			return Common.buildServiceRespArrayError(ErrorCode.NOT_FOUND, description);
 		}
 
@@ -51,7 +51,7 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 	public ServiceResp getCartsByCartId(String cartId) {
 		// Input Validation
 		Long crtId = NumberUtil.getLong(cartId);
-		if(crtId==null) {
+		if (crtId == null) {
 			String description = StringUtil.append("The cart id [", cartId, "] is invalid integer.");
 			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 		}
@@ -59,8 +59,8 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 		CustomerCart customerCart = customerCartDao.findByCartId(crtId.longValue());
 
 		// Validate Data Existence
-		if(customerCart==null) {
-			String description =  StringUtil.append("No customer found with id [", crtId, "].");
+		if (customerCart == null) {
+			String description = StringUtil.append("No customer found with id [", crtId, "].");
 			return Common.buildServiceRespError(ErrorCode.NOT_FOUND, description);
 		}
 
@@ -68,12 +68,11 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 		return Common.buildServiceResp(customerCart);
 	}
 
-
 	@Override
 	public ServiceRespArray getCartsByUserId(String customerId) {
 		// Input Validation
 		Long cId = NumberUtil.getLong(customerId);
-		if(cId==null){
+		if (cId == null) {
 			String description = StringUtil.append("The customer id [", cId, "] is invalid integer.");
 			return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
 		}
@@ -81,23 +80,22 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 		List<CustomerCart> customerCart = customerCartDao.getCartByCustomerId(cId.longValue());
 
 		// Validate Data Existence
-		if(customerCart==null) {
-			String description =  StringUtil.append("No card found with id [", cId, "].");
+		if (customerCart == null) {
+			String description = StringUtil.append("No card found with id [", cId, "].");
 			return Common.buildServiceRespArrayError(ErrorCode.NOT_FOUND, description);
 		}
 		// Data Exist, Return Success
 		return Common.buildServiceRespArray(customerCart);
 	}
 
-
 	@Override
 	public ServiceResp addProduct(String data, String customerId) {
-		if(Common.nullOrEmpty(data)) {
+		if (Common.nullOrEmpty(data)) {
 			String description = StringUtil.append("Invalid data [", data, "] provided as an input.");
 			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 		}
 		Long cId = NumberUtil.getLong(customerId);
-		if(cId==null){
+		if (cId == null) {
 			String description = StringUtil.append("The customer id [", cId, "] is invalid integer.");
 			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 		}
@@ -110,14 +108,12 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 			JSONObject jsonData = new JSONObject(data).getJSONObject(KeyPairConstants.CART_DATA);
 			productId = Long.valueOf(jsonData.getString(KeyPairConstants.CART_PRODUCT_ID));
 			productCount = Integer.valueOf(jsonData.getString(KeyPairConstants.CART_PRODUCT_COUNT));
-			if(jsonData.has(KeyPairConstants.CART_DISPLAY_NAME)) {
+			if (jsonData.has(KeyPairConstants.CART_DISPLAY_NAME)) {
 				displayName = jsonData.getString(KeyPairConstants.CART_DISPLAY_NAME);
-			}
-			else {
+			} else {
 				displayName = DateUtil.getMMDDYYYY_HHMMSS();
 			}
-		}
-		catch(Exception ex) {
+		} catch (Exception ex) {
 			String description = StringUtil.append("Invalid data format [", data, "] provided as an input.");
 			AppLog.log(CustomerCartServiceImpl.class, description, ex);
 			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
@@ -127,15 +123,14 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 		return cartActivity.saveCart(cId, displayName, productId, productCount);
 	}
 
-
 	@Override
 	public ServiceResp addAllProduct(String data, String customerId) {
-		if(Common.nullOrEmpty(data)) {
+		if (Common.nullOrEmpty(data)) {
 			String description = StringUtil.append("Invalid data [", data, "] provided as an input.");
 			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 		}
 		Long cId = NumberUtil.getLong(customerId);
-		if(cId==null){
+		if (cId == null) {
 			String description = StringUtil.append("The customer id [", cId, "] is invalid integer.");
 			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 		}
@@ -147,23 +142,21 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 		JSONArray jsonDataArray;
 		try {
 			JSONObject jsonData = new JSONObject(data).getJSONObject(KeyPairConstants.CART_DATA);
-			if(jsonData.has(KeyPairConstants.CART_DISPLAY_NAME)) {
+			if (jsonData.has(KeyPairConstants.CART_DISPLAY_NAME)) {
 				displayName = jsonData.getString(KeyPairConstants.CART_DISPLAY_NAME);
-			}
-			else {
+			} else {
 				displayName = DateUtil.getMMDDYYYY_HHMMSS();
 			}
 			jsonDataArray = jsonData.getJSONArray(KeyPairConstants.CART_PRODUCT_DATA);
 			int len = jsonData.length();
 			productIdList = new ArrayList<>(len);
 			productCountList = new ArrayList<>(len);
-			for(int i=0; i<len; i++) {
+			for (int i = 0; i < len; i++) {
 				JSONObject jsonObject = jsonDataArray.getJSONObject(i);
 				productIdList.add(Long.valueOf(jsonObject.getString(KeyPairConstants.CART_PRODUCT_ID)));
 				productCountList.add(Integer.valueOf(jsonObject.getString(KeyPairConstants.CART_PRODUCT_COUNT)));
 			}
-		}
-		catch(Exception ex) {
+		} catch (Exception ex) {
 			String description = StringUtil.append("Invalid data format [", data, "] provided as an input.");
 			AppLog.log(CustomerCartServiceImpl.class, description, ex);
 			return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
@@ -173,26 +166,26 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 		return cartActivity.saveCart(cId, displayName, productIdList, productCountList);
 	}
 
+
 	@Override
 	public ServiceRespArray getFrquentlyBoughtProducts(String customerId) {
 		// Input Validation
-				Long cId = NumberUtil.getLong(customerId);
-				if(cId==null){
-					String description = StringUtil.append("The customer id [", cId, "] is invalid integer.");
-					return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
-				}
+		Long cId = NumberUtil.getLong(customerId);
+		if (cId == null) {
+			String description = StringUtil.append("The customer id [", cId, "] is invalid integer.");
+			return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
+		}
 
-				List<CustomerCart> customerCart = customerCartDao.getFrequentlyBoughtProducts(cId.longValue());
+		CustomerCart customerCart = customerCartDao.getLatestCartByCustomerId(cId);
 
-				// Validate Data Existence
-				if(customerCart==null) {
-					String description =  StringUtil.append("No car found with id [", cId, "].");
-					return Common.buildServiceRespArrayError(ErrorCode.NOT_FOUND, description);
-				}
-				// Data Exist, Return Success
-				return Common.buildServiceRespArray(customerCart);
+		// Validate Data Existence
+		if (customerCart == null) {
+			String description = StringUtil.append("No car found with id [", cId, "].");
+			return Common.buildServiceRespArrayError(ErrorCode.NOT_FOUND, description);
+		}
+		// Data Exist, Return Success
+		
+		return Common.buildServiceRespArray(Arrays.asList(customerCart));
 	}
 
 }
-
-

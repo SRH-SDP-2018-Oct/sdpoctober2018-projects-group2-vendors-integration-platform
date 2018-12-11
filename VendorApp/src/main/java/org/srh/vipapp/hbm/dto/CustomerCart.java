@@ -19,6 +19,7 @@ import org.srh.vipapp.hbm.hql.CustomerCartQuery;
 @Table(name = "customer_cart")
 @NamedQuery(name = CustomerCartQuery.GET_ALL_CUSTOMER_CARTS_$N, query = CustomerCartQuery.GET_ALL_CUSTOMER_CARTS_$Q)
 @NamedQuery(name = CustomerCartQuery.GET_CUSTOMER_CARTS_BY_CUSTOMERID_$N, query = CustomerCartQuery.GET_CUSTOMER_CARTS_BY_CUSTOMERID_$Q)
+@NamedQuery(name = CustomerCartQuery.GET_LATEST_CUSTOMER_CARTS_BY_CUSTOMERID_$N, query = CustomerCartQuery.GET_LATEST_CUSTOMER_CARTS_BY_CUSTOMERID_$Q)
 @POJO(hidden= {"setCustomerId","setCreatedBy","setModifiedBy"},
 	hiddenParam= {"org.srh.vipapp.hbm.dto.CustomerMaster",
 			"org.srh.vipapp.hbm.dto.UserMaster","org.srh.vipapp.hbm.dto.UserMaster"}
