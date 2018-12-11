@@ -1,5 +1,7 @@
 package org.srh.vipapp.activity;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.srh.bean.ServiceResp;
@@ -25,7 +27,7 @@ public class FavouriteListActivity {
 
 	private CustomerMasterDao customerMasterDao = new CustomerMasterDaoImpl();
 	private ProductsMasterDao productsMasterDao = new ProductsMasterDaoImpl();
-	
+
 	public ServiceResp saveFavouriteList(Long customerId, Long productId) {
 		Session session = RootHB.getSessionFactory().openSession();
 
@@ -57,10 +59,10 @@ public class FavouriteListActivity {
 				String description = StringUtil.append("The product id [", productId, "] is invalid integer.");
 				return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 			}
-			FavouriteListProduct cartProduct = saveFavouriteProduct(session,favouriteList, productsMaster, systemUser);
+			saveFavouriteProduct(session,favouriteList, productsMaster, systemUser);
 
 			transaction.commit();
-			return Common.buildServiceResp(cartProduct);
+			return Common.buildServiceResp(favouriteList);
 		}
 		catch(Exception ex) {
 			transaction.rollback();
@@ -71,7 +73,60 @@ public class FavouriteListActivity {
 			RootHB.closeSession(session);
 		}
 	}
-	
+
+
+	public ServiceResp saveFavouriteList(Long customerId, List<Long> productList) {
+		Session session = RootHB.getSessionFactory().openSession();
+
+		// Cart Transaction
+		Transaction transaction = session.beginTransaction();
+		try {
+			// 
+			CustomerMaster customerMaster = customerMasterDao.findById(customerId, session);
+			if(customerMaster==null) {
+				RootHB.closeSession(session);
+				String description = StringUtil.append("The customer id [", customerId, "] is invalid integer.");
+				return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
+			}
+
+			// 
+			UserMaster systemUser = RootHB.getSystemUser();
+
+			// Create [CustomerFavouriteList] entity object to save it.
+			CustomerFavouriteList favouriteList = new CustomerFavouriteList();
+			favouriteList.setCustomerId(customerMaster);
+			favouriteList.setCreatedBy(systemUser);
+			favouriteList.setModifiedBy(systemUser);
+			
+			session.save(favouriteList);
+
+			int len = productList.size();
+			for(int i=0; i<len; i++) {
+				// Save Products in Cart
+				Long productId = productList.get(i);
+				ProductsMaster productsMaster = productsMasterDao.findById(productId, session);
+				if(productsMaster==null) {
+					transaction.rollback();
+					String description = StringUtil.append("The product id [", productId, "] is invalid integer.");
+					return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
+				}
+				saveFavouriteProduct(session,favouriteList, productsMaster, systemUser);
+			}
+
+			transaction.commit();
+			return Common.buildServiceResp(favouriteList);
+		}
+		catch(Exception ex) {
+			transaction.rollback();
+			String desc = ex.getMessage();
+			return Common.buildServiceRespError(ErrorCode.EXCEPTION, desc);
+		}
+		finally {
+			RootHB.closeSession(session);
+		}
+	}
+
+
 	private FavouriteListProduct saveFavouriteProduct(Session session, CustomerFavouriteList favouriteList,
 			ProductsMaster productsMaster, UserMaster systemUser) {
 		FavouriteListProduct favouriteProduct = new FavouriteListProduct();
@@ -82,6 +137,6 @@ public class FavouriteListActivity {
 		session.save(favouriteProduct);
 		return favouriteProduct;
 	}
-	
-	
+
+
 }

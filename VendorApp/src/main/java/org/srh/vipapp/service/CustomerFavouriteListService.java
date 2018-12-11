@@ -36,7 +36,7 @@ public interface CustomerFavouriteListService {
 	 * Create favourite list and add multiple products to the favourite list
 	 * @param data {@link String}
 	 * @param customerId {@link String}
-	 * @return serviceResp {@link ServiceRespArray}
+	 * @return serviceResp {@link ServiceResp}
 	 */
-	ServiceRespArray addProductsToFavouriteList(String data, String customerId);
+	ServiceResp addProductsToFavouriteList(String data, String customerId);
 }

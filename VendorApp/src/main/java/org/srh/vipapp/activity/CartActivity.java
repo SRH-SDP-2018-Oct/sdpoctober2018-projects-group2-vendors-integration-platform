@@ -117,6 +117,7 @@ public class CartActivity {
 				Integer productCount = productCountList.get(i);
 				ProductsMaster productsMaster = productsMasterDao.findById(productId, session);
 				if(productsMaster==null) {
+					transaction.rollback();
 					String description = StringUtil.append("The product id [", productId, "] is invalid integer.");
 					return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 				}

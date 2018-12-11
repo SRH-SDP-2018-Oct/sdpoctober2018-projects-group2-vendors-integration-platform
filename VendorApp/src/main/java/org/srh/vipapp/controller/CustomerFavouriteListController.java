@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.srh.bean.ServiceResp;
-import org.srh.bean.ServiceRespArray;
 import org.srh.util.HttpUtil;
 import org.srh.vipapp.service.CustomerFavouriteListService;
 
@@ -51,8 +50,8 @@ public class CustomerFavouriteListController {
 	@RequestMapping(path="/addAll", method=RequestMethod.POST)
 	public String addAll(@RequestBody String data, HttpServletResponse resp) {
 		String customerId = "1";
-		ServiceRespArray customerFavouriteListServiceResp = customerFavouriteListService.addProductsToFavouriteList(data, customerId);
-		return HttpUtil.buildResponseArray(resp, customerFavouriteListServiceResp).toString();
+		ServiceResp customerFavouriteListServiceResp = customerFavouriteListService.addProductsToFavouriteList(data, customerId);
+		return HttpUtil.buildResponse(resp, customerFavouriteListServiceResp).toString();
 	}
 
 }
