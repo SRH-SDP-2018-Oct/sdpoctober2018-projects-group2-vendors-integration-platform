@@ -4,7 +4,7 @@ import org.srh.bean.ServiceResp;
 import org.srh.bean.ServiceRespArray;
 
 /**
- * Service Interface to perform the task related to Application Customer's favourite List.  <br/>
+ * Service Interface to perform the task related to Application Customer's favourite List.<br/>
  * Date: 10 Dec 2018
  * @author Anglita
  */
