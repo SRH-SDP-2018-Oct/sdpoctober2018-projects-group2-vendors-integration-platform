@@ -1,5 +1,6 @@
 package org.srh.vipapp.hbm.hql;
 
+import org.srh.util.StringUtil;
 import org.srh.vipapp.hbm.dto.ProductsMaster;
 
 /**
@@ -30,4 +31,13 @@ public final class ProductsMasterQuery {
 	public static final String FIND_PRODUCT_BY_OFFERS_$N = "FIND_PRODUCTS_BY_OFFERS";
 	public static final String FIND_PRODUCT_BY_OFFERS_$Q = "FROM ProductsMaster "
 			+ " WHERE deleteFlag=0 AND hasAnOffer=1";
+
+
+	public static final String GET_FREQUENT_PRODUCDTS_P1 = "customerId";
+	public static final String GET_FREQUENT_PRODUCDTS_Q = StringUtil.append("SELECT ",
+			" cp.productId, COUNT(*), cp.*  " ,
+			" FROM cart_product cp ",
+			" INNER JOIN customer_cart cc ON cc.cartId = cp.cartId " + 
+			" WHERE cc.customerId = :", GET_FREQUENT_PRODUCDTS_P1,
+			" GROUP BY cp.productId ");
 }

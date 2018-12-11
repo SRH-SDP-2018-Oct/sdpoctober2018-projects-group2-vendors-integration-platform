@@ -59,7 +59,7 @@ public class CustomerController {
 	@Autowired
 	private CustomerLoginRegistrationService customerLoginRegistrationService;
 
-	@RequestMapping("/login")
+	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String customerLogin(@RequestParam String username, @RequestParam String pwd, 
 			HttpServletResponse resp, HttpServletRequest req) {
 

@@ -1,13 +1,17 @@
 package org.srh.vipapp.hbm.dao.impl;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.srh.util.AppLog;
 import org.srh.util.StringUtil;
 import org.srh.vipapp.hbm.RootHB;
 import org.srh.vipapp.hbm.dao.ProductsMasterDao;
+import org.srh.vipapp.hbm.dto.CartProduct;
+import org.srh.vipapp.hbm.dto.CustomerMaster;
 import org.srh.vipapp.hbm.dto.ProductsMaster;
 import org.srh.vipapp.hbm.hql.ProductsMasterQuery;
 
@@ -123,6 +127,34 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 			RootHB.closeSession(session);
 		}
 		return new ArrayList<>();
+	}
+
+
+	@Override
+	public List<ProductsMaster> frequentlyBoughtByCustomer(CustomerMaster customerMaster) {
+		List<ProductsMaster> listProduct = new ArrayList<>();
+		Session session = RootHB.getSessionFactory().openSession();
+		try {
+			@SuppressWarnings("unchecked")
+			NativeQuery<CartProduct> nativeQuery = session.createSQLQuery(ProductsMasterQuery.GET_FREQUENT_PRODUCDTS_Q);
+			Query<CartProduct> query = nativeQuery.addEntity("cp", CartProduct.class);
+			query.setParameter(ProductsMasterQuery.GET_FREQUENT_PRODUCDTS_P1, customerMaster);
+			List<CartProduct> listCartProduct = query.getResultList();
+			if(listCartProduct.isEmpty())
+				return listProduct;
+			int size = listCartProduct.size();
+			for(int i=0; i<size; i++) {
+				CartProduct cartProduct = listCartProduct.get(i);
+				listProduct.add(cartProduct.getProductId());
+			}
+		}
+		catch(NoResultException ex){
+			AppLog.log(this.getClass(), StringUtil.append("There are no products on Offers!",ex.getMessage()) );
+		}
+		finally {
+			RootHB.closeSession(session);
+		}
+		return listProduct;
 	}
 	
 

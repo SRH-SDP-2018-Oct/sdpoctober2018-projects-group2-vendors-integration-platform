@@ -1,5 +1,6 @@
 package org.srh.config;
 import org.srh.vipapp.hbm.dto.*;
+import org.srh.vipapp.service.impl.CustomerCartServiceImpl;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -38,9 +39,9 @@ public class AppMain {
 
 	public static void main(String[] args) {
 		try {
+			AppLog.print(new JSONObject(new CustomerCartServiceImpl().getFrquentlyBoughtProducts("1")));
 			// vendorDataETL();
-			CustomerCart c = new CustomerCartDaoImpl().getLatestCartByCustomerId(1);
-			AppLog.print(new JSONObject(c));
+			frequentlyBought();
 		}
 		catch(Exception ex) {
 			AppLog.log(AppMain.class, ex);
@@ -51,18 +52,35 @@ public class AppMain {
 	}
 
 
+	private static void frequentlyBought() {
+		String queryString = StringUtil.append("SELECT cp.productId, COUNT(*), cp.*  " ,
+				" FROM cart_product cp ",
+				" INNER JOIN customer_cart cc ON cc.cartId = cp.cartId\r\n" + 
+				" WHERE cc.customerId = :customerId ",
+				" GROUP BY cp.productId ");
+		Session session = RootHB.getSessionFactory().openSession();
+		@SuppressWarnings("unchecked")
+		Query<CartProduct> query = session.createSQLQuery(queryString).addEntity("cp", CartProduct.class);
+		query.setParameter("customerId", 1);
+		List<CartProduct> list = query.getResultList();
+		AppLog.print(new JSONArray(list));
+	}
+
+
 	private static void sortedLocation() {
 		String queryString = StringUtil.append("SELECT " ,
-				"  ( 6371 * ACOS ( COS ( RADIANS(:userLatitude) ) " ,
-				"   * COS ( RADIANS( vm.locationLat ) ) " ,
-				"   * COS ( RADIANS( vm.locationLon ) - RADIANS(:userLongitude) ) " ,
-				"   + SIN ( RADIANS(:userLatitude) ) " ,
-				"   * SIN ( RADIANS( vm.locationLat ) )",
-				" ))  AS distance, pm.*  FROM products_master pm ",
+				"   ( 6371 * ACOS ( COS ( RADIANS(:userLatitude) ) " ,
+				"    * COS ( RADIANS( vm.locationLat ) ) " ,
+				"    * COS ( RADIANS( vm.locationLon ) - RADIANS(:userLongitude) ) " ,
+				"    + SIN ( RADIANS(:userLatitude) ) " ,
+				"    * SIN ( RADIANS( vm.locationLat ) )",
+				"   ))  AS distance,",
+				"   pm.* ",
+				" FROM products_master pm ",
 				" INNER JOIN vendor_branches vm ON vm.id = pm.branchId ",
 				" ORDER BY distance ");
 		Session session = RootHB.getSessionFactory().openSession();
-		Query query = session.createSQLQuery(queryString).addEntity("pm", ProductsMaster.class);//.addJoin("vm","pm.branchId");
+		Query query = session.createSQLQuery(queryString).addEntity("pm", ProductsMaster.class);
 		query.setParameter("userLatitude", "49.4140614");
 		query.setParameter("userLongitude", "8.6536843");
 		// query.setParameter(0, "");

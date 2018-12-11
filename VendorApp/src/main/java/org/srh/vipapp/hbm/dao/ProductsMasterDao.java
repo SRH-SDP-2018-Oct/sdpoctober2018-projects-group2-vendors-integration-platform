@@ -3,6 +3,7 @@ package org.srh.vipapp.hbm.dao;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.srh.vipapp.hbm.dto.CustomerMaster;
 import org.srh.vipapp.hbm.dto.ProductsMaster;
 
 /**
@@ -48,11 +49,21 @@ public interface ProductsMasterDao {
 	List<ProductsMaster> getProductsByProductType(String productTypeName);
 
 
-
 	/**
 	 * Returns all the {@link ProductsMaster} entities on Offer from persistence database
 	 * @return productsMasterList {@link List<ProductsMaster>}
 	 */
 	List<ProductsMaster> getAllProductsOnOffer();
+
+
+	/**
+	 * Returns all the {@link ProductsMaster} entities that are frequently brought by the customer
+	 * @param customerMaster {@link CustomerMaster}
+	 * @return productsMasterList {@link List<ProductsMaster>}
+	 */
+	List<ProductsMaster> frequentlyBoughtByCustomer(CustomerMaster customerMaster);
+
+
+	
 
 }

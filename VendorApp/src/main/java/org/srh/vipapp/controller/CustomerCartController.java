@@ -64,6 +64,14 @@ public class CustomerCartController {
 		return HttpUtil.buildResponse(resp, customerCartServiceResp).toString();
 	}
 
+	@RequestMapping(path="/latestCartProducts", method=RequestMethod.GET)
+	public String getLatestCartByCustomerId(HttpServletResponse resp, HttpSession httpSession) {
+		String customerId = Common.getCustomerId(httpSession).toString();
+		ServiceRespArray customerCartServiceResp = customerCartService.getLatestCartByCustomerId(customerId);
+		return HttpUtil.buildResponseArray(resp, customerCartServiceResp).toString();
+	
+	}
+
 	@RequestMapping(path="/frequentlyBought", method=RequestMethod.GET)
 	public String getFrequentlyBoughtProducts(HttpServletResponse resp, HttpSession httpSession) {
 		String customerId = Common.getCustomerId(httpSession).toString();

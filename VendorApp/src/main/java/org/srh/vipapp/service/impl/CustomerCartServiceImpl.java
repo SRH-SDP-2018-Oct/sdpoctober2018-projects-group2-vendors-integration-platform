@@ -1,7 +1,6 @@
 package org.srh.vipapp.service.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -17,9 +16,17 @@ import org.srh.util.DateUtil;
 import org.srh.util.NumberUtil;
 import org.srh.util.StringUtil;
 import org.srh.vipapp.activity.CartActivity;
+import org.srh.vipapp.hbm.dao.CartProductDao;
 import org.srh.vipapp.hbm.dao.CustomerCartDao;
+import org.srh.vipapp.hbm.dao.CustomerMasterDao;
+import org.srh.vipapp.hbm.dao.ProductsMasterDao;
+import org.srh.vipapp.hbm.dao.impl.CartProductDaoImpl;
 import org.srh.vipapp.hbm.dao.impl.CustomerCartDaoImpl;
+import org.srh.vipapp.hbm.dao.impl.CustomerMasterDaoImpl;
+import org.srh.vipapp.hbm.dao.impl.ProductsMasterDaoImpl;
 import org.srh.vipapp.hbm.dto.CustomerCart;
+import org.srh.vipapp.hbm.dto.CustomerMaster;
+import org.srh.vipapp.hbm.dto.ProductsMaster;
 import org.srh.vipapp.service.CustomerCartService;
 
 /**
@@ -32,6 +39,10 @@ import org.srh.vipapp.service.CustomerCartService;
 public class CustomerCartServiceImpl implements CustomerCartService {
 
 	private CustomerCartDao customerCartDao = new CustomerCartDaoImpl();
+	private CartProductDao cartProductDao = new CartProductDaoImpl();
+	private ProductsMasterDao productsMasterDao = new ProductsMasterDaoImpl();
+	private CustomerMasterDao customerMasterDao = new CustomerMasterDaoImpl();
+
 	private CartActivity cartActivity = new CartActivity();
 
 	@Override
@@ -123,6 +134,7 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 		return cartActivity.saveCart(cId, displayName, productId, productCount);
 	}
 
+
 	@Override
 	public ServiceResp addAllProduct(String data, String customerId) {
 		if (Common.nullOrEmpty(data)) {
@@ -168,7 +180,7 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 
 
 	@Override
-	public ServiceRespArray getFrquentlyBoughtProducts(String customerId) {
+	public ServiceRespArray getLatestCartByCustomerId(String customerId) {
 		// Input Validation
 		Long cId = NumberUtil.getLong(customerId);
 		if (cId == null) {
@@ -183,9 +195,38 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 			String description = StringUtil.append("No car found with id [", cId, "].");
 			return Common.buildServiceRespArrayError(ErrorCode.NOT_FOUND, description);
 		}
+
+		// Get all the products from the cart
+		List<ProductsMaster> listProductsMaster = cartProductDao.getAllProductInCart(customerCart) ;
+
+		// Returns the response
+		return Common.buildServiceRespArray(listProductsMaster);
+	}
+
+
+	@Override
+	public ServiceRespArray getFrquentlyBoughtProducts(String customerId) {
+		// Input Validation
+		Long cId = NumberUtil.getLong(customerId);
+		if (cId == null) {
+			String description = StringUtil.append("The customer id [", cId, "] is invalid integer.");
+			return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
+		}
+
+		CustomerMaster customerMaster = customerMasterDao.findById(cId);
+
+		// Validate Data Existence
+		if (customerMaster == null) {
+			String description = StringUtil.append("No car found with id [", cId, "].");
+			return Common.buildServiceRespArrayError(ErrorCode.NOT_FOUND, description);
+		}
 		// Data Exist, Return Success
+
+		// Get all the products from the cart
+		List<ProductsMaster> listProductsMaster = productsMasterDao.frequentlyBoughtByCustomer(customerMaster);
+
 		
-		return Common.buildServiceRespArray(Arrays.asList(customerCart));
+		return Common.buildServiceRespArray(listProductsMaster);
 	}
 
 }

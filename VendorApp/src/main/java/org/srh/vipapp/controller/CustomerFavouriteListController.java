@@ -32,6 +32,7 @@ public class CustomerFavouriteListController {
 		return HttpUtil.buildResponse(resp, customerFavouriteListServiceResp).toString();
 	}
 
+
 	@RequestMapping(path="/customerId/{customerId}", method=RequestMethod.GET)
 	public String getProductsByName(@PathVariable String customerId, HttpServletResponse resp) {
 		ServiceResp customerFavouriteListServiceResp = customerFavouriteListService.getFavouriteListByCustomerId(customerId);

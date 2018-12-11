@@ -8,12 +8,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.srh.annotation.POJO;
+import org.srh.vipapp.hbm.hql.CartProductQuery;
 
 @Entity
 @Table(name = "cart_product")
+@NamedQuery(name=CartProductQuery.FIND_PRODUCT_BY_CART_$N, query=CartProductQuery.FIND_PRODUCT_BY_CART_$Q)
 @POJO(hidden= {"setCreatedBy","setModifiedBy"},
 	hiddenParam= {"org.srh.vipapp.hbm.dto.UserMaster","org.srh.vipapp.hbm.dto.UserMaster"}
 )

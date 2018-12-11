@@ -13,7 +13,7 @@ Login
 Description: Customer Login
 
 
-URL:
+URL: (POST)
 http://localhost:8080/vip/customer/login?username=john&pwd=Hello@135
 
 
@@ -52,13 +52,13 @@ http://localhost:8080/vip/products/productsOnOffers
 ==============================================================================
 
 
-Add single product to cart (POST)
+Add single product to cart
 ------------------------------
 
 Description: Creates a cart with single product within the cart
 
 
-URL:
+URL: (POST)
 http://localhost:8080/vip/cart/add
 
 
@@ -79,13 +79,13 @@ Request Body:
 ==============================================================================
 
 
-Add products to cart (POST)
+Add products to cart
 ------------------------------
 
 Description: Creates a cart with number of products provided in the input within the cart.
 
 
-URL:
+URL: (POST)
 http://localhost:8080/vip/cart/addAll
 
 
@@ -116,13 +116,13 @@ Request Body:
 ==============================================================================
 
 
-Add single product to favourite list (POST)
+Add single product to favourite list
 ------------------------------
 
 Description: Creates a favourite list with single product within the list
 
 
-URL:
+URL: (POST)
 http://localhost:8080/vip/favouritelist/add
 
 
@@ -141,13 +141,13 @@ Request Body:
 ==============================================================================
 
 
-Add products to favourite list (POST)
+Add products to favourite list
 ------------------------------
 
 Description: Creates a favourite list with number of products provided in the input within the list.
 
 
-URL:
+URL: (POST)
 http://localhost:8080/vip/favouritelist/addAll
 
 
@@ -169,4 +169,33 @@ Request Body:
 	}
 }
 
+
+
+==============================================================================
+==============================================================================
+
+
+Get products of latest cart
+------------------------------------------------------------
+
+Description: Get products which are there in the latest generated cart.
+
+
+URL:
+http://localhost:8080/vip/cart/latestCartProducts
+
+
+
+==============================================================================
+==============================================================================
+
+
+Get frequent products
+------------------------------------------------------------
+
+Description: Get products which are add frequently by the customer in the cart.
+
+
+URL:
+http://localhost:8080/vip/cart/frequentlyBought
 
