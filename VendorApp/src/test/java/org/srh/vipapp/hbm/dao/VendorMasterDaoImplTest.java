@@ -6,8 +6,6 @@ import org.junit.Test;
 import org.srh.vipapp.hbm.dao.impl.VendorMasterDaoImpl;
 import org.srh.vipapp.hbm.dto.VendorMaster;
 
-
-
 public class VendorMasterDaoImplTest {
 
 	@Test
@@ -25,7 +23,7 @@ public class VendorMasterDaoImplTest {
 
 	
 	@Test
-	public void testFindById() {
+	public void testFindByValidId() {
 		int id = 1;
 		VendorMaster vendorMaster = new VendorMasterDaoImpl().findById(id);
 		if(vendorMaster != null){
@@ -35,8 +33,34 @@ public class VendorMasterDaoImplTest {
 			// Entry not present in database
 			assertEquals(null, vendorMaster);
 		}
-
 	}
+	
+	@Test
+	public void testFindByInvalidId() {
+		int id = 9;
+		VendorMaster vendorMaster = new VendorMasterDaoImpl().findById(id);
+		if(vendorMaster != null){
+			assertEquals(id, vendorMaster.getVendorId());
+		}
+		else {
+			// Entry not present in database
+			assertEquals(null, vendorMaster);
+		}
+	}
+	
+	@Test
+	public void testFindByNullId() {
+		int id = 0;
+		VendorMaster vendorMaster = new VendorMasterDaoImpl().findById(id);
+		if(vendorMaster != null){
+			assertEquals(id, vendorMaster.getVendorId());
+		}
+		else {
+			// Entry not present in database
+			assertEquals(null, vendorMaster);
+		}
+	}
+
 
 	@Test
 	public void testGetAllVendors() {
@@ -65,8 +89,6 @@ public class VendorMasterDaoImplTest {
 			assertEquals(vendorName,vendorMaster.getVendorName());
 			
 		}
-		
-
 	}
 
 	@SuppressWarnings("null")
@@ -79,7 +101,17 @@ public class VendorMasterDaoImplTest {
 			 assertEquals(null,vendorMaster.getVendorName());
 			
 		}
-
+	}
+	
+	@Test
+	public void testFindByVendorNameStringNull() {
+		String vendorName = null;
+		VendorMaster vendorMaster = new VendorMasterDaoImpl().findByVendorName(vendorName);
+		if(vendorMaster != null)
+		{
+			assertEquals(vendorName,vendorMaster.getVendorName());
+			
+		}
 	}
 
 }

@@ -17,7 +17,7 @@ Steps:
  	-> Expand 'Working Tree'
  	-> the Right-Click 'VendorApp' -> Import Project
  	-> Wait till the import project in progress window is completed
- - Till project is getting imported run the queries from -> doc -> testschema.sql
+ - Till project is getting imported run the queries from -> doc -> VendorIntegrationDbSchema.sql
  - Go To Project Explorer, right-click Gradle -> Refresh Gradle Project
  	(It may take from several seconds to minutes)
  - Window -> Show View -> Gradle Tasks

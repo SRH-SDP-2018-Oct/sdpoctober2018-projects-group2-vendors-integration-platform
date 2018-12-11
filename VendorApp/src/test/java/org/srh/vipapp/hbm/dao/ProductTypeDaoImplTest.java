@@ -15,8 +15,30 @@ import org.srh.vipapp.hbm.dto.ProductType;
 public class ProductTypeDaoImplTest {
 
 	@Test
-	public void testGetProductTypeIntString() {
-		int vendorId = 3;
+	public void testGetValidProductTypeIntString() {
+		int vendorId = 1;
+		List<ProductType> productType = new ProductTypeDaoImpl().getAllProductType(vendorId);
+		if(productType == null)
+		{
+			assertTrue(true);
+
+		}
+	}
+	
+	@Test
+	public void testGetInvalidProductTypeIntString() {
+		int vendorId = 6;
+		List<ProductType> productType = new ProductTypeDaoImpl().getAllProductType(vendorId);
+		if(productType == null)
+		{
+			assertTrue(true);
+
+		}
+	}
+	
+	@Test
+	public void testGetNullProductTypeIntString() {
+		int vendorId = 0;
 		List<ProductType> productType = new ProductTypeDaoImpl().getAllProductType(vendorId);
 		if(productType == null)
 		{
@@ -26,8 +48,30 @@ public class ProductTypeDaoImplTest {
 	}
 
 	@Test
-	public void testGetProductTypeStringString() {
+	public void testGetValidProductTypeStringString() {
 		String vendorName = "Aldo";
+		List<ProductType> productType = new ProductTypeDaoImpl().getAllProductType(vendorName);
+		if(productType == null)
+		{
+			assertTrue(true);
+
+		}
+	}
+	
+	@Test
+	public void testGetInvalidProductTypeStringString() {
+		String vendorName = "Aldi";
+		List<ProductType> productType = new ProductTypeDaoImpl().getAllProductType(vendorName);
+		if(productType == null)
+		{
+			assertTrue(true);
+
+		}
+	}
+	
+	@Test
+	public void testGetNullProductTypeStringString() {
+		String vendorName = null;
 		List<ProductType> productType = new ProductTypeDaoImpl().getAllProductType(vendorName);
 		if(productType == null)
 		{
@@ -51,7 +95,7 @@ public class ProductTypeDaoImplTest {
 
 	@Test
 	public void testGetAllProductsInValidVendorId() {
-		int vendorId = 3;
+		int vendorId = 9;
 		List<ProductType> productType = new ProductTypeDaoImpl().getAllProductType(vendorId);
 		if(productType == null)
 		{
@@ -60,6 +104,20 @@ public class ProductTypeDaoImplTest {
 		}
 
 	}
+	
+	
+	@Test
+	public void testGetAllProductsInNullVendorId() {
+		int vendorId = 0;
+		List<ProductType> productType = new ProductTypeDaoImpl().getAllProductType(vendorId);
+		if(productType == null)
+		{
+			assertTrue(true);
+
+		}
+
+	}
+	
 	@Test
 	public void testGetAllProductTypeByValidVendorName() {
 		String vendorName = "Aldo";
@@ -74,7 +132,18 @@ public class ProductTypeDaoImplTest {
 
 	@Test
 	public void testGetAllProductTypeByInvalidVendorName() {
-		String vendorName = "Aldo";
+		String vendorName = "Aldi";
+		List<ProductType> productType = new ProductTypeDaoImpl().getAllProductType(vendorName);
+		if(productType == null)
+		{
+			assertTrue(true);
+
+		}
+	}
+	
+	@Test
+	public void testGetAllProductTypeByNullVendorName() {
+		String vendorName = null;
 		List<ProductType> productType = new ProductTypeDaoImpl().getAllProductType(vendorName);
 		if(productType == null)
 		{
