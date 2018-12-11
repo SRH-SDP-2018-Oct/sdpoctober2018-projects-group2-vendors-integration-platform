@@ -11,12 +11,15 @@ import org.srh.bean.ServiceRespArray;
  */
 public interface ProductService {
 
+	
+	ServiceRespArray getAllProducts();
 	/**
 	 * Returns product data with the given ProductId.
 	 * 
 	 * @param productId {@link String}
 	 * @return serviceResp {@link ServiceResp}
 	 */
+	
 	ServiceResp getProductByproductId(String productId);
 
 	/**

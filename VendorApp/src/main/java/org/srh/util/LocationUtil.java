@@ -12,7 +12,7 @@ package org.srh.util;
 public class LocationUtil {
 
 	
-	public static double distance(double lat1, double lat2, double lon1,
+	public static double CalculateDistance(double lat1, double lat2, double lon1,
 	        double lon2, double el1, double el2) {
 
 	    final int R = 6371; // Radius of the earth
@@ -31,4 +31,22 @@ public class LocationUtil {
 
 	    return Math.sqrt(distance);
 	}
+
+
+	public static void main(String[]args) {
+		double lat1 = 49.4140614;
+		double lon1 = 8.6536843;
+		
+		double lat2 = 49.419090;
+		double lon2 = 8.651890;
+
+		double lat3 = 49.428550;
+		double lon3 = 8.645980;
+
+		double distance = CalculateDistance(lat1, lat2, lon1, lon2, 10, 10);
+
+		System.out.println(distance);
+	}
+	
 }
+ 
