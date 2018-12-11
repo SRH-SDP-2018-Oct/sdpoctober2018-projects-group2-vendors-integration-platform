@@ -18,6 +18,11 @@ import org.srh.vipapp.hbm.dao.impl.CustomerFavouriteListDaoImpl;
 import org.srh.vipapp.hbm.dto.CustomerFavouriteList;
 import org.srh.vipapp.service.CustomerFavouriteListService;
 
+/**
+ * Service Implementation of {@link CustomerFavouriteListService}.  <br/>
+ * Date: 10 Dec 2018
+ * @author Anglita
+ */
 @Service
 public class CustomerFavouriteListServiceImpl implements CustomerFavouriteListService {
 
