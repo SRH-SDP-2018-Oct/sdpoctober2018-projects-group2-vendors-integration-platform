@@ -1,5 +1,8 @@
 package org.srh.vipapp.activity;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.srh.bean.ServiceResp;
@@ -53,16 +56,79 @@ public class CartActivity {
 			customerCart.setDisplayName(displayName);
 			session.save(customerCart);
 
+			BigDecimal totalPrice = customerCart.getTotalPrice();
+
 			// Save Products in Cart
 			ProductsMaster productsMaster = productsMasterDao.findById(productId, session);
 			if(productsMaster==null) {
 				String description = StringUtil.append("The product id [", productId, "] is invalid integer.");
 				return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
 			}
-			CartProduct cartProduct = saveCartProduct(session, customerCart, productsMaster, productCount, systemUser);
+			saveCartProduct(session, customerCart, productsMaster, productCount, systemUser);
+			totalPrice = totalPrice.add(productsMaster.getProductPrice());
 
+			customerCart.setTotalPrice(totalPrice);
+			session.update(customerCart);
 			transaction.commit();
-			return Common.buildServiceResp(cartProduct);
+			return Common.buildServiceResp(customerCart);
+		}
+		catch(Exception ex) {
+			transaction.rollback();
+			String desc = ex.getMessage();
+			return Common.buildServiceRespError(ErrorCode.EXCEPTION, desc);
+		}
+		finally {
+			RootHB.closeSession(session);
+		}
+	}
+
+
+	public ServiceResp saveCart(Long customerId, String displayName, List<Long> productList, List<Integer> productCountList) {
+		Session session = RootHB.getSessionFactory().openSession();
+
+		// Cart Transaction
+		Transaction transaction = session.beginTransaction();
+		try {
+			// 
+			CustomerMaster customerMaster = customerMasterDao.findById(customerId, session);
+			if(customerMaster==null) {
+				RootHB.closeSession(session);
+				String description = StringUtil.append("The customer id [", customerId, "] is invalid integer.");
+				return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
+			}
+
+			// 
+			UserMaster systemUser = RootHB.getSystemUser();
+
+			// Create [CustomerCart] entity object to save it.
+			CustomerCart customerCart = new CustomerCart();
+			customerCart.setCustomerId(customerMaster);
+			customerCart.setCreatedBy(systemUser);
+			customerCart.setModifiedBy(systemUser);
+			customerCart.setDisplayName(displayName);
+			session.save(customerCart);
+
+			BigDecimal totalPrice = customerCart.getTotalPrice();
+
+			int len = productList.size();
+			for(int i=0; i<len; i++) {
+				// Save Products in Cart
+				Long productId = productList.get(i);
+				Integer productCount = productCountList.get(i);
+				ProductsMaster productsMaster = productsMasterDao.findById(productId, session);
+				if(productsMaster==null) {
+					transaction.rollback();
+					String description = StringUtil.append("The product id [", productId, "] is invalid integer.");
+					return Common.buildServiceRespError(ErrorCode.INVALID_INPUT, description);
+				}
+				saveCartProduct(session, customerCart, productsMaster, productCount, systemUser);
+				totalPrice = totalPrice.add(productsMaster.getProductPrice());
+			}
+
+			customerCart.setTotalPrice(totalPrice);
+			session.update(customerCart);
+			transaction.commit();
+			return Common.buildServiceResp(customerCart);
 		}
 		catch(Exception ex) {
 			transaction.rollback();

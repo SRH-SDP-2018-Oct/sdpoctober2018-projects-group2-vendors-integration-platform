@@ -46,7 +46,7 @@ public interface CustomerCartService {
 	 * @param customerId {@link String}
 	 * @return serviceResp {@link ServiceRespArray}
 	 */
-	ServiceRespArray addAllProduct(String data, String customerId);
+	ServiceResp addAllProduct(String data, String customerId);
 
 	
 	

@@ -14,8 +14,10 @@ import org.srh.bean.ServiceResp;
 import org.srh.bean.ServiceRespArray;
 import org.srh.constants.ErrorCode;
 import org.srh.util.AppLog;
+import org.srh.util.Common;
 import org.srh.util.HttpUtil;
 import org.srh.util.StringUtil;
+import org.srh.vipapp.hbm.dto.CustomerMaster;
 import org.srh.vipapp.service.CustomerLoginRegistrationService;
 import org.srh.vipapp.service.CustomerService;
 
@@ -78,6 +80,7 @@ public class CustomerController {
 		String sessionId = session.getId();
 		AppLog.print( StringUtil.append("New session created with id [", sessionId , "].") );
 
+		Common.setCustomerId(session, ((CustomerMaster)serviceResp.getSuccessData()).getCustomerId());
 		return HttpUtil.successResponse(serviceResp.getSuccessData(), "sessionId", sessionId).toString();
 	}
 
