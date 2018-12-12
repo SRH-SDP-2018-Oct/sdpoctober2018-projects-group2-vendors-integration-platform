@@ -18,6 +18,7 @@ import org.srh.vipapp.hbm.hql.ProductsMasterQuery;
 @NamedQuery(name = ProductsMasterQuery.GET_ALL_PRODUCTS_$N, query = ProductsMasterQuery.GET_ALL_PRODUCTS_$Q)
 @NamedQuery(name = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$N, query = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTNAME_$Q)
 @NamedQuery(name = ProductsMasterQuery.FIND_PRODUCT_BY_OFFERS_$N, query = ProductsMasterQuery.FIND_PRODUCT_BY_OFFERS_$Q)
+@NamedQuery(name = ProductsMasterQuery.GET_PRODUCDTS_BY_PRICE_$N, query = ProductsMasterQuery.GET_PRODUCDTS_BY_PRICE_$Q)
 //@NamedQuery(name = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$N, query = ProductsMasterQuery.FIND_PRODUCT_BY_PRODUCTTYPE_$N)
 
 /**

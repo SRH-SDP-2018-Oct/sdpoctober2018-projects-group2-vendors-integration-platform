@@ -17,6 +17,7 @@ import org.srh.util.AppLog;
 import org.srh.util.Common;
 import org.srh.util.HttpUtil;
 import org.srh.util.StringUtil;
+import org.srh.vipapp.hbm.dao.impl.CustomerMasterDaoImpl;
 import org.srh.vipapp.hbm.dto.CustomerMaster;
 import org.srh.vipapp.service.CustomerLoginRegistrationService;
 import org.srh.vipapp.service.CustomerService;
@@ -63,6 +64,15 @@ public class CustomerController {
 	public String customerLogin(@RequestParam String username, @RequestParam String pwd, 
 			HttpServletResponse resp, HttpServletRequest req) {
 
+		HttpSession httpSession = req.getSession();
+		Long customerId = Common.getCustomerId(httpSession);
+		if(customerId!=null) {
+			String sessionId = httpSession.getId();
+			ServiceResp serviceResp = Common.buildServiceResp(new CustomerMasterDaoImpl().findById(customerId));
+			Common.setCustomerId(httpSession, ((CustomerMaster)serviceResp.getSuccessData()).getCustomerId());
+			return HttpUtil.successResponse(serviceResp.getSuccessData(), "sessionId", sessionId).toString();
+		}
+
 		// Authenticate the user
 		ServiceResp serviceResp = customerLoginRegistrationService.authenticate(username, pwd);
 
@@ -75,12 +85,12 @@ public class CustomerController {
 		// Invalidate Previous Session
 		req.getSession().invalidate();
 		// Create new Session
-		HttpSession session = req.getSession(true);
+		httpSession = req.getSession(true);
 
-		String sessionId = session.getId();
+		String sessionId = httpSession.getId();
 		AppLog.print( StringUtil.append("New session created with id [", sessionId , "].") );
 
-		Common.setCustomerId(session, ((CustomerMaster)serviceResp.getSuccessData()).getCustomerId());
+		Common.setCustomerId(httpSession, ((CustomerMaster)serviceResp.getSuccessData()).getCustomerId());
 		return HttpUtil.successResponse(serviceResp.getSuccessData(), "sessionId", sessionId).toString();
 	}
 

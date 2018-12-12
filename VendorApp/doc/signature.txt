@@ -199,3 +199,18 @@ Description: Get products which are add frequently by the customer in the cart.
 URL:
 http://localhost:8080/vip/cart/frequentlyBought
 
+
+
+==============================================================================
+==============================================================================
+
+
+Search Products
+------------------------------------------------------------
+
+Description: Search products on basis of price or location.
+
+
+URL: (POST)
+http://localhost:8080/vip/products/search?filter=location&productName=milk
+

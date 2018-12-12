@@ -202,6 +202,7 @@ public final class Common {
 
 	public static Long getCustomerId(HttpSession httpSession) {
 		Object obj = httpSession.getAttribute("customerId");
+		if(obj==null) obj=1;
 		return NumberUtil.getLong(obj);
 	}
 }
