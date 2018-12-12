@@ -84,7 +84,7 @@ public class AppMain {
 
 	private static void vendorDataETL() {
 		ProductActivity productActivity = new ProductActivity();
-		productActivity.registerProducts("Netti");
+		// productActivity.registerProducts("Netti");
 		//productActivity.registerProducts("Aldo");
 	}
 
