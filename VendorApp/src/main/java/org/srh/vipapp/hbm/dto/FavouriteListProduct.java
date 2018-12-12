@@ -8,11 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import org.srh.annotation.POJO;
+import org.srh.vipapp.hbm.hql.CustomerFavouriteListQuery;
 
 @Entity
 @Table(name = "favouritelist_product")
+@NamedQuery(name=CustomerFavouriteListQuery.GET_FAVOURITE_CART_PRODUCTS_$N,query=CustomerFavouriteListQuery.GET_FAVOURITE_CART_PRODUCTS_$Q)
 @POJO(hidden= {"setCreatedBy","setModifiedBy"},
 	hiddenParam= {"org.srh.vipapp.hbm.dto.UserMaster","org.srh.vipapp.hbm.dto.UserMaster"}
 )
