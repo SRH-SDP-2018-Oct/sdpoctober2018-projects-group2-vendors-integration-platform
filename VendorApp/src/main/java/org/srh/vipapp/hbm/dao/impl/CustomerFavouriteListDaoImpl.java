@@ -61,6 +61,7 @@ public class CustomerFavouriteListDaoImpl implements CustomerFavouriteListDao{
 	}
 
 
+	@Override
 	public List<ProductsMaster> getFavouriteProducts(long customerId) {
 		List<ProductsMaster> productList = new ArrayList<>();
 		Session session = RootHB.getSessionFactory().openSession();

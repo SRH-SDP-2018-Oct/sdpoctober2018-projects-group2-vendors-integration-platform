@@ -39,4 +39,6 @@ public interface CustomerFavouriteListService {
 	 * @return serviceResp {@link ServiceResp}
 	 */
 	ServiceResp addProductsToFavouriteList(String data, String customerId);
+
+	ServiceRespArray getFavouriteProductsByCustomerId(String customerId);
 }

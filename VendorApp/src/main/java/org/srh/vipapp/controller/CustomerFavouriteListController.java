@@ -1,6 +1,7 @@
 package org.srh.vipapp.controller;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.srh.bean.ServiceResp;
+import org.srh.bean.ServiceRespArray;
+import org.srh.util.Common;
 import org.srh.util.HttpUtil;
 import org.srh.vipapp.service.CustomerFavouriteListService;
 
@@ -39,20 +42,28 @@ public class CustomerFavouriteListController {
 		return HttpUtil.buildResponse(resp, customerFavouriteListServiceResp).toString();
 	}
 
+	
 
 	@RequestMapping(path="/add", method=RequestMethod.POST)
-	public String add(@RequestBody String data, HttpServletResponse resp) {
-		String customerId = "1";
+	public String add(@RequestBody String data, HttpServletResponse resp, HttpSession httpSession) {
+		String customerId = Common.getCustomerId(httpSession).toString();
 		ServiceResp customerFavouriteListServiceResp = customerFavouriteListService.addProductToFavouriteList(data, customerId);
 		return HttpUtil.buildResponse(resp, customerFavouriteListServiceResp).toString();
 	}
 
 
 	@RequestMapping(path="/addAll", method=RequestMethod.POST)
-	public String addAll(@RequestBody String data, HttpServletResponse resp) {
-		String customerId = "1";
+	public String addAll(@RequestBody String data, HttpServletResponse resp, HttpSession httpSession) {
+		String customerId = Common.getCustomerId(httpSession).toString();
 		ServiceResp customerFavouriteListServiceResp = customerFavouriteListService.addProductsToFavouriteList(data, customerId);
 		return HttpUtil.buildResponse(resp, customerFavouriteListServiceResp).toString();
+	}
+	
+	@RequestMapping(path="/getFavouriteProducts", method=RequestMethod.GET)
+	public String getFavouriteProducts(HttpServletResponse resp, HttpSession httpSession) {
+		String customerId = Common.getCustomerId(httpSession).toString();
+		ServiceRespArray customerFavouriteListServiceResp = customerFavouriteListService.getFavouriteProductsByCustomerId(customerId);
+		return HttpUtil.buildResponseArray(resp, customerFavouriteListServiceResp).toString();
 	}
 
 }

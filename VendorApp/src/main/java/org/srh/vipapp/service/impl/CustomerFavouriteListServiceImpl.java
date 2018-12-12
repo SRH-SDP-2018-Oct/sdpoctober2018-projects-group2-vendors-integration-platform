@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.srh.bean.ServiceResp;
+import org.srh.bean.ServiceRespArray;
 import org.srh.constants.ErrorCode;
 import org.srh.constants.KeyPairConstants;
 import org.srh.util.AppLog;
@@ -16,6 +17,7 @@ import org.srh.vipapp.activity.FavouriteListActivity;
 import org.srh.vipapp.hbm.dao.CustomerFavouriteListDao;
 import org.srh.vipapp.hbm.dao.impl.CustomerFavouriteListDaoImpl;
 import org.srh.vipapp.hbm.dto.CustomerFavouriteList;
+import org.srh.vipapp.hbm.dto.ProductsMaster;
 import org.srh.vipapp.service.CustomerFavouriteListService;
 
 /**
@@ -139,4 +141,25 @@ public class CustomerFavouriteListServiceImpl implements CustomerFavouriteListSe
 		return favouriteListActivity.saveFavouriteList(cId, lisProductId);
 	}
 
+
+
+	@Override
+	public ServiceRespArray getFavouriteProductsByCustomerId(String customerId) {
+		// Input Validation
+		Long cId = NumberUtil.getLong(customerId);
+		if(cId==null){
+			String description = StringUtil.append("The customer id [", cId, "] is invalid integer.");
+			return Common.buildServiceRespArrayError(ErrorCode.INVALID_INPUT, description);
+		}
+
+		List<ProductsMaster> favouriteList = customerFavouriteListDao.getFavouriteProducts(cId);
+
+		// Validate Data Existence
+		if(favouriteList==null) {
+			String description =  StringUtil.append("No favourite list found for the customer id [", cId, "].");
+			return Common.buildServiceRespArrayError(ErrorCode.NOT_FOUND, description);
+		}
+		// Data Exist, Return Success
+		return Common.buildServiceRespArray(favouriteList);
+	}
 }
