@@ -41,9 +41,10 @@ public class AppMain {
 
 	public static void main(String[] args) {
 		try {
-			CustomerMaster customerMaster = new CustomerMasterDaoImpl().findById(1);
+			/*CustomerMaster customerMaster = new CustomerMasterDaoImpl().findById(1);
 			// sortedLocation( "milk", "49.4140614", "8.6536843");
-			sortedLocation( "milk", customerMaster.getDefaultLocationLat(), customerMaster.getDefaultLocationLon());
+			sortedLocation( "milk", customerMaster.getDefaultLocationLat(), customerMaster.getDefaultLocationLon());*/
+			vendorDataETL();
 		}
 		catch(Exception ex) {
 			AppLog.log(AppMain.class, ex);
@@ -84,6 +85,7 @@ public class AppMain {
 	private static void vendorDataETL() {
 		ProductActivity productActivity = new ProductActivity();
 		productActivity.registerProducts("Netti");
+		//productActivity.registerProducts("Aldo");
 	}
 
 	public static void testHbmDaos() {

@@ -16,6 +16,7 @@ import org.srh.vipapp.hbm.dto.CustomerMaster;
 import org.srh.vipapp.hbm.dto.ProductsMaster;
 import org.srh.vipapp.hbm.hql.ProductsMasterQuery;
 
+
 /** 
  * Implementation class of HBM DAO {@link ProductsMasterDao}
  * Date: 03 Dec 2018
@@ -182,7 +183,22 @@ public class ProductsMasterDaoImpl implements ProductsMasterDao {
 	}
 
 
+	@Override
 	public List<ProductsMaster> searchLowCostProduct(String productName) {
+		Session session = RootHB.getSessionFactory().openSession();
+		try {
+			@SuppressWarnings("unchecked")
+			Query<ProductsMaster> query = session.createNamedQuery(ProductsMasterQuery.GET_PRODUCDTS_BY_PRICE_$N);
+			query.setParameter(ProductsMasterQuery.GET_PRODUCDTS_BY_PRICE_$P1, StringUtil.append("%", productName, "%"));
+			return query.getResultList();
+
+		}
+		catch(NoResultException ex) {
+			AppLog.log(this.getClass(), StringUtil.append("There are no products on Offers!",ex.getMessage()) );
+		}
+		finally {
+			RootHB.closeSession(session);
+		}
 		return new ArrayList<>();
 	}
 

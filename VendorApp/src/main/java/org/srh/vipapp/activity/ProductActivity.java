@@ -90,7 +90,7 @@ public class ProductActivity {
 		/* ****************** GET PRODUCT DATA FROM VENDOR API ****************** */
 		/* ********************************************************************** */
 
-		String data = "[{\"deleteFlag\":false,\"branchId\":1,\"productId\":1,\"productTypeId\":1,\"productDescription\":\"Energy : 197 KJ,1.5 %\",\"productName\":\"H-milk\",\"productPrice\":1},{\"deleteFlag\":false,\"branchId\":1,\"productId\":2,\"productTypeId\":2,\"productDescription\":\"Brand : Chiquita, Mainly grown in columbia,Slight sour to very sweet\",\"productName\":\"Banana\",\"productPrice\":2},{\"deleteFlag\":false,\"branchId\":1,\"productId\":3,\"productTypeId\":3,\"productDescription\":\"Origin : Spain Or Italy, Green or Dark Color, Store : In Refrigerator\",\"productName\":\"Broccoli\",\"productPrice\":1}]";
+		String data = getProductData(vendorName);
 		JSONArray apiJSONArray = null;
 
 		try {
@@ -207,4 +207,77 @@ public class ProductActivity {
 	}
 
 
+
+
+	private String getProductData(String vendorName) {
+		
+		int branchId = 1;
+		boolean deleteFlag = false;
+		JSONArray jsonArray = new JSONArray();
+
+		if("netti".equalsIgnoreCase(vendorName)) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("productId", 1);
+			jsonObject.put("productName", "H-milk");
+			jsonObject.put("productTypeId", 1);
+			jsonObject.put("productDescription", "Energy : 197 KJ,1.5 %");
+			jsonObject.put("productPrice", "1.09");
+			jsonObject.put("branchId", branchId);
+			jsonObject.put("deleteFlag", deleteFlag);
+			jsonArray.put(jsonObject);
+	
+			jsonObject = new JSONObject();
+			jsonObject.put("productId", 2);
+			jsonObject.put("productName", "Banana");
+			jsonObject.put("productTypeId", 2);
+			jsonObject.put("productDescription", "Brand : Chiquita, Mainly grown in columbia,Slight sour to very sweet");
+			jsonObject.put("productPrice", "1.5");
+			jsonObject.put("branchId", branchId);
+			jsonObject.put("deleteFlag", deleteFlag);
+			jsonArray.put(jsonObject);
+	
+			jsonObject = new JSONObject();
+			jsonObject.put("productId", 3);
+			jsonObject.put("productName", "Broccoli");
+			jsonObject.put("productTypeId", 3);
+			jsonObject.put("productDescription", "Origin : Spain Or Italy, Green or Dark Color, Store : In Refrigerator");
+			jsonObject.put("productPrice", "1.9");
+			jsonObject.put("branchId", branchId);
+			jsonObject.put("deleteFlag", deleteFlag);
+			jsonArray.put(jsonObject);
+		}
+		else {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("id", 1);
+			jsonObject.put("name", "H-milk");
+			jsonObject.put("type", 1);
+			jsonObject.put("description", "Energy : 197 KJ,1.5 %");
+			jsonObject.put("price", "1.05");
+			jsonObject.put("branch", branchId);
+			jsonObject.put("deleteFlag", deleteFlag);
+			jsonArray.put(jsonObject);
+	
+			jsonObject = new JSONObject();
+			jsonObject.put("id", 2);
+			jsonObject.put("name", "Banana");
+			jsonObject.put("type", 2);
+			jsonObject.put("description", "Brand : Chiquita, Mainly grown in columbia,Slight sour to very sweet");
+			jsonObject.put("price", "1.7");
+			jsonObject.put("branch", branchId);
+			jsonObject.put("deleteFlag", deleteFlag);
+			jsonArray.put(jsonObject);
+	
+			jsonObject = new JSONObject();
+			jsonObject.put("id", 3);
+			jsonObject.put("name", "Tomato");
+			jsonObject.put("type", 3);
+			jsonObject.put("description", "Store : In Refrigerator");
+			jsonObject.put("price", "1.9");
+			jsonObject.put("branch", branchId);
+			jsonObject.put("deleteFlag", deleteFlag);
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray.toString();
+	}
 }

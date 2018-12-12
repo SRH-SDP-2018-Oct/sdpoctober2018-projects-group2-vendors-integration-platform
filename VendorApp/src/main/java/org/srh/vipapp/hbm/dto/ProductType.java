@@ -25,7 +25,9 @@ import org.srh.vipapp.hbm.hql.ProductTypeQuery;
 public class ProductType {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
+
 	private int productTypeId;
 
 	@ManyToOne
@@ -44,6 +46,12 @@ public class ProductType {
 	private Date createdOn = new Date();
 	private Date modifiedOn = new Date();
 
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getProductTypeId() {
 		return productTypeId;
 	}

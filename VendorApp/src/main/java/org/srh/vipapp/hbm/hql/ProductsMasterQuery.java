@@ -57,6 +57,15 @@ public final class ProductsMasterQuery {
 			"   pm.* ",
 			" FROM products_master pm ",
 			" INNER JOIN vendor_branches vm ON vm.id = pm.branchId ",
-			" WHERE pm.productName LIKE :", GET_PRODUCDTS_BY_LOCATION_$_PRODUCTNAME,
+			" WHERE pm.deleteFlag=0 AND vm.deleteFlag=0 ",
+			"   AND pm.productName LIKE :", GET_PRODUCDTS_BY_LOCATION_$_PRODUCTNAME,
 			" ORDER BY distance ");
+
+
+	public static final String GET_PRODUCDTS_BY_PRICE_$P1 = "productName";
+	public static final String GET_PRODUCDTS_BY_PRICE_$N = "GET_PRODUCDTS_BY_PRICE";
+	public static final String GET_PRODUCDTS_BY_PRICE_$Q = "FROM ProductsMaster "
+			+ " WHERE deleteFlag=0 AND "
+			+ " productName LIKE :" + GET_PRODUCDTS_BY_PRICE_$P1
+			+ " ORDER BY productPrice ";
 }
