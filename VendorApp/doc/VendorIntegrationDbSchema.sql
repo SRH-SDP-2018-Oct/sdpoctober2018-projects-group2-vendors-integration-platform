@@ -196,15 +196,17 @@ DESC vendor_branches;
 
 
 INSERT INTO vendor_branches (vendorId, createdBy, modifiedBy, branchId, location, locationLat, locationLon, city, createdOn, modifiedOn)
-SELECT vm.vendorId, um.userId, um.userId,
-  1, 'Czernyring 14, 69115 Heidelberg', '49.428550' , '8.645980', 'Heidelberg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+SELECT
+  vm.vendorId, um.userId, um.userId, 1, 'Czernyring 14, 69115 Heidelberg',
+  '49.428550' , '8.645980', 'Heidelberg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM vendor_master vm, user_master um
 WHERE vm.vendorName = 'Aldo' AND um.username='system';
 
 
 INSERT INTO vendor_branches (vendorId, createdBy, modifiedBy, branchId, location, locationLat, locationLon, city, createdOn, modifiedOn)
-SELECT vm.vendorId, um.userId, um.userId,
-  1, 'Mannheimer Str. 177, 69123 Heidelberg', '49.419090' , '8.651890', 'Heidelberg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+SELECT
+  vm.vendorId, um.userId, um.userId, 1, 'Mannheimer Str. 177, 69123 Heidelberg',
+  '49.419090' , '8.651890', 'Heidelberg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM vendor_master vm, user_master um
 WHERE vm.vendorName = 'Netti' AND um.username='system';
 
@@ -331,7 +333,7 @@ DESC vendor_api_config;
 
 
 INSERT INTO vendor_api_config (createdBy, modifiedBy, vendorId, connectionUrl, secured, username, pwd, createdOn, modifiedOn )
-SELECT um.userId, um.userId, vm.vendorId, 'http://localhost:8070/nettiapp/products', 1, 'netticlient', 'nettiApiConnnect', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+SELECT um.userId, um.userId, vm.vendorId, 'http://localhost:8080/nettiapp/products/all', 1, 'netticlient', 'nettiApiConnnect', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM user_master um, vendor_master vm
 WHERE um.userName='system' AND vm.vendorName = 'Netti';
 
@@ -418,6 +420,8 @@ CREATE TABLE api_structure (
 
 DESC api_structure;
 
+
+
 -- Netti - Product Id
 INSERT INTO api_structure (createdBy, modifiedBy, keyConstantId, vendorId, keyName, createdOn, modifiedOn)
 SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'productId', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
@@ -455,6 +459,49 @@ FROM user_master um, api_structure_constants apisc, vendor_master vm
 WHERE um.username = 'system'  AND  apisc.constantName='product_branch' AND vm.vendorName = 'Netti' ;
 
 
+
+
+
+
+
+-- Aldo - Product Id
+INSERT INTO api_structure (createdBy, modifiedBy, keyConstantId, vendorId, keyName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'id', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um, api_structure_constants apisc, vendor_master vm
+WHERE um.username = 'system'  AND  apisc.constantName='product_id' AND vm.vendorName = 'Aldo' ;
+
+-- Aldo - Product Name
+INSERT INTO api_structure (createdBy, modifiedBy, keyConstantId, vendorId, keyName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'name', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um, api_structure_constants apisc, vendor_master vm
+WHERE um.username = 'system'  AND  apisc.constantName='product_name' AND vm.vendorName = 'Aldo' ;
+
+-- Aldo - Product Name
+INSERT INTO api_structure (createdBy, modifiedBy, keyConstantId, vendorId, keyName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'description', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um, api_structure_constants apisc, vendor_master vm
+WHERE um.username = 'system'  AND  apisc.constantName='product_description' AND vm.vendorName = 'Aldo' ;
+
+-- Aldo - Product Name
+INSERT INTO api_structure (createdBy, modifiedBy, keyConstantId, vendorId, keyName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'price', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um, api_structure_constants apisc, vendor_master vm
+WHERE um.username = 'system'  AND  apisc.constantName='product_price' AND vm.vendorName = 'Aldo' ;
+
+-- Aldo - Product Name
+INSERT INTO api_structure (createdBy, modifiedBy, keyConstantId, vendorId, keyName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'type', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um, api_structure_constants apisc, vendor_master vm
+WHERE um.username = 'system'  AND  apisc.constantName='product_type' AND vm.vendorName = 'Aldo' ;
+
+-- Aldo - Product Name
+INSERT INTO api_structure (createdBy, modifiedBy, keyConstantId, vendorId, keyName, createdOn, modifiedOn)
+SELECT um.userId, um.userId, apisc.apiStructId, vm.vendorId, 'branch', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+FROM user_master um, api_structure_constants apisc, vendor_master vm
+WHERE um.username = 'system'  AND  apisc.constantName='product_branch' AND vm.vendorName = 'Aldo' ;
+
+
+
 SELECT * FROM api_structure;
 
 
@@ -466,7 +513,8 @@ SELECT * FROM api_structure;
 DROP TABLE IF EXISTS product_type;
 
 CREATE TABLE product_type(
-  productTypeId INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id  INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  productTypeId INT UNSIGNED NOT NULL COMMENT 'Vendors Product Type',
   productTypeName VARCHAR(30) NOT NULL,
   vendorId INT UNSIGNED NOT NULL,
   deleteFlag TINYINT(1) DEFAULT '0' NOT NULL,
@@ -483,9 +531,14 @@ DESC product_type;
 
 
 INSERT INTO product_type (productTypeId, productTypeName, vendorId, createdBy, createdOn, modifiedBy, modifiedOn) VALUES
+-- FOR [Netti]
 (1, 'Dairy', 1, 2, CURRENT_TIMESTAMP, 2, CURRENT_TIMESTAMP),
 (2, 'Fruits', 1, 2, CURRENT_TIMESTAMP, 2, CURRENT_TIMESTAMP),
-(3, 'Vegetables', 1, 2, CURRENT_TIMESTAMP, 2, CURRENT_TIMESTAMP);
+(3, 'Vegetables', 1, 2, CURRENT_TIMESTAMP, 2, CURRENT_TIMESTAMP),
+-- FOR [Aldo]
+(1, 'Dairy Products', 2, 2, CURRENT_TIMESTAMP, 2, CURRENT_TIMESTAMP),
+(2, 'Fruits', 2, 2, CURRENT_TIMESTAMP, 2, CURRENT_TIMESTAMP),
+(3, 'Vegetables', 2, 2, CURRENT_TIMESTAMP, 2, CURRENT_TIMESTAMP);
 
 
 
@@ -510,7 +563,7 @@ CREATE TABLE products_master(
   createdBy INT UNSIGNED NOT NULL,
   modifiedOn DATETIME NOT NULL,
   modifiedBy INT UNSIGNED NOT NULL,
-  FOREIGN KEY (productTypeId) REFERENCES product_type (productTypeId),
+  FOREIGN KEY (productTypeId) REFERENCES product_type (id),
   FOREIGN KEY (vendorId) REFERENCES vendor_master (vendorId),
   FOREIGN KEY (branchId) REFERENCES vendor_branches (id),
   FOREIGN KEY (createdBy) REFERENCES user_master (userId),
@@ -622,6 +675,5 @@ CREATE TABLE favouritelist_product(
 DESC favouritelist_product;
 
 SELECT * FROM favouritelist_product;
-
 
 

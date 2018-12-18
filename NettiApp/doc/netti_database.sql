@@ -118,21 +118,19 @@ SELECT * FROM branch_timings;
 
 
 
-DROP TABLE IF EXISTS product_types ;
+DROP TABLE IF EXISTS product_type ;
 
-CREATE TABLE product_types (
-  prodTypeId INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  productType VARCHAR(30) NOT NULL,
-   deleteFlag TINYINT(1) NOT NULL DEFAULT '0',
-  UNIQUE (productType),
-  PRIMARY KEY (prodtypeId)
-) ENGINE=INNODB;
+CREATE TABLE product_type (
+  prodTypeId INT UNSIGNED NOT NULL AUTO_INCREMENT primary key,
+  productTypeName VARCHAR(30) NOT NULL unique,
+  deleteFlag TINYINT(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB;
 
-DESC product_types;
+DESC product_type;
 
 
-INSERT INTO product_types (productType) VALUES
-('Dairy'), ('Fruits'), ('Vegetables');
+insert into product_type (prodTypeId, productTypeName) values
+(1, 'Dairy'), (2, 'Fruits'), (3, 'Vegetables');
 
 
 
@@ -140,38 +138,42 @@ DROP TABLE IF EXISTS product_master ;
 
 
 CREATE TABLE product_master (
-  productId INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  productTypeId INT UNSIGNED NOT NULL,
-  productName VARCHAR(50) DEFAULT NULL,
-  productDescription TEXT,
-  productPrice DECIMAL(9,2) DEFAULT NULL,
-  branchId INT UNSIGNED DEFAULT NULL,
+  productId int UNSIGNED NOT NULL AUTO_INCREMENT,
+  productTypeId int UNSIGNED NOT NULL,
+  productName varchar(50) DEFAULT NULL,
+  productDescription text,
+  productPrice decimal(9,2) DEFAULT NULL,
+  branchId int UNSIGNED DEFAULT NULL,
   deleteFlag TINYINT(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (productId),
   UNIQUE (productName, productTypeId),
-  CONSTRAINT productTypeId FOREIGN KEY (productTypeId) REFERENCES product_types (prodTypeId ),
+  CONSTRAINT productTypeId FOREIGN KEY (productTypeId) REFERENCES product_type (prodTypeId ),
   CONSTRAINT branchId FOREIGN KEY (branchId) REFERENCES branch_master (branchid)
-) ENGINE=INNODB;
+) ENGINE=InnoDB;
 
-DESC product_master;
-
-
-INSERT INTO product_master (productTypeId,productName,productDescription,productPrice,branchId)
-SELECT pt.prodTypeId, 'H-milk','Energy : 197 KJ,1.5 %', '0.79', bm.branchId
-FROM product_types pt, branch_master bm
-WHERE pt.productType = 'Dairy' AND bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
+desc product_master;
 
 
 INSERT INTO product_master (productTypeId,productName,productDescription,productPrice,branchId)
-SELECT pt.prodTypeId, 'Banana','Brand : Chiquita, Mainly grown in columbia,Slight sour to very sweet','1.83', bm.branchId
-FROM product_types pt, branch_master bm
-WHERE pt.productType = 'Fruits' AND bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
+SELECT pt.prodTypeId, 'H-milk','Energy : 197 KJ,1.5 %', '1.09', bm.branchId
+FROM product_type pt, branch_master bm
+WHERE pt.productTypeName = 'Dairy' AND bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
+
+
+INSERT INTO product_master (productTypeId,productName,productDescription,productPrice,branchId)
+SELECT pt.prodTypeId, 'Banana','Brand : Chiquita, Mainly grown in columbia,Slight sour to very sweet','1.50', bm.branchId
+FROM product_type pt, branch_master bm
+WHERE pt.productTypeName = 'Fruits' AND bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
 
 
 INSERT INTO product_master (productTypeId,productName,productDescription, productPrice, branchId)
-SELECT pt.prodTypeId, 'Broccoli','Origin : Spain Or Italy, Green or Dark Color, Store : In Refrigerator', '1.20', bm.branchId
-FROM product_types pt, branch_master bm
-WHERE pt.productType = 'Vegetables' AND bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
+SELECT pt.prodTypeId, 'Broccoli','Origin : Spain Or Italy, Green or Dark Color, Store : In Refrigerator', '1.90', bm.branchId
+FROM product_type pt, branch_master bm
+WHERE pt.productTypeName = 'Vegetables' AND bm.location = 'Mannheimer Str. 177, 69123 Heidelberg';
+
+
+ 
+SELECT * FROM product_master;
 
 
  

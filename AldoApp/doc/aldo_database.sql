@@ -131,7 +131,7 @@ DESC product_type;
 
 
 INSERT INTO product_type (prodTypeId, productTypeName) VALUES
-(1, 'Fruits'), (2, 'Vegetables'), (3, 'Dairy Products');
+(1, 'Dairy Products'), (2, 'Fruits'), (3, 'Vegetables');
 
 
 
@@ -155,22 +155,23 @@ CREATE TABLE product_master (
 DESC product_master;
 
 
+
+INSERT INTO product_master (productTypeId, productName, productDescription, productPrice, branchId)
+SELECT pt.prodTypeId, 'H-milk','Energy : 197 KJ,1.5 %', '1.05', bm.branchId
+FROM product_type pt, branch_master bm
+WHERE pt.productTypeName = 'Dairy Products' AND bm.location = 'Czernyring 14, 69115 Heidelberg';
+
 INSERT INTO product_master (productTypeId,productName,productDescription,productPrice,branchId)
-SELECT pt.prodTypeId, 'Banana','Brand : Chiquita, Mainly grown in columbia,Slight sour to very sweet','1.83', bm.branchId
+SELECT pt.prodTypeId, 'Banana','Brand : Chiquita, Mainly grown in columbia,Slight sour to very sweet','1.75', bm.branchId
 FROM product_type pt, branch_master bm
 WHERE pt.productTypeName = 'Fruits' AND bm.location = 'Czernyring 14, 69115 Heidelberg';
 
 
 INSERT INTO product_master (productTypeId,productName,productDescription, productPrice, branchId)
-SELECT pt.prodTypeId, 'Broccoli','Origin : Spain Or Italy, Green or Dark Color, Store : In Refrigerator', '1.20', bm.branchId
+SELECT pt.prodTypeId, 'Tomato','Bio (Organic)', '1.60', bm.branchId
 FROM product_type pt, branch_master bm
 WHERE pt.productTypeName = 'Vegetables' AND bm.location = 'Czernyring 14, 69115 Heidelberg';
 
 
-INSERT INTO product_master (productTypeId,productName,productDescription,productPrice,branchId)
-SELECT pt.prodTypeId, 'H-milk','Energy : 197 KJ,1.5 %', '0.79', bm.branchId
-FROM product_type pt, branch_master bm
-WHERE pt.productTypeName = 'Dairy Products' AND bm.location = 'Czernyring 14, 69115 Heidelberg';
-
-
  
+SELECT * FROM product_master;
