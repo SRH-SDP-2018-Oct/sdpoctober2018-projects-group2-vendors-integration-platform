@@ -1,5 +1,6 @@
 package org.srh.bean;
 
+import org.json.JSONObject;
 import org.srh.constants.ErrorCode;
 
 public class ServiceResp {
@@ -53,4 +54,7 @@ public class ServiceResp {
 		return this;
 	}
 
+	public String toJSONString() {
+		return new JSONObject(this).toString();
+	}
 }

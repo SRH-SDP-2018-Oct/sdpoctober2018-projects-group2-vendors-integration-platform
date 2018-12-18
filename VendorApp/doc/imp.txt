@@ -32,4 +32,11 @@ Steps:
  	- http://localhost:8080/vip/user/id/1  (Valid) (200)
  	- http://localhost:8080/vip/user/id/3	(Not Found) (422)
  	- http://localhost:8080/vip/user/id/a	(In Valid) (422)
- 	
+
+
+- In order to acquire the vendor's product data from API, execute 'org.srh.config.Execute.java'
+
+Note: Disabled the session based login since the session is not maintained,
+       because when 'app.html' is executed/opened from the Chrome,
+       the server always considers the session as a new one.
+ 

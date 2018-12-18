@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.srh.util.AppLog;
+import org.srh.util.Common;
 import org.srh.util.ProductUtil;
 import org.srh.util.StringUtil;
 import org.srh.vipapp.hbm.RootHB;
@@ -43,16 +44,56 @@ public class ProductActivity {
 
 	public boolean registerProducts(String vendorName) {
 
-		/* ******************************************************* */
-		/* ****************** GET CONSTANT DATA ****************** */
-		/* ******************************************************* */
-
-		/* *** 1. GET VENDOR DATA *** */
+		/* *** GET VENDOR DATA *** */
 		VendorMaster vendorMaster = new VendorMasterDaoImpl().findByVendorName(vendorName);
 		if(vendorMaster==null)
 			return false;
+		return registerProducts(vendorMaster);
+	}
 
-		/* *** 2. GET BRANCH DATA *** */
+
+
+	private boolean registerProducts(VendorMaster vendorMaster) {
+
+		/* ********************************************************************** */
+		/* ****************** GET PRODUCT DATA FROM VENDOR API ****************** */
+		/* ********************************************************************** */
+
+		String data = getProductData(vendorMaster.getVendorName());
+		if(Common.nullOrEmptyTrim(data)) {
+			AppLog.log(ProductActivity.class, "Data not received from the vendor.");
+			return false;
+		}
+
+
+		JSONArray apiJSONArray = null;
+		try {
+			JSONObject jsonObject = new JSONObject(data);
+			apiJSONArray = jsonObject.getJSONArray("data");
+			AppLog.print(apiJSONArray);
+		}
+		catch(JSONException ex) {
+			AppLog.log(ProductActivity.class, "Parsing exception occurred while parsing API data of the Vendor.", ex);
+			return false;
+		}
+
+		if(apiJSONArray.length()==0) {
+			AppLog.log(ProductActivity.class, "Blank data received from the vendor.");
+			return false;
+		}
+
+		return registerProductsForVendor(vendorMaster, apiJSONArray);
+	}
+
+
+
+	/* ******************************************************* */
+	/* ****************** GET CONSTANT DATA ****************** */
+	/* ******************************************************* */
+
+	private boolean registerProductsForVendor(VendorMaster vendorMaster, JSONArray apiJSONArray) {
+
+		/* *** 1. GET BRANCH DATA *** */
 		List<VendorBranch> listBranchMaster = new VendorBranchDaoImpl().getAllBranches(vendorMaster.getVendorId());
 		if(listBranchMaster==null || listBranchMaster.isEmpty())
 			return false;
@@ -66,7 +107,7 @@ public class ProductActivity {
 		}
 
 
-		/* *** 3. GET ALL PRODUCT TYPES FOR THE GIVEN VENDOR *** */
+		/* *** 2. GET ALL PRODUCT TYPES FOR THE GIVEN VENDOR *** */
 		List<ProductType> listProductType = new ProductTypeDaoImpl().getAllProductType(vendorMaster.getVendorId());
 		if(listProductType==null || listProductType.isEmpty())
 			return false;
@@ -85,26 +126,7 @@ public class ProductActivity {
 
 		List<ApiStructure> listApiStruct = new ApiStructureDaoImpl().getApiStructureOfVendor(vendorMaster.getVendorId());
 
-
-		/* ********************************************************************** */
-		/* ****************** GET PRODUCT DATA FROM VENDOR API ****************** */
-		/* ********************************************************************** */
-
-		String data = getProductData(vendorName);
-		JSONArray apiJSONArray = null;
-
-		try {
-			apiJSONArray = new JSONArray(data);
-			AppLog.print(apiJSONArray);
-		}
-		catch(JSONException ex) {
-			AppLog.log(ProductActivity.class, "Parsing exception occurred while parsing API data of the Vendor.", ex);
-			return false;
-		}
-		if(apiJSONArray.length()==0)
-			return false;
-
-		// 
+		// SAVING TASK
 		return saveProducts(apiJSONArray, listApiStruct, mapProductType, mapVendorBranch);
 	}
 
@@ -210,74 +232,11 @@ public class ProductActivity {
 
 
 	private String getProductData(String vendorName) {
-		
-		int branchId = 1;
-		boolean deleteFlag = false;
-		JSONArray jsonArray = new JSONArray();
-
-		if("netti".equalsIgnoreCase(vendorName)) {
-			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("productId", 1);
-			jsonObject.put("productName", "H-milk");
-			jsonObject.put("productTypeId", 1);
-			jsonObject.put("productDescription", "Energy : 197 KJ,1.5 %");
-			jsonObject.put("productPrice", "1.09");
-			jsonObject.put("branchId", branchId);
-			jsonObject.put("deleteFlag", deleteFlag);
-			jsonArray.put(jsonObject);
-	
-			jsonObject = new JSONObject();
-			jsonObject.put("productId", 2);
-			jsonObject.put("productName", "Banana");
-			jsonObject.put("productTypeId", 2);
-			jsonObject.put("productDescription", "Brand : Chiquita, Mainly grown in columbia,Slight sour to very sweet");
-			jsonObject.put("productPrice", "1.5");
-			jsonObject.put("branchId", branchId);
-			jsonObject.put("deleteFlag", deleteFlag);
-			jsonArray.put(jsonObject);
-	
-			jsonObject = new JSONObject();
-			jsonObject.put("productId", 3);
-			jsonObject.put("productName", "Broccoli");
-			jsonObject.put("productTypeId", 3);
-			jsonObject.put("productDescription", "Origin : Spain Or Italy, Green or Dark Color, Store : In Refrigerator");
-			jsonObject.put("productPrice", "1.9");
-			jsonObject.put("branchId", branchId);
-			jsonObject.put("deleteFlag", deleteFlag);
-			jsonArray.put(jsonObject);
-		}
-		else {
-			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("id", 1);
-			jsonObject.put("name", "H-milk");
-			jsonObject.put("type", 1);
-			jsonObject.put("description", "Energy : 197 KJ,1.5 %");
-			jsonObject.put("price", "1.05");
-			jsonObject.put("branch", branchId);
-			jsonObject.put("deleteFlag", deleteFlag);
-			jsonArray.put(jsonObject);
-	
-			jsonObject = new JSONObject();
-			jsonObject.put("id", 2);
-			jsonObject.put("name", "Banana");
-			jsonObject.put("type", 2);
-			jsonObject.put("description", "Brand : Chiquita, Mainly grown in columbia,Slight sour to very sweet");
-			jsonObject.put("price", "1.7");
-			jsonObject.put("branch", branchId);
-			jsonObject.put("deleteFlag", deleteFlag);
-			jsonArray.put(jsonObject);
-	
-			jsonObject = new JSONObject();
-			jsonObject.put("id", 3);
-			jsonObject.put("name", "Tomato");
-			jsonObject.put("type", 3);
-			jsonObject.put("description", "Store : In Refrigerator");
-			jsonObject.put("price", "1.9");
-			jsonObject.put("branch", branchId);
-			jsonObject.put("deleteFlag", deleteFlag);
-			jsonArray.put(jsonObject);
-		}
-
-		return jsonArray.toString();
+		String strURL = null;
+		if("netti".equalsIgnoreCase(vendorName))
+			strURL = "http://localhost:8080/nettiapp/products/all";
+		else
+			strURL = "http://localhost:8080/aldoapp/products/all";
+		return new ApiConnection(strURL).toString();
 	}
 }

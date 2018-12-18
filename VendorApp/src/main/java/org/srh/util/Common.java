@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.srh.annotation.POJO;
 import org.srh.bean.ServiceResp;
 import org.srh.bean.ServiceRespArray;
@@ -192,6 +193,11 @@ public final class Common {
 
 	public static ServiceRespArray buildServiceRespArray(List<?> list, String successDescription) {
 		return new ServiceRespArray().setSuccessData(list).setSuccessDescription(successDescription);
+	}
+
+
+	public static ServiceRespArray buildServiceRespArray(JSONArray jsonArray) {
+		return new ServiceRespArray().setSuccessJSONArray(jsonArray);
 	}
 
 

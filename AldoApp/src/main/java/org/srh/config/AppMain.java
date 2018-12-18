@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.json.JSONObject;
 import org.srh.aldoapp.hbm.RootHB;
+import org.srh.constants.KeyPairConstant;
 import org.srh.util.AppLog;
 
 
@@ -18,10 +19,9 @@ public class AppMain {
 
 
 	public static void main(String[] args) {
-		// testCustomerFunctinalities();
-		Object obj = display();
-		AppLog.print( new JSONObject(obj) );
-		System.exit(0);
+		System.out.println(KeyPairConstant.PRODUCT_ID);
+		System.out.println(KeyPairConstant.PRODUCT_ID);
+		System.out.println(KeyPairConstant.PRODUCT_NAME);
 	}
 
 

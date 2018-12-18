@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.srh.bean.ServiceResp;
 import org.srh.bean.ServiceRespArray;
@@ -58,7 +59,7 @@ public class CustomerCartController {
 
 	
 	@RequestMapping(path="/addAll", method=RequestMethod.POST)
-	public String addAll(@RequestBody String data, HttpServletResponse resp, HttpSession httpSession) {
+	public String addAll(@RequestParam String data, HttpServletResponse resp, HttpSession httpSession) {
 		String customerId = Common.getCustomerId(httpSession).toString();
 		ServiceResp customerCartServiceResp = customerCartService.addAllProduct(data, customerId);
 		return HttpUtil.buildResponse(resp, customerCartServiceResp).toString();

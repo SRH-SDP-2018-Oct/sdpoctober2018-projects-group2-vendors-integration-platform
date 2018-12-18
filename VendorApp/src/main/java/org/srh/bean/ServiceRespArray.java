@@ -2,6 +2,8 @@ package org.srh.bean;
 
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.srh.constants.ErrorCode;
 
 public class ServiceRespArray {
@@ -14,6 +16,7 @@ public class ServiceRespArray {
 	// Success
 	private List<?> successData;
 	private String successDescription;
+	private JSONArray successJSONArray;
 
 	public ErrorCode getErrorCode() {
 		return errorCode;
@@ -52,6 +55,18 @@ public class ServiceRespArray {
 	}
 	public ServiceRespArray setSuccessDescription(String successDescription) {
 		this.successDescription = successDescription;
+		return this;
+	}
+
+	public String toJSONString() {
+		return new JSONObject(this).toString();
+	}
+
+	public JSONArray getSuccessJSONArray() {
+		return successJSONArray;
+	}
+	public ServiceRespArray setSuccessJSONArray(JSONArray successJSONArray) {
+		this.successJSONArray = successJSONArray;
 		return this;
 	}
 

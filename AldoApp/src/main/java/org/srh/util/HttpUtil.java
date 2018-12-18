@@ -1,6 +1,7 @@
 package org.srh.util;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,12 +37,7 @@ public final class HttpUtil {
 	 * @return jsonObject {@link JSONObject}
 	 */
 	public static JSONObject successResponse(Object obj) {
-		JSONObject jsonObject;
-		if(obj!=null)
-			jsonObject = new JSONObject(Common.hidePojoData(obj));
-		else
-			jsonObject = new JSONObject();
-		return new JSONObject().put(KEY_DATA, jsonObject).put(KEY_STATUS, KEY_SUCCESS);
+		return successResponse(obj, KEY_SUCCESS);
 	}
 
 
@@ -53,8 +49,16 @@ public final class HttpUtil {
 	 */
 	public static JSONObject successResponse(Object obj, String statusMsg) {
 		JSONObject jsonObject;
-		if(obj!=null)
-			jsonObject = new JSONObject(Common.hidePojoData(obj));
+		if(obj!=null) {
+			if(obj instanceof JSONObject)
+				jsonObject = (JSONObject) obj;
+			else if(obj instanceof Map<?, ?>)
+				jsonObject = new JSONObject((Map<?,?>)obj);
+			else {
+				Object newObj = Common.hidePojoData(obj);
+				jsonObject = new JSONObject(newObj);
+			}
+		}
 		else
 			jsonObject = new JSONObject();
 		return new JSONObject().put(KEY_DATA, jsonObject).put(KEY_STATUS, statusMsg);
@@ -70,8 +74,16 @@ public final class HttpUtil {
 	 */
 	public static JSONObject successResponse(Object obj, String key, String value) {
 		JSONObject jsonObject;
-		if(obj!=null)
-			jsonObject = new JSONObject(Common.hidePojoData(obj));
+		if(obj!=null) {
+			if(obj instanceof JSONObject)
+				jsonObject = (JSONObject) obj;
+			else if(obj instanceof Map<?, ?>)
+				jsonObject = new JSONObject((Map<?,?>)obj);
+			else {
+				Object newObj = Common.hidePojoData(obj);
+				jsonObject = new JSONObject(newObj);
+			}
+		}
 		else
 			jsonObject = new JSONObject();
 		JSONObject jsonData = new JSONObject().put(KEY_DATA, jsonObject);
@@ -109,7 +121,12 @@ public final class HttpUtil {
 		JSONArray jsonArray = new JSONArray();
 		if(list!=null && !list.isEmpty()) {
 			for(Object obj : list) {
-				jsonArray.put(new JSONObject(Common.hidePojoData(obj)));
+				if(obj instanceof JSONObject)
+					jsonArray.put(obj);
+				else if(obj instanceof Map<?, ?>)
+					jsonArray.put(new JSONObject((Map<?,?>)obj));
+				else
+					jsonArray.put(new JSONObject(Common.hidePojoData(obj)));
 			}
 		}
 		return new JSONObject().put(KEY_DATA, jsonArray);
@@ -163,6 +180,21 @@ public final class HttpUtil {
 		ErrorCode errorCode = serviceRespArray.getErrorCode();
 		if(errorCode!=null) {
 			return errorResponse(resp, errorCode, serviceRespArray.getErrorDescription());
+		}
+		// Return JSONArray if response is already formatted
+		JSONArray jsonArray = serviceRespArray.getSuccessJSONArray();
+		if(jsonArray!=null) {
+			return new JSONObject().put(KEY_DATA, jsonArray);
+		}
+		
+		/* ******** RETURN RESPONSE FROM LIST ******** */
+		List<?> list = serviceRespArray.getSuccessData();
+		
+		// Validate the list
+		if(list==null) {
+			String description = "Service response cannot be constructed on the null list object";
+			AppLog.log(HttpUtil.class, new NullPointerException(description));
+			return errorResponse(resp, ErrorCode.ERROR, description);
 		}
 		return successResponseArray(serviceRespArray.getSuccessData());
 	}

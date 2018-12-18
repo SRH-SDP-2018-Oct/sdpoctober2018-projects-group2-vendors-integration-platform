@@ -181,6 +181,21 @@ public final class HttpUtil {
 		if(errorCode!=null) {
 			return errorResponse(resp, errorCode, serviceRespArray.getErrorDescription());
 		}
+		// Return JSONArray if response is already formatted
+		JSONArray jsonArray = serviceRespArray.getSuccessJSONArray();
+		if(jsonArray!=null) {
+			return new JSONObject().put(KEY_DATA, jsonArray);
+		}
+		
+		/* ******** RETURN RESPONSE FROM LIST ******** */
+		List<?> list = serviceRespArray.getSuccessData();
+		
+		// Validate the list
+		if(list==null) {
+			String description = "Service response cannot be constructed on the null list object";
+			AppLog.log(HttpUtil.class, new NullPointerException(description));
+			return errorResponse(resp, ErrorCode.ERROR, description);
+		}
 		return successResponseArray(serviceRespArray.getSuccessData());
 	}
 }

@@ -65,13 +65,13 @@ public class CustomerController {
 			HttpServletResponse resp, HttpServletRequest req) {
 
 		HttpSession httpSession = req.getSession();
-		Long customerId = Common.getCustomerId(httpSession);
+		/*Long customerId = Common.getCustomerId(httpSession);
 		if(customerId!=null) {
 			String sessionId = httpSession.getId();
 			ServiceResp serviceResp = Common.buildServiceResp(new CustomerMasterDaoImpl().findById(customerId));
 			Common.setCustomerId(httpSession, ((CustomerMaster)serviceResp.getSuccessData()).getCustomerId());
 			return HttpUtil.successResponse(serviceResp.getSuccessData(), "sessionId", sessionId).toString();
-		}
+		}*/
 
 		// Authenticate the user
 		ServiceResp serviceResp = customerLoginRegistrationService.authenticate(username, pwd);

@@ -160,7 +160,7 @@ public class CustomerCartServiceImpl implements CustomerCartService {
 				displayName = DateUtil.getMMDDYYYY_HHMMSS();
 			}
 			jsonDataArray = jsonData.getJSONArray(KeyPairConstants.CART_PRODUCT_DATA);
-			int len = jsonData.length();
+			int len = jsonDataArray.length();
 			productIdList = new ArrayList<>(len);
 			productCountList = new ArrayList<>(len);
 			for (int i = 0; i < len; i++) {

@@ -31,6 +31,11 @@ public class AppLog {
 	}
 
 
+	public static void log(Class<?> c, Throwable ex, Object msg) {
+		Logger.getLogger(c).error(msg, ex);
+	}
+
+
 	public static void print(Object msg) {
 		Logger.getLogger(System.class).info(msg);
 	}

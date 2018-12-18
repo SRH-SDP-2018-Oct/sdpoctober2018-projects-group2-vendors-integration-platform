@@ -24,7 +24,7 @@ public final class NumberUtil {
 		if(Common.nullOrEmptyTrim(obj))
 			return null;
 		try {
-			return Integer.valueOf(obj.toString());
+			return Integer.valueOf(obj.toString().trim());
 		}
 		catch(NumberFormatException ex) {
 			LOGGER.error(StringUtil.append("Invalid Integer ", obj), ex);
@@ -42,7 +42,7 @@ public final class NumberUtil {
 		if(Common.nullOrEmptyTrim(obj))
 			return null;
 		try {
-			return Long.valueOf(obj.toString());
+			return Long.valueOf(obj.toString().trim());
 		}
 		catch(NumberFormatException ex) {
 			LOGGER.error(StringUtil.append("Invalid Long ", obj), ex);

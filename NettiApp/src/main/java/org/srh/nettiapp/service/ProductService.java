@@ -1,6 +1,5 @@
 package org.srh.nettiapp.service;
 
-import org.srh.bean.ServiceResp;
 import org.srh.bean.ServiceRespArray;
 
 /**
@@ -11,23 +10,13 @@ import org.srh.bean.ServiceRespArray;
  */
 public interface ProductService {
 
-	
-	ServiceRespArray getAllProducts();
+
 	/**
-	 * Returns product data with the given ProductId.
+	 * Returns all the product data.
 	 * 
 	 * @param productId {@link String}
 	 * @return serviceResp {@link ServiceResp}
 	 */
-	
-	ServiceResp getProductByproductId(String productId);
-
-	/**
-	 * Returns the product type data with the given productTypeId.
-	 * 
-	 * @param productTypeId {@link String}
-	 * @return serviceRespArray {@link ServiceRespArray}
-	 */
-	ServiceRespArray getproducttypeByproductTypeId(String productTypeId);
+	ServiceRespArray getAllProducts();
 
 }

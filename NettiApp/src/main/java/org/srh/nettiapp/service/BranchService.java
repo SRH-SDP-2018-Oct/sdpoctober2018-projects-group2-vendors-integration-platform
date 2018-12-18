@@ -19,4 +19,5 @@ public interface BranchService {
 	 */
 	ServiceRespArray getBranchesInCity(String city);
 
+	
 }
