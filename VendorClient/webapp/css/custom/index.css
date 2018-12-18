@@ -1,0 +1,38 @@
+/* INDEX */
+
+.container-content { padding: 10px; }
+
+/* Inner Spacing */
+#inner_spacing { text-align: center; }
+#inner_spacing > table { width: 100%; height: 100%; }
+#inner_spacing > table > tbody > tr > td { vertical-align: middle; }
+#inner_spacing > table > tbody > tr > td > img { border-radius:50%; width:150px; height:150px; }
+
+/* Slogan */
+#octaway-slogan { background-color: rgba(255, 255, 255, 0.5); text-align: center; padding: 20px; }
+#octaway-slogan > h3 { color: #39729B; }
+#octaway-slogan > h1 { color: #0C3C60; font-weight: bold; }
+
+/* Octaway Home */
+#octaway-home { background-color: rgba(255, 255, 255, 0.7); }
+#octaway-home > div.container > div { padding-top: 70px; }
+#octaway-home > .container > div > .col-md-6 > .panel { background-color: #0c3c60; }
+#octaway-home > .container > div > .col-md-6 > .panel > .panel-body { color: #ffffff; padding-left: 30px; padding-right: 30px; }
+#octaway-home > .container > div > .col-md-6 > .panel > .panel-body > h4 { margin-top: 25px; margin-bottom: 0px;}
+#octaway-home > .container > div > .col-md-6 > .panel > .panel-body > span { font-size: 13px; }
+#octaway-home > .container > div > .col-md-6 > .panel > .panel-body > a { color: yellow; font-size: 18px; }
+#octaway-home > .container > div > .col-md-6 > .panel > .panel-heading { background-color: #0c3c60; border: 1px solid #0c3c60; font-size: 24px; text-align: center; }
+
+/* Octaway About-Us */
+#octaway-aboutus { background-color: #d1e0eb; }
+#octaway-aboutus > .container > h1 { color:#0d3d61; text-align: center; padding: 20px; }
+#octaway-aboutus > .container > div > div.col-sm-6 { color: #0c3c60; text-align: center; }
+
+
+
+/*==============================================
+    MEDIA QUERIES     
+=============================================*/
+@media ( min-width :1200px ) { #inner_spacing { height: 400px; } }
+@media ( max-width :1200px ) { #inner_spacing { height: 350px; } }
+@media ( max-width :800px ) { #inner_spacing { height: 300px; } }

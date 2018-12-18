@@ -1,0 +1,23 @@
+/* SERVICES */
+
+#octaway-services > .container > div > .col-md-6 > .panel { background-color: rgba(13, 61, 97, 0.80); }
+#octaway-services > .container > div > .col-md-6 > .panel > .panel-body { padding: 30px; color: #ffffff; }
+#octaway-services > .container > div > .col-md-6 > .panel > .panel-body > h4 { margin-top: 10px; margin-bottom: 5px; text-decoration: underline; }
+#octaway-services > .container > div > .col-md-6 > .panel > .panel-body > span { font-size: 13px; }
+#octaway-services > .container > div > .col-md-6 > .panel > .panel-body > a { color: yellow; font-size: 18px; }
+#octaway-services > div.container > div { padding-top: 100px; }
+#octaway-services { padding-bottom: 80px; }
+
+#octaway-services > .container > div > .col-md-6 > .panel > .panel-heading {
+	background-color: #0c3c60;
+	border: 1px solid #0c3c60;
+	font-size: 24px;
+	text-align: center;
+}
+
+
+
+
+/*==============================================
+    MEDIA QUERIES     
+=============================================*/

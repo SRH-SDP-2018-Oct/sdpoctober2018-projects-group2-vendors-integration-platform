@@ -1,0 +1,22 @@
+/* PROJECTS */
+
+.container > div > table > tbody >  tr > td > div.panel  { background-color: rgba(255, 255, 255, 0.25); }
+.container > div > table > tbody >  tr > td > div.panel > .panel-heading { background-color:#0c3c60; padding:15px 30px; font-size: 20px;  }
+.container > div > table > tbody >  tr > td > div.panel > .panel-body { background-color: rgba(255, 255, 255, 0.5); color:#0c3c60; padding:30px; }
+.container > div > table > tbody >  tr > td > div.panel > .panel-body > .col-sm-6 { background-color: rgba(255, 255, 255, 0.8); padding: 20px; }
+.container > div > table > tbody >  tr > td > div.panel > .panel-body > .col-sm-6 + .col-sm-6 { background-color: rgba(255, 255, 255, 0.0); padding: 0px; }
+
+#octaway-projects > div.container > div { padding-top: 70px; }
+#octaway-projects > div.container > div > table { width: 100%; }
+#octaway-projects > div.container > div > table > tbody > tr > td  { padding-bottom: 50px; }
+
+
+
+/*==============================================
+    MEDIA QUERIES     
+=============================================*/
+@media ( max-width :768px) { .container > div > table > tbody >  tr > td > div.panel > .panel-body > .col-sm-6 + .col-sm-6 { padding-top: 20px; } }
+@media ( max-width :500px) { .panel > .panel-body > .col-sm-6 > img { width: 60%; } }
+@media ( max-width :400px) { .panel > .panel-body > .col-sm-6 > img { width: 80%; } }
+@media ( max-width :300px) { .panel > .panel-body > .col-sm-6 > img { width: 100%; } }
+@media ( min-width :768px) { .panel > .panel-body > .col-sm-6 > img { width: auto; } }

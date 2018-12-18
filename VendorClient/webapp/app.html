@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Vendor Integration Platform</title>
+<script src='js/jquery.min.js'></script>
+<script src='js/bootstrap.min.js'></script>
+<script src='js/common.js'></script>
+<script src='js/main.js'></script>
+
+<link rel='stylesheet' href='css/bootstrap.min.css'>
+<link rel='stylesheet' href='css/fonts.css'>
+<link rel='stylesheet' href='css/font-awesome.css'>
+<link rel='stylesheet' href='css/custom/common.css'>
+</head>
+<body>
+	<nav class="navbar navbar-default" style="height:60px; padding-top: 5px;">
+		<div class="container-fluid" style="padding-right: 0;">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<form class="navbar-form nav navbar-right" >
+					<div class="form-group">
+						<input id="loginUsername" type="text" class="form-control" placeholder="Username">
+					</div>
+					<div class="form-group">
+						<input id="loginPassword" type="password" class="form-control" placeholder="Password">
+					</div>
+					<button type="button" class="btn btn-default" onclick="login()">Submit</button>
+				</form>
+				<form class="navbar-form nav navbar-right" style="display:none" >
+					<button type="submit" class="btn btn-default">Logout</button>
+				</form>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+
+	<div id="mainContent" >
+		<div id="searchContent" class="col-sm-12" style="border-bottom: 1px solid #ccc; padding-bottom: 15px;" >
+			<div class="col-sm-2">
+				<input type="text" value="" id="searchBox" placeholder="Search" class="form-control" />
+			</div>
+			<div class="col-sm-2">
+				<select class="form-control" id="searchType" >
+					<option value="price" selected="selected" >Price</option>
+					<option value="location" >Location</option>
+				</select>
+			</div>
+			<div class="col-sm-1">
+				<input type="button" value="Go" class="btn btn-primary" onclick="search()" />
+			</div>
+			<div class="col-sm-6">
+				<div class="col-sm-3">
+					<input type="button" value="Repeat Previous" class="btn btn-orange"
+					  onclick="searchLatestCartProducts()" />
+				</div>
+				<div class="col-sm-2">
+					<input type="button" value="On Offer" class="btn btn-orange"
+					  onclick="searchProductsOnOffers()" />
+				</div>
+				<div class="col-sm-2">
+					<input type="button" value="Frequent" class="btn btn-orange"
+					  onclick="searchFrequentlyBought()" />
+				</div>
+				<div class="col-sm-2">
+					<input type="button" value="Favourite" class="btn btn-orange"
+					  onclick="searchFavouriteProducts()" />
+				</div>
+			</div>
+			<div class="col-sm-1" style="padding-top: 5px;">
+				<label>Total:</label>
+				<span id="cartTotal">0.00</span>
+			</div>
+		</div>
+
+		<div style="padding: 20px; height: 200px; overflow: auto"> 
+			<table class="table-striped padd-10" style="width:100%" >
+				<thead>
+					<tr>
+						<th style="width: 50px;">Add</th>
+						<th>Id</th>
+						<th>Product</th>
+						<th>Description</th>
+						<th>Price</th>
+						<th>Vendor</th>
+						<th>Location</th>
+						<th style="max-width: 100px">Offer</th>
+						<th>Quantity</th>
+					</tr>
+				</thead>
+				<tbody id="productData">
+				</tbody>
+			</table>
+		</div>
+
+		<div style="padding: 20px; height: 200px; overflow: auto"> 
+			<table class="table-striped padd-10" style="width:100%" >
+				<thead>
+					<tr>
+						<th style="width: 70px;">Remove</th>
+						<th>Id</th>
+						<th>Product</th>
+						<th>Description</th>
+						<th>Price</th>
+						<th>Vendor</th>
+						<th>Location</th>
+						<th style="max-width: 100px">Offer</th>
+						<th>Quantity</th>
+					</tr>
+				</thead>
+				<tbody id="selectedData">
+				</tbody>
+			</table>
+		</div>
+
+		<div style="bottom:0px" class="col-sm-12">
+			<div class="col-sm-2 pull-left">
+				<input type="button" value="Add To Favourite" class="btn btn-orange"
+				  onclick="addToFavourite()" />
+			</div>
+			<div class="col-sm-2 pull-right">
+				<input type="button" value="Generate Cart" class="btn btn-orange"
+				  onclick="generateCart()" />
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" tabindex="-1" role="dialog" id="errorMessage">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Message</h4>
+				</div>
+				<div class="modal-body" id="errorMessageContent">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+
+
+</body>
+</html>

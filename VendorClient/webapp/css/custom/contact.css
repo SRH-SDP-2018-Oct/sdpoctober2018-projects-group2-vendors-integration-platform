@@ -1,0 +1,15 @@
+/* CONTACT */
+
+.panel { background-color: rgba(255, 255, 255, 0.0); }
+.panel > .panel-heading { background-color: rgba(12, 60, 96, 0.4); color: #ffffff; font-size: 20px; border: 0px; }
+.panel > .panel-body { background-color: rgba(12, 60, 96, 0.6); color: #f0f0f0; font-size: 14px; }
+
+#panel-body-ContactDetail > h5 { font-weight:bold; margin-bottom: 5px; }
+#panel-body-ContactDetail > div { padding-top:5px; }
+#panel-body-ContactDetail > div > div { width:70px; display: inline-block; }
+#panel-body-ContactDetail > div > div + div { width:160px; }
+
+.padd-05 { padding: 5px; }
+.padd-10 { padding: 10px; }
+.padd-t-05 { padding-top: 5px; padding-bottom: 5px; }
+.padd-t-10 { padding-top: 10px; padding-bottom: 10px; }

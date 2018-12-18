@@ -1,0 +1,3 @@
+
+1. Enable the cross-site scripting
+2. Execute/Open the 'app.html' file using Chrome.

@@ -1,0 +1,75 @@
+
+@CHARSET "ISO-8859-1";
+
+html, body { height:100%; }
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	margin: 0;
+	overflow: hidden;
+}
+
+div#main-container {
+	width: 100%;
+	background-color: #ffffff;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100%;
+	overflow: auto;
+}
+
+/* FOOTER */
+footer { bottom: 0px; width: 100%; }
+footer > div { background-color: #0c3c60; border-top: 5px solid #555555; }
+footer > div > div.container { padding: 20px 0px; }
+footer > div > div.container > div.col-sm-6 { font-size:20px; padding:10px; }
+footer > div > div.container > div.col-sm-6 > table > tbody > tr > td > h4 { color:white; font-weight:bold; font-size:16px; }
+footer > div > div.container > div.col-sm-6 > table > tbody > tr > td > h3 { color:white; font-weight:bold; }
+footer > div > div.container > div.col-sm-6 > table > tbody > tr > td { padding: 10px; }
+footer > div > div.container > div.col-sm-6 > table > tbody > tr > td > div { color:#f3f3f3; font-size: 14px; }
+footer > div > div.container > div.col-sm-6 > table > tbody > tr > td > div > div { padding: 10px 0px; }
+
+/* Page Header */
+.octaway-page-header { background-color: rgba(255, 255, 255, 0.701961); text-align: center; padding: 20px; }
+.octaway-page-header > h1 { color:#0C3C60; font-weight: bold; margin-bottom: 20px; }
+
+/* Menu */
+.navbar-default , #spacingTopMenu { height: 80px; }
+.navbar-default { padding: 0px 0px;  background-color: #0c3c60; }
+.navbar-default > div.menu { padding: 0px 10px 0px 10px; }
+.navbar-default > div.menu > div.navbar-header { padding: 10px 0px 20px 10px; }
+.navbar-default > div.menu > div.navbar-header > div.navbar-brand { padding:0px; padding-left:10px; }
+.navbar-default > div.menu > div.navbar-header > div.navbar-brand > table > tbody > tr > td { font-size:40px; }
+.container.menu td { color: #FFFFFF; height: 60px; font-size: 30px; }
+#menuContainerDiv > div.dropdown > button.dropdown-toggle { background-color: transparent; padding:9px 10px; }
+#menuContainerDiv > div.dropdown > button.dropdown-toggle .icon-bar { border-radius: 1px; display: block; height: 2px; width: 22px; background-color: #fff; }
+#menuContainerDiv > div.dropdown > button.dropdown-toggle .icon-bar + .icon-bar { margin-top: 4px; }
+#downdownMenuContainer { width: 200px; }
+#downdownMenuContainer > li > a > i { width: 45px; }
+div.menu-switch > table > tbody > tr > td { padding:0px 10px; }
+div.menu-switch > table > tbody > tr > td > a { color: white; font-size: 16px; }
+div.menu-switch {
+	color:white;
+	display: none;
+	float:right;
+	font-size:16px;
+	padding:10px 15px 5px 50px; 
+}
+div#menuContainerDiv {
+	display: inline-block;
+	float: right;
+	padding:15px 20px 0px 0px;
+}
+
+
+
+/*==============================================
+    MEDIA QUERIES     
+=============================================*/
+
+@media ( min-width :768px) {
+	.navbar { border-radius: 0px; }
+	div.menu-switch { display: inline-block; }
+	div#menuContainerDiv { display: none; }
+}
+
